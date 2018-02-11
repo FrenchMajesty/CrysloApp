@@ -3,9 +3,9 @@ import styling from 'app/config/styling'
 
 export default StyleSheet.create({
 	card: {
-		width: 135,
-		height: 135,
-		margin: 0,
+		width: 140,
+		height: 140,
+		marginBottom: 25,
 		display: 'flex',
 		position: 'relative',
 		flexDirection: 'row',

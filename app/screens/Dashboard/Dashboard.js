@@ -1,8 +1,11 @@
-import React, { Component } from 'react'
-import { View } from 'react-native'
-import VitalCard from './components/VitalCard/'
-import styling from 'app/config/styling'
-import style from './style'
+import React, { Component } from 'react';
+import { View, ScrollView, ListView } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import Header from 'app/components/Header/';
+import VitalCard from './components/VitalCard/';
+import FloatingIcon from 'app/components/common/Button/FloatingIcon/';
+import styling from 'app/config/styling';
+import style from './style';
 
 export default class Home extends Component {
 
@@ -50,13 +53,24 @@ export default class Home extends Component {
 	 */
 	render() {
 		const {vitals} = this.state
+		const {navigation} = this.props
+
 		return (
-			<View style={styling.statusBarPadding}>
-		        <View style={[style.list]}>
+			<ScrollView 
+				contentContainerStyle={{flexGrow: 1}}
+				style={[styling.statusBarPadding, styling.screenPadding, style.container]}
+			>
+				<Header 
+					title="Victron"
+					style={{flex: 2}}
+					navigation={navigation}
+				/>
+				
+		        <View style={[style.list, {flex: 900}]}>
 		        	{vitals.map(this.renderCard)}
 		        </View>
-		        <View style={{flex: 1}} />
-			</View>
+		        
+			</ScrollView>
 		)
 	}
 }
