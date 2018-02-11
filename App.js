@@ -6,24 +6,26 @@ import { TabsInDrawer } from './app/config/router';
 export default class App extends React.Component {
 
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       ready: false,
-    }
+    };
   }
 
   async componentWillMount() {
     await Font.loadAsync({
       'montserrat-medium': require('./assets/fonts/montserrat/Montserrat-Medium.ttf'),
-      'montserrat-regular': require('./assets/fonts/montserrat/Montserrat-Regular.ttf')
-    })
+      'montserrat-regular': require('./assets/fonts/montserrat/Montserrat-Regular.ttf'),
+      'ionicons': require('./assets/fonts/Ionicons.ttf'),
+      'font-awesome': require('./assets/fonts/FontAwesome.ttf'),
+    });
 
-    this.setState({ready: true})
+    this.setState({ready: true});
   }
 
   render() {
-    const {ready} = this.state
+    const {ready} = this.state;
 
 
     return ready ? <TabsInDrawer /> : (<View />);
