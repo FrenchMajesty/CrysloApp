@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text } from 'react-native'
+import styling from 'app/config/styling'
 
 export default class Guardians extends Component {
 
@@ -9,7 +10,7 @@ export default class Guardians extends Component {
 	 */
 	render() {
 		return (
-			<View>
+			<View style={styling.statusBarPadding}>
 				<Text>This is the guardians screen.</Text>
 			</View>
 		)
