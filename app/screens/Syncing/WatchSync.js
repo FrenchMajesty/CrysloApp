@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, Button } from 'react-native'
 import styling from 'app/config/styling'
 
 export default class WatchSync extends Component {
@@ -18,6 +18,9 @@ export default class WatchSync extends Component {
 		return (
 			<View style={styling.statusBarPadding}>
 				<Text>Connect your freaking Bluetooth watch man</Text>
+				<Button title="Press Me!" 
+					onPress={() => this.props.navigation.navigate('DrawerToggle')}
+				/>
 			</View>
 		)
 	}
