@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View } from 'react-native'
 import VitalCard from './components/VitalCard/'
-import styling from '../../config/styling'
+import styling from 'app/config/styling'
 import style from './style'
 
 export default class Home extends Component {
@@ -51,8 +51,7 @@ export default class Home extends Component {
 	render() {
 		const {vitals} = this.state
 		return (
-			<View>
-				<View style={{flex: 1}} />
+			<View style={styling.statusBarPadding}>
 		        <View style={[style.list]}>
 		        	{vitals.map(this.renderCard)}
 		        </View>
