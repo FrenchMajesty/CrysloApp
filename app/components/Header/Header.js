@@ -10,8 +10,8 @@ const Header = ({title, navigation, style: customStyle}) => {
 		<View 
 			style={[styling.screenPadding, style.container, customStyle]}
 		>
-			<MenuButton navigation={navigation} style={{flex: 1}} />
-			<Text style={[style.title, {flex: 100}]}>{title}</Text>
+			<MenuButton navigation={navigation} />
+			<Text style={[style.title, {flex: 100}]} OnPress={() => navigation.navigate('DrawerToggle')}>{title}</Text>
 		</View>
 	);
 };

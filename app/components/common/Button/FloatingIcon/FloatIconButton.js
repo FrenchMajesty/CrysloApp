@@ -1,17 +1,17 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import style from './style';
 import cardStyle from '../../Card/style';
 
 const FloatIconButton = (props) => {
 
 	return (
-		<View 
-			style={[cardStyle.card, style.button, cardStyle.depth2]}
+		<TouchableOpacity 
+			style={[cardStyle.card, style.button, cardStyle.depth2, props.customStyle]}
 			{...props}
 		>
 			{props.children}
-		</View>
+		</TouchableOpacity>
 	);
 };
 
