@@ -58,13 +58,15 @@ const SimpleTabs = TabNavigator(
 			tension: 1,
 			friction: 35,
 		})
-	}
+	},
 );
 
 export const TabsInDrawer = DrawerNavigator(
 	{
 		Home: {
-			screen: SimpleTabs,
+			screen: ({navigation}) => {
+				return <SimpleTabs screenProps={{ rootNavigation: navigation }} /> 
+			},
 			navigationOptions: {
 				title: 'Home',
 			},

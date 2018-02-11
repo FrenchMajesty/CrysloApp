@@ -53,8 +53,7 @@ export default class Home extends Component {
 	 */
 	render() {
 		const {vitals} = this.state
-		const {navigation} = this.props
-
+		const {screenProps: {rootNavigation}} = this.props
 		return (
 			<ScrollView 
 				contentContainerStyle={{flexGrow: 1}}
@@ -63,7 +62,7 @@ export default class Home extends Component {
 				<Header 
 					title="Victron"
 					style={{flex: 2}}
-					navigation={navigation}
+					navigation={rootNavigation}
 				/>
 				
 		        <View style={[style.list, {flex: 900}]}>
