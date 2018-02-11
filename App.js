@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, ListView } from 'react-native';
 import { Font } from 'expo';
-import { Tabs } from './app/config/router';
+import { TabsInDrawer } from './app/config/router';
 
 export default class App extends React.Component {
 
@@ -26,7 +26,7 @@ export default class App extends React.Component {
     const {ready} = this.state
 
 
-    return ready ? <Tabs /> : (<View />);
+    return ready ? <TabsInDrawer /> : (<View />);
   }
 }
 
