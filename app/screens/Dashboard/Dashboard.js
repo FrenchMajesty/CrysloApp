@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ScrollView, ListView } from 'react-native';
+import { View, ScrollView, ListView, StatusBar } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Header from 'app/components/Header/';
 import VitalCard from './components/VitalCard/';
@@ -59,6 +59,7 @@ export default class Home extends Component {
 				contentContainerStyle={{flexGrow: 1}}
 				style={[styling.statusBarPadding, styling.screenPadding, style.container]}
 			>
+				<StatusBar barStyle="dark-content" />
 				<Header 
 					title="Victron"
 					style={{flex: 2}}
