@@ -2,16 +2,17 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import MenuButton from '../MenuButton/';
 import style from './style';
-import styling from 'app/config/styling'
+import styling from 'app/config/styling';
 
-const Header = ({title, navigation, style: customStyle}) => {
+const Header = ({title, navigation, style: customStyle, color}) => {
 
 	return (
-		<View 
-			style={[styling.screenPadding, style.container, customStyle]}
-		>
-			<MenuButton navigation={navigation} />
-			<Text style={[style.title, {flex: 100}]} OnPress={() => navigation.navigate('DrawerToggle')}>{title}</Text>
+		<View style={[styling.screenPadding, style.container, customStyle]}>
+			<MenuButton navigation={navigation} style={{position: 'absolute', marginLeft: 10}} />
+			<Text 
+				style={[style.title, {color: color}]} 
+				OnPress={() => navigation.navigate('DrawerToggle')}
+			>{title}</Text>
 		</View>
 	);
 };
