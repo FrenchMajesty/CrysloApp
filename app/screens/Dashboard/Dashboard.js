@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, ScrollView, ListView, StatusBar } from 'react-native';
+import { NavigationActions } from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Header from 'app/components/Header/';
 import VitalCard from './components/VitalCard/';
@@ -15,7 +16,10 @@ export default class Home extends Component {
 	constructor(props) {
 		super(props)
 
-		this.state = this.getInitialState()
+		this.state = this.getInitialState();
+
+		this.renderCard = this.renderCard.bind(this);
+		this.triggerNavigation = this.triggerNavigation.bind(this);
 	}
 
 	/**
@@ -38,13 +42,32 @@ export default class Home extends Component {
 					date: '10 Minutes Ago'
 				},
 			]
-		}
+		};
 	}
 
 	renderCard(item, i) {
 		return (
-			<VitalCard key={i} item={item} />
-		)
+			<VitalCard 
+				key={i} 
+				item={item} 
+				onPress={null} 
+			/>
+		);
+	}
+
+	triggerNavigation(item) {
+		const {navigation} = this.props;
+
+		return;
+		navigation.navigate('DashboardDetails', {vital: item.type});
+		const action = NavigationActions.navigate({
+			index: 0,
+			actions: [NavigationActions.navigate({
+					routeName: 'History',
+				})],
+		});
+
+		navigation.dispatch(action);
 	}
 
 	/**
@@ -52,8 +75,9 @@ export default class Home extends Component {
 	 * @return {ReactElement} 
 	 */
 	render() {
-		const {vitals} = this.state
-		const {screenProps: {rootNavigation}} = this.props
+		const {vitals} = this.state;
+		const {screenProps: {rootNavigation}} = this.props;
+
 		return (
 			<ScrollView 
 				contentContainerStyle={{flexGrow: 1}}
@@ -71,6 +95,6 @@ export default class Home extends Component {
 		        </View>
 		        
 			</ScrollView>
-		)
+		);
 	}
-}
+};
