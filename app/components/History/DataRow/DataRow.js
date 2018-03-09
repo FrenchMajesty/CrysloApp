@@ -1,11 +1,11 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo';
 import CommonText from 'app/components/common/CommonText/';
 import cardStyle from 'app/components/common/Card/style';
 import style from './style';
 
-export default DataRow = ({metric: {name, type, value}}) => {
+export default DataRow = ({metric: {name, type, value}, onPress}) => {
 	
 	let count = null;
 	let gradient = ['#8563e5','#968df8'];
@@ -31,32 +31,34 @@ export default DataRow = ({metric: {name, type, value}}) => {
 	];
 
 	return (
-		<LinearGradient colors={gradient} style={styleProps}>
-				<CommonText 
-					weight="light"
-					style={[style.rowName, style.typeName]}
-				>
-					{name}
-				</CommonText>
-			<View style={[style.rowData]}>
-				<View style={[style.countContainer]}>
+		<TouchableOpacity onPress={onPress}>
+			<LinearGradient colors={gradient} style={styleProps}>
 					<CommonText 
 						weight="light"
-						style={[style.metricValue]}
-					>{value} </CommonText>
+						style={[style.rowName, style.typeName]}
+					>
+						{name}
+					</CommonText>
+				<View style={[style.rowData]}>
+					<View style={[style.countContainer]}>
+						<CommonText 
+							weight="light"
+							style={[style.metricValue]}
+						>{value} </CommonText>
 
-					<CommonText
-						weight="light"
-						color="white"
-					>{count}</CommonText>
+						<CommonText
+							weight="light"
+							color="white"
+						>{count}</CommonText>
+					</View>
+					{
+						count == 'hours' ? 
+							<CommonText weight="light" style={[style.countSubscript]}>Last night</CommonText>
+						:
+							<CommonText weight="light" style={[style.countSubscript]}>On average today</CommonText>
+					}
 				</View>
-				{
-					count == 'hours' ? 
-						<CommonText weight="light" style={[style.countSubscript]}>Last night</CommonText>
-					:
-						<CommonText weight="light" style={[style.countSubscript]}>On average today</CommonText>
-				}
-			</View>
-		</LinearGradient>
+			</LinearGradient>
+		</TouchableOpacity>
 	);
 };

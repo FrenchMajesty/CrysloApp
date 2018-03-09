@@ -1,8 +1,8 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { Text, View, TouchableOpacity } from 'react-native'
 import style from './style'
 
-export default Card = ({children, depth, card, body, style: additionalStyle}) => {
+export default Card = ({children, depth, card, body, onPress, style: additionalStyle}) => {
 
 	let depthStyle = style.depth1
 	let cardStyle = null
@@ -13,11 +13,16 @@ export default Card = ({children, depth, card, body, style: additionalStyle}) =>
 		depthStyle = style.depth3
 	}
 
+	const hasLink = onPress ? 0.7 : 1;
 	return (
-		<View style={[style.card, depthStyle, card, additionalStyle]}>
+		<TouchableOpacity 
+			activeOpacity={hasLink} 
+			style={[style.card, depthStyle, card, additionalStyle]}
+			onPress={onPress}
+		>
 			<View style={[style.cardBody, body]}>
 				{children}
 			</View>
-		</View>
+		</TouchableOpacity>
 	)
 }

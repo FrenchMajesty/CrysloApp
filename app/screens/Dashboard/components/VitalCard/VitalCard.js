@@ -10,9 +10,9 @@ export default class VitalCard extends React.Component {
 	 * @return {ReactElement} 
 	 */
 	render() {
-		const {children, item} = this.props
+		const {children, item, onPress} = this.props
 		return (
-			<Card card={style.card} body={style.body}>
+			<Card card={style.card} body={style.body} onPress={onPress}>
 				<Text style={style.name}>{item.name}</Text>
 				<View style={style.logo} />
 				<Text style={style.vitalValue}>{item.value} Peanuts</Text>
