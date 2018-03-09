@@ -1,5 +1,4 @@
 import React from 'react';
-import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import FloatingIcon from '../common/Button/FloatingIcon/';
 import styling from 'app/config/styling';
