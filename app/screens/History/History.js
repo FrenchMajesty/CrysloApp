@@ -51,6 +51,7 @@ export default class History extends Component {
 	 */
 	renderDay(day, firstMetric) {
 		const {dateExpanded} = this.state;
+		const {navigation} = this.props;
 
 		if(day) {
 			const readableDate = moment(day.dateString).format('ddd DD');
@@ -64,7 +65,7 @@ export default class History extends Component {
 					}}>{readableDate}</CommonText>
 					{
 						firstMetric ?
-							<DataRow metric={firstMetric} />
+							<DataRow metric={firstMetric} onPress={() => navigation.navigate('Details', {vital: firstMetric.type})} />
 						:
 							<CommonText>Empty day</CommonText>
 					}
