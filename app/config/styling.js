@@ -15,6 +15,7 @@ styling.screenSize = {
 
 styling.text = {
 	lightgray: '#c0c2c5',
+	darkgray: '#90949a',
 	font: {
 		light: 'montserrat-regular',
 		heavy: 'montserrat-medium',
@@ -36,7 +37,7 @@ styling.screenPadding = {
 };
 
 styling.statusBarPadding = {
-	paddingTop: 25,
+	paddingTop: 20,
 };
 
 styling.floatingButton = {
