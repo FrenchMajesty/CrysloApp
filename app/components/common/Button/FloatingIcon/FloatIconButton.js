@@ -6,7 +6,8 @@ import cardStyle from '../../Card/style';
 const FloatIconButton = (props) => {
 
 	return (
-		<TouchableOpacity 
+		<TouchableOpacity
+			activeOpacity={0.6} 
 			style={[cardStyle.card, style.button, cardStyle.depth2, props.customStyle]}
 			{...props}
 		>
