@@ -168,12 +168,13 @@ export default class History extends Component {
 
 		return (
 			<View style={[styling.statusBarPadding, {flex: 1, backgroundColor: purple}]}>
-				<StatusBar barStyle="light-content" />
+				{/*<StatusBar barStyle="light-content" />*/}
 				<Header 
 					title="History"
 					color="white"
 					style={{flex: 0, backgroundColor: purple}}
 					navigation={rootNavigation}
+					forHistory={true}
 				/>
 				<Agenda
 					items={items}
