@@ -14,6 +14,7 @@ styling.screenSize = {
 };
 
 styling.text = {
+	gray: '#73787f',
 	lightgray: '#c0c2c5',
 	darkgray: '#90949a',
 	font: {
@@ -29,6 +30,10 @@ styling.text.prop = {
 	heavy: {
 		fontFamily: styling.text.font.heavy,
 	}
+};
+
+styling.grayScreenBackground = {
+	backgroundColor: '#faf9f9',
 };
 
 styling.screenPadding = {
