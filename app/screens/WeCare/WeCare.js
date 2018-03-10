@@ -15,8 +15,14 @@ export default class WeCare extends Component {
 		super(props);
 
 		this.state = this.getInitialState();
+
+		this.openContactDetails = this.openContactDetails.bind(this);
 	}
 
+	/**
+	 * Return the initial state of the component
+	 * @return {Object} 
+	 */
 	getInitialState() {
 		return {
 			contacts: [
@@ -32,6 +38,18 @@ export default class WeCare extends Component {
 				},
 			]
 		};
+	}
+
+	/**
+	 * Open the contact's details screen
+	 * @param {number} contactId Contact's ID
+	 * @return {Void} 
+	 */
+	openContactDetails(contactId) {
+		const {navigation} = this.props;
+		const contact = this.state.contacts.find(contact => contact.id == contactId);
+
+		navigation.navigate('ContactDetails', {contact});
 	}
 
 	/**
@@ -82,6 +100,7 @@ export default class WeCare extends Component {
 				<ScrollView style={[style.screenPadding, style.listContainer]}>
 					<ContactList 
 						data={contacts} 
+						onItemPress={this.openContactDetails}
 					/>
 					<View style={[style.buttonStyle]}>
 						{this.renderAddButton()}
