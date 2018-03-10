@@ -13,6 +13,7 @@ export default StyleSheet.create({
 		borderStyle: 'solid',
 	    borderColor: 'rgba(0,0,0, .125)',
 	    marginTop: 25,
+	    paddingTop: 10,
 	    paddingBottom: 20,
 	    shadowOffset: {
 	    	width: 0,
@@ -33,6 +34,6 @@ export default StyleSheet.create({
 	hint: {
 		marginTop: 18,
 		fontSize: 13,
-		color: styling.text.darkgray
+		color: styling.text.darkgray,
 	}
 });
