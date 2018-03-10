@@ -36,7 +36,7 @@ const Header = ({title, navigation, hint, elevated, forHistory, style: customSty
 			>{title}</Text>
 			{hint ? 
 				<Text
-					style={[styling.text.light, style.hint]}
+					style={[styling.text.prop.light, style.hint]}
 				>{hint}</Text>
 				:
 				null
