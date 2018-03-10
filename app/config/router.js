@@ -6,6 +6,7 @@ import Dashboard from 'app/screens/Dashboard/';
 import History from 'app/screens/History/';
 import Guardians from 'app/screens/Guardians/';
 import WeCare from 'app/screens/WeCare/';
+import ContactDetails from 'app/screens/ContactDetails/';
 import DetailedHistory from 'app/screens/DetailedHistory/';
 
 // Drawers screens
@@ -31,6 +32,23 @@ const HistoryTab = StackNavigator({
 	}
 });
 
+const WeCareTab = StackNavigator({
+	WeCare: {
+		screen: WeCare,
+		path: '/wecare',
+		navigationOptions: {
+			header: null,
+		},
+	},
+	ContactDetails: {
+		screen: ContactDetails,
+		path: '/contact/:id',
+		navigationOptions: ({navigation}) => ({
+			header: null,
+			contact: navigation.state.params.contact,
+		}),
+	},
+});
 
 const SimpleTabs = TabNavigator(
 	{
@@ -59,7 +77,7 @@ const SimpleTabs = TabNavigator(
 			}
 		},
 		WeCare: {
-			screen: WeCare,
+			screen: WeCareTab,
 			navigationOptions: {
 				tabBarIcon: ({focused, tintColor}) => {
 					return <Icon name="share-alt" size={25} color={tintColor} />
