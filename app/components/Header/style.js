@@ -33,7 +33,8 @@ export default StyleSheet.create({
 	},
 	hint: {
 		marginTop: 18,
-		fontSize: 13,
+		fontSize: 14,
+		marginLeft: 10,
 		color: styling.text.darkgray,
 	}
 });
