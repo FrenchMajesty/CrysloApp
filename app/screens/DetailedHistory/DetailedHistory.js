@@ -16,7 +16,6 @@ export default class DetailedHistry extends Component {
 	 * @return {ReactElement} markup
 	 */
 	render() {
-		console.log(this.props);
 		const {vital} = this.props.navigation.state.params;
 		const {navigation} = this.props;
 		return (
