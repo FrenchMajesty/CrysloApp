@@ -126,7 +126,7 @@ export default class Guardians extends Component {
 						navigation={rootNavigation}
 						title="Guardians"
 						color={styling.black}
-						hint="This is where you can update your parameters for your Helo watch."
+						hint="Guardians helps you set notifications if your health indicators are outside of their normal range."
 						elevated={true}
 						style={{flex: 2, position: 'absolute'}}
 					/>
