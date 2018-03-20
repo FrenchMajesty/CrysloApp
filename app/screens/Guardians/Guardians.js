@@ -121,7 +121,7 @@ export default class Guardians extends Component {
 		const {rootNavigation} = this.props.screenProps;
 		return (
 			<View style={[styling.container, styling.grayScreenBackground]}>
-				<View style={{backgroundColor: '#fff', height: 140}}>
+				<View style={{backgroundColor: '#fff', height: 140, marginBottom: 23}}>
 					<Header
 						navigation={rootNavigation}
 						title="Guardians"
