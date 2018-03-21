@@ -5,10 +5,12 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Header from 'app/components/Header/';
 import VitalCard from './components/VitalCard/';
 import FloatingIcon from 'app/components/common/Button/FloatingIcon/';
+import { connect } from 'react-redux';
+import TrackerAction from 'app/store/actions/trackers';
 import styling from 'app/config/styling';
 import style from './style';
 
-export default class Home extends Component {
+class Home extends Component {
 
 	/**
 	 * Component constructor
@@ -16,47 +18,34 @@ export default class Home extends Component {
 	constructor(props) {
 		super(props)
 
-		this.state = this.getInitialState();
-
 		this.renderCard = this.renderCard.bind(this);
 		this.triggerNavigation = this.triggerNavigation.bind(this);
 	}
 
 	/**
-	 * Return the initial state of the component
-	 * @return {Object} Initial state
+	 * Render a stat card for the given vital object
+	 * @param  {Object} item The vital to render
+	 * @param  {Number} i    Item index
+	 * @return {ReactElement}      
 	 */
-	getInitialState() {
-		return {
-			vitals: [
-				{
-					type: 'heart',
-					name: 'Heart Pulse',
-					value: 75,
-					date: '32 Minutes Ago'
-				},
-				{
-					type: 'breath',
-					name: 'Breaths Rate',
-					value: 23,
-					date: '10 Minutes Ago'
-				},
-			]
-		};
-	}
-
 	renderCard(item, i) {
+		const {dispatch} = this.props;
+		const newValue = {
+			type: item.type,
+			value: 99,
+		};
+
 		return (
 			<VitalCard 
 				key={i} 
 				item={item} 
-				onPress={null} 
+				onPress={() => dispatch(TrackerAction.updateVitalValue(newValue))} 
 			/>
 		);
 	}
 
 	triggerNavigation(item) {
-		const {navigation} = this.props;
+		/*const {navigation} = this.props;
 
 		return;
 		navigation.navigate('DashboardDetails', {vital: item.type});
@@ -67,7 +56,7 @@ export default class Home extends Component {
 				})],
 		});
 
-		navigation.dispatch(action);
+		navigation.dispatch(action);*/
 	}
 
 	/**
@@ -75,7 +64,7 @@ export default class Home extends Component {
 	 * @return {ReactElement} 
 	 */
 	render() {
-		const {vitals} = this.state;
+		const {trackers} = this.props;
 		const {screenProps: {rootNavigation}} = this.props;
 
 		return (
@@ -91,10 +80,22 @@ export default class Home extends Component {
 				/>
 				
 		        <View style={[style.list, {flex: 900}]}>
-		        	{vitals.map(this.renderCard)}
+		        	{Object.keys(trackers).map((name, i) => this.renderCard(trackers[name], i))}
 		        </View>
 		        
 			</ScrollView>
 		);
 	}
 };
+
+/**
+ * Map the redux store's state to the component's props
+ * @param  {Object} options.trackers Tree of the trackers values
+ * @return {Object}                  
+ */
+const mapStateToProps = ({trackers}) => ({
+		trackers,
+})
+
+
+export default connect(mapStateToProps)(Home);
