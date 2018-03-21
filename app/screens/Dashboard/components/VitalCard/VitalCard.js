@@ -1,7 +1,8 @@
-import React from 'react'
-import { View, Text } from 'react-native'
-import Card from 'app/components/common/Card'
-import style from './style'
+import React from 'react';
+import { View, Text } from 'react-native';
+import distanceInWords from 'date-fns/distance_in_words';
+import Card from 'app/components/common/Card';
+import style from './style';
 
 export default class VitalCard extends React.Component {
 
@@ -16,8 +17,8 @@ export default class VitalCard extends React.Component {
 				<Text style={style.name}>{item.name}</Text>
 				<View style={style.logo} />
 				<Text style={style.vitalValue}>{item.value} Peanuts</Text>
-				<Text style={style.date}>{item.date}</Text>
+				<Text style={style.date}>{distanceInWords(item.lastReading, new Date())} ago</Text>
 			</Card>
-		)
+		);
 	}
 }
