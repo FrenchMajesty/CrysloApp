@@ -28,6 +28,7 @@ export default StyleSheet.create({
 		fontFamily: 'montserrat-regular',
 		marginTop: 'auto',
 		marginLeft: 40,
+		width: '100%',
 	},
 	logo: {
 		flex: 3,
