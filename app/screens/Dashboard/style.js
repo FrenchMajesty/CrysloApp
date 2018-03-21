@@ -14,5 +14,10 @@ export default StyleSheet.create({
 		flexDirection: 'column',
 		paddingLeft: 10,
 		paddingRight: 10,
-	}
+	},
+	trackersContainer: {
+		height: '100%',
+		paddingTop: 25,
+		flex: 0
+	},
 })

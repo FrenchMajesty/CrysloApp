@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ScrollView, ListView, StatusBar } from 'react-native';
+import { View, ScrollView, RefreshControl, StatusBar } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Header from 'app/components/Header/';
@@ -18,8 +18,21 @@ class Home extends Component {
 	constructor(props) {
 		super(props)
 
+		this.state = this.getInitialState();
+
 		this.renderCard = this.renderCard.bind(this);
+		this._onRefresh = this._onRefresh.bind(this);
 		this.triggerNavigation = this.triggerNavigation.bind(this);
+	}
+
+	/**
+	 * Get the initial state of the component
+	 * @return {Object} 
+	 */
+	getInitialState() {
+		return {
+			refreshing: false,
+		};
 	}
 
 	/**
@@ -44,6 +57,11 @@ class Home extends Component {
 		);
 	}
 
+	_onRefresh() {
+		this.setState({refreshing: true});
+		setTimeout(() => this.setState({refreshing: false}), 1400);
+	}
+
 	triggerNavigation(item) {
 		/*const {navigation} = this.props;
 
@@ -66,24 +84,32 @@ class Home extends Component {
 	render() {
 		const {trackers} = this.props;
 		const {screenProps: {rootNavigation}} = this.props;
+		const {refreshing} = this.state;
 
 		return (
-			<ScrollView 
-				contentContainerStyle={{flexGrow: 1}}
+			<View 
 				style={[styling.statusBarPadding, styling.screenPadding, style.container]}
 			>
 				<StatusBar barStyle="dark-content" />
 				<Header 
 					title="Victron"
-					style={{flex: 2}}
+					style={{flex: 0, marginBottom: 20}}
 					navigation={rootNavigation}
 				/>
 				
-		        <View style={[style.list, {flex: 900}]}>
+		        <ScrollView 
+		        	contentContainerStyle={[style.list]} 
+					style={[style.trackersContainer]}
+					showsVerticalScrollIndicator={false}
+				>
+					<RefreshControl
+						refreshing={refreshing}
+						onRefresh={this._onRefresh}
+					/>
 		        	{Object.keys(trackers).map((name, i) => this.renderCard(trackers[name], i))}
-		        </View>
+		        </ScrollView>
 		        
-			</ScrollView>
+			</View>
 		);
 	}
 };
