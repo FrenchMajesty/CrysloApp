@@ -45,6 +45,10 @@ styling.statusBarPadding = {
 	paddingTop: 20,
 };
 
+styling.tabIcon = {
+	size: 25,
+};
+
 styling.floatingButton = {
 	size: 35,
 	iconSize: 16,

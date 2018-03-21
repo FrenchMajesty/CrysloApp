@@ -56,7 +56,7 @@ const SimpleTabs = TabNavigator(
 			screen: Dashboard,
 			navigationOptions: {
 				tabBarIcon: ({focused, tintColor}) => {
-					return <Icon name="plus-square" size={25} color={tintColor} />
+					return <Icon name="plus-square" size={styling.tabIcon.size} color={tintColor} />
 				},
 			}
 		},
@@ -64,7 +64,7 @@ const SimpleTabs = TabNavigator(
 			screen: HistoryTab,
 			navigationOptions: {
 				tabBarIcon: ({focused, tintColor}) => {
-					return <Icon name="bar-chart" size={25} color={tintColor} />
+					return <Icon name="bar-chart" size={styling.tabIcon.size} color={tintColor} />
 				},
 			}
 		},
@@ -72,7 +72,7 @@ const SimpleTabs = TabNavigator(
 			screen: Guardians,
 			navigationOptions: {
 				tabBarIcon: ({focused, tintColor}) => {
-					return <Icon name="user" size={25} color={tintColor} />
+					return <Icon name="user" size={styling.tabIcon.size} color={tintColor} />
 				},
 			}
 		},
@@ -80,7 +80,7 @@ const SimpleTabs = TabNavigator(
 			screen: WeCareTab,
 			navigationOptions: {
 				tabBarIcon: ({focused, tintColor}) => {
-					return <Icon name="share-alt" size={25} color={tintColor} />
+					return <Icon name="share-alt" size={styling.tabIcon.size} color={tintColor} />
 				},
 			}
 		}, 
@@ -88,6 +88,21 @@ const SimpleTabs = TabNavigator(
 	{
 		tabBarOptions: {
 			activeTintColor: styling.mainColor,
+			inactiveTintColor: '#a7a6a6',
+			style: {
+				backgroundColor: 'white',
+				height: 50,
+				paddingTop: 7,
+				marginBottom: 7,
+				borderTopWidth: 0,
+			    borderColor: 'rgba(0,0,0, .125)',
+				shadowOffset: {
+			    	width: 0,
+			    	height: -15,
+			    },
+			    shadowRadius: 20,
+			    shadowOpacity: .03,
+			},
 		},
 		animationEnabled: true,
 		swipeEnabled: false,
