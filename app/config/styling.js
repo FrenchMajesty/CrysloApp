@@ -7,6 +7,7 @@ const screenPaddingSize = 16;
 
 styling.mainColor = '#8299f3';
 styling.black = '#464d56';
+styling.gradient = [styling.mainColor, '#968df8'];
 
 styling.screenSize = {
 	width: screenWidth,

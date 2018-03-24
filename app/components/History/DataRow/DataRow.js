@@ -3,12 +3,13 @@ import { View, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo';
 import CommonText from 'app/components/common/CommonText/';
 import cardStyle from 'app/components/common/Card/style';
+import styling from 'app/config/styling';
 import style from './style';
 
 export default DataRow = ({metric: {name, type, value}, onPress}) => {
 	
 	let count = null;
-	let gradient = ['#8563e5','#968df8'];
+	let gradient = styling.gradient;
 
 	if(type =='heart' || type == 'breaths') {
 		count = 'bpm';
