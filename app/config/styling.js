@@ -55,4 +55,11 @@ styling.floatingButton = {
 	iconSize: 16,
 };
 
+styling.fixedNavButton = {
+	position: 'absolute',
+	top: 25,
+	left: 20,
+	zIndex: 3,
+}
+
 export default styling;
