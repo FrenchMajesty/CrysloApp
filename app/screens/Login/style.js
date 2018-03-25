@@ -9,8 +9,6 @@ export default StyleSheet.create({
 		display: 'flex',
 		flexDirection: 'column',
 		justifyContent: 'space-around',
-		//alignContent: 'center',
-		//alignItems: 'center',
 	},
 	text: {
 		...styling.text.prop.light,
