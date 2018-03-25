@@ -27,7 +27,7 @@ export default StyleSheet.create({
 	formContainer: {
 		flex: 4,
 		alignSelf: 'center',
-		width: 350,
+		width: 300,
 	},
 	inputContainer: {
 		flex: 1,
@@ -40,7 +40,7 @@ export default StyleSheet.create({
 	},
 	submitButton: {
 		flex: 0,
-		width: '80%',
+		width: '100%',
 		alignSelf: 'center'
 	},
 });

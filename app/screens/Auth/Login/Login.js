@@ -38,7 +38,7 @@ class Login extends Component {
 	 */
 	render() {
 		const {email, password, passwordIsHidden} = this.state;
-
+		const {navigate} = this.props.navigation;
 		return (
 			<View>
 				<LinearGradient 
@@ -93,12 +93,12 @@ class Login extends Component {
 						</View>
 					</View>
 					<View style={{flex: 3, marginTop: 25}}>
-					<TouchableOpacity>
+					<TouchableOpacity onPress={() => navigate('ForgotPassword')}>
 						<Text style={[style.text]}>
 							Forgot your password?</Text>
 					</TouchableOpacity>
 					</View>
-					<TouchableOpacity>
+					<TouchableOpacity onPress={() => navigate('SignUp')}>
 						<Text style={[style.text, {marginBottom: 20}]}>
 							Don't have an account? {"\b"}
 							<Text style={[style.underline]}>Sign Up</Text>
