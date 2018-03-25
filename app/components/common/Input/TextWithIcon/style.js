@@ -4,7 +4,6 @@ import styling from 'app/config/styling';
 export default StyleSheet.create({
 	inputRow: {
 		flex: 1,
-		margin: 10,
 	},
 	inputWrapper: {
 		padding: 1,
