@@ -2,6 +2,13 @@ import React from 'react';
 import { StackNavigator, TabNavigator, DrawerNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+
+// Authentication Stack
+import Login from 'app/screens/Auth/Login/';
+import SignUp from 'app/screens/Auth/SignUp/';
+import SignUpStep2 from 'app/screens/Auth/SignUpStep2/';
+import ForgotPassword from 'app/screens/Auth/ForgotPassword/';
+
 import Dashboard from 'app/screens/Dashboard/';
 import History from 'app/screens/History/';
 import Guardians from 'app/screens/Guardians/';
@@ -114,12 +121,44 @@ const SimpleTabs = TabNavigator(
 	},
 );
 
+const AuthStack = StackNavigator({
+	Login: {
+		screen: Login,
+		path: '/login',
+		navigationOptions: {
+			header: null,
+		},
+	},
+	SignUp: {
+		screen: SignUp,
+		path: '/signup',
+		navigationOptions: {
+			header: null,
+		},
+	},
+	SignUpStep2: {
+		screen: SignUpStep2,
+		path: '/signup/2',
+		navigationOptions: {
+			header: null,
+		},
+	},
+	ForgotPassword: {
+		screen: ForgotPassword,
+		path: '/forgot-pwd',
+		navigationOptions: {
+			header: null,
+		},
+	},
+});
+
 export const TabsInDrawer = DrawerNavigator(
 	{
 		Home: {
-			screen: ({navigation}) => {
+			/*screen: ({navigation}) => {
 				return <SimpleTabs screenProps={{ rootNavigation: navigation }} /> 
-			},
+			},*/
+			screen: AuthStack,
 			navigationOptions: {
 				title: 'Home',
 			},
