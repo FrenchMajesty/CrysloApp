@@ -48,7 +48,7 @@ export default class VitalCard extends React.Component {
 	componentWillReceiveProps({item: {lastReading}}) {
 		const {intervalId} = this.state;
 
-		if(!intervalId) {
+		if(!intervalId && lastReading) {
 			const time = distanceInWords(lastReading, new Date());
 			const newIntervalId = setInterval(this.timer, 60000);
 			clearInterval(intervalId);
