@@ -77,7 +77,6 @@ class SignUp extends Component {
 									placeholder="Enter your email"
 									keyboardType="email-address"
 									returnKeyType="done"
-									autoFocus={true}
 									value={email}
 									onChangeText={(email) => this.setState({email})}
 									hint={emailHint}
