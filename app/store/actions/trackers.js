@@ -4,7 +4,7 @@ export default class Tracker {
 
 	/**
 	 * Return the action to update a vital's value
-	 * @param  {Object} options.type  Identifying name of the vital to update
+	 * @param  {String} options.type  Identifying name of the vital to update
 	 * @param  {String} options.value New value to set
 	 * @return {Object}               Action
 	 */
