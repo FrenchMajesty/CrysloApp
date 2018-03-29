@@ -5,18 +5,21 @@ const initialState = {
 		type: 'heart',
 		name: 'Heart pulse',
 		value: 80,
+		measure: 'bpm',
 		lastReading: null,
 	},
 	breaths: {
 		type: 'breaths',
 		name: 'Breaths Rate',
 		value: 16,
+		measure: 'bpm',
 		lastReading: null,
 	},
 	sleep: {
 		type: 'sleep',
 		name: 'Sleep',
 		value: '7:36',
+		measure: 'hours',
 		lastReading: null,
 	},
 };
