@@ -1,5 +1,8 @@
 import React from 'react';
-import { StackNavigator, TabNavigator, DrawerNavigator } from 'react-navigation';
+import { StackNavigator,
+	 TabNavigator,
+	  DrawerNavigator,
+	  SwitchNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
@@ -152,15 +155,11 @@ const AuthStack = StackNavigator({
 	},
 });
 
-export const TabsInDrawer = DrawerNavigator(
+const TabsInDrawer = DrawerNavigator(
 	{
 		Home: {
-			/*screen: ({navigation}) => {
+			screen: ({navigation}) => {
 				return <SimpleTabs screenProps={{ rootNavigation: navigation }} /> 
-			},*/
-			screen: AuthStack,
-			navigationOptions: {
-				title: 'Home',
 			},
 		},
 		Sync: {
@@ -171,3 +170,14 @@ export const TabsInDrawer = DrawerNavigator(
 		},
 	}
 );
+
+export const SwitchNavigation = SwitchNavigator({
+	App: TabsInDrawer,
+	Auth: ({navigation}) => {
+		return <AuthStack screenProps={{authNav: navigation}} />
+	},
+}, {
+	initialRouteName: 'Auth',
+});
+
+

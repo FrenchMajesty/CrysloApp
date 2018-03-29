@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, ListView } from 'react-native';
 import { Font } from 'expo';
-import { TabsInDrawer } from './app/config/router';
+import { SwitchNavigation } from './app/config/router';
 import { Provider } from 'react-redux';
 import store from 'app/store/store';
 
@@ -30,7 +30,7 @@ export default class App extends React.Component {
     const {ready} = this.state;
 
 
-    return ready ? (<Provider store={store}><TabsInDrawer /></Provider>) : (<View />);
+    return ready ? (<Provider store={store}><SwitchNavigation /></Provider>) : (<View />);
   }
 }
 

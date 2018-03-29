@@ -18,6 +18,8 @@ class Login extends Component {
 		super(props);
 
 		this.state = this.getInitialState();
+
+		this._onSignOn = this._onSignOn.bind(this);
 	}
 
 	/**
@@ -32,6 +34,11 @@ class Login extends Component {
 		};
 	}
 
+	_onSignOn() {
+		const {navigate} = this.props.screenProps.authNav;
+		navigate('App');
+	}
+
 	/**
 	 * Render the component
 	 * @return {ReactElement} 
@@ -39,6 +46,7 @@ class Login extends Component {
 	render() {
 		const {email, password, passwordIsHidden} = this.state;
 		const {navigate} = this.props.navigation;
+
 		return (
 			<View>
 				<LinearGradient 
@@ -81,6 +89,7 @@ class Login extends Component {
 							<RoundedButton
 								style={[style.submitButton]}
 								text="Sign In"
+								onPress={this._onSignOn}
 							/>
 						</View>
 						<View style={[style.touchId]}>
