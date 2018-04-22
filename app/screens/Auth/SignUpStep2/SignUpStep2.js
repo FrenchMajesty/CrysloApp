@@ -41,7 +41,7 @@ class SignUpStep2 extends Component {
 	 * @return {ReactElement} 
 	 */
 	render() {
-		const {navigation, signup: {number}} = this.props;
+		const {navigation, number} = this.props;
 
 		return (
 			<View style={[styling.statusBarPadding, style.container, {flex: 1}]}>
@@ -64,11 +64,11 @@ class SignUpStep2 extends Component {
 
 /**
  * Map the redux store's state to the component's props
- * @param  {Object} store.signup User's sign up data
+ * @param  {Object} store.verifyNumber.number The user's phone number
  * @return {Object}                  
  */
-const mapStateToProps = ({signup}) => ({
-		signup,
+const mapStateToProps = ({verifyNumber: {number}}) => ({
+		number,
 })
 
 export default connect(mapStateToProps)(SignUpStep2);
