@@ -53,5 +53,21 @@ export default StyleSheet.create({
 	},
 	actionButtonContainer: {
 		marginBottom: 150,
-	}
+	},
+	submitContainer2: {
+		flex: 1,
+		height: 40,
+		alignSelf: 'center',
+		marginTop: 30
+	},
+	submitButton2: {
+		padding: 13,
+		height: 8,
+		paddingRight: 120,
+		paddingLeft: 120,
+	},
+	link: {
+		color: styling.mainColor,
+		textDecorationLine: 'underline',
+	},
 });
