@@ -7,8 +7,7 @@ import IconButton from 'app/components/common/Button/IconButton/';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import IosIcon from 'react-native-vector-icons/Ionicons';
 import styling from 'app/config/styling'; 
-import authStyle from '../Login/style';
-import style from './style';
+import style from '../style';
 import illustration from '../../../../assets/images/signup.png';
 
 
@@ -63,10 +62,13 @@ class SignUp extends Component {
 							style={{width: '100%'}}
 							source={illustration}
 						/>
-						<Text style={[authStyle.text, style.blackText, {marginBottom: 20}]}>Sign Up</Text>
+						<View style={{marginBottom: 30}}>
+							<Text style={[style.text, style.title]}>Sign Up</Text>
+							<Text style={[style.text, style.subtitle]}>For a free trial of Cryslo today.</Text>
+						</View>
 						<View style={{flex: 1}} />
-						<View style={[authStyle.screenPadding, authStyle.formContainer, {flex: 3}]}>
-							<View style={[authStyle.inputContainer]}>
+						<View style={[style.screenPadding, style.formContainer, {flex: 3}]}>
+							<View style={[style.inputContainer]}>
 								<Input
 									iconColor="black"
 									backgroundColor="rgba(0, 0, 0, 0.05)"
@@ -82,7 +84,7 @@ class SignUp extends Component {
 									hint={emailHint}
 								/>
 							</View>
-							<View style={[authStyle.inputContainer]}>
+							<View style={[style.inputContainer]}>
 								<Input
 									iconColor="black"
 									backgroundColor="rgba(0, 0, 0, 0.05)"
@@ -98,9 +100,9 @@ class SignUp extends Component {
 									hint={passwordHint}
 								/>
 							</View>
-							<View style={[authStyle.submitContainer, style.actionButtonContainer]}>
+							<View style={[style.submitContainer, style.actionButtonContainer]}>
 								<RoundedButton
-									style={[authStyle.submitButton]}
+									style={[style.submitButton]}
 									inverted={true}
 									text="Continue"
 									onPress={() => navigation.navigate('SignUpStep2')}

@@ -43,4 +43,15 @@ export default StyleSheet.create({
 		width: '100%',
 		alignSelf: 'center'
 	},
+	title: {
+		color: 'black',
+		fontSize: 25,
+	},
+	subtitle: {
+		color: 'black',
+		fontSize: 18,
+	},
+	actionButtonContainer: {
+		marginBottom: 150,
+	}
 });

@@ -6,7 +6,7 @@ import Input from 'app/components/common/Input/TextWithIcon/';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import IosIcon from 'react-native-vector-icons/Ionicons';
 import styling from 'app/config/styling'; 
-import style from './style';
+import style from '../style';
 
 
 class Login extends Component {
