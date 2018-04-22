@@ -7,7 +7,7 @@ import RoundedButton from 'app/components/common/Button/RoundedButton/';
 import PhoneNumber from 'awesome-phonenumber';
 import style from 'app/screens/Auth/style';
 
-class SignUpVerification extends Component {
+class PhoneNumberVerification extends Component {
 
 	/** The component's constructor */
 	constructor(props) {
@@ -35,13 +35,19 @@ class SignUpVerification extends Component {
 	 */
 	onButtonPress() {
 		const {number} = this.state;
+		const {purpose} = this.props;
 
 		if(number.length > 8) {
 			this.setState({isSubmitting: true});
 
 			setTimeout(() => {
 				this.setState({isSubmitting: false});
-				this.props.dispatch(SignUpAction.setNumber(number));
+				
+				if(purpose == 'signup') {
+					this.props.dispatch(SignUpAction.setNumber(number));
+				}else if(purpose == 'reset-pwd') {
+					this.props.dispatch(SignUpAction.setNumber(number));
+				}
 			}, 1000);
 		}
 	}
@@ -91,4 +97,4 @@ class SignUpVerification extends Component {
 	}
 }
 
-export default connect(null)(SignUpVerification);
+export default connect(null)(PhoneNumberVerification);

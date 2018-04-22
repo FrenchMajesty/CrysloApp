@@ -3,7 +3,7 @@ import { View, Image, Text } from 'react-native';
 import { connect } from 'react-redux';
 import IconButton from 'app/components/common/Button/IconButton/';
 import Input from 'app/components/common/Input/TextWithIcon/';
-import PhoneVerification from 'app/container/SignUpVerification/';
+import PhoneNumberVerification from 'app/container/PhoneNumberVerification/';
 import ValidateSecurityCode from 'app/container/SignUpVerificationCode/';
 import styling from 'app/config/styling';
 import style from '../style';
@@ -54,7 +54,7 @@ class SignUpStep2 extends Component {
 					{number ?
 						<ValidateSecurityCode />
 					: 
-						<PhoneVerification />
+						<PhoneNumberVerification purpose="signup" />
 					}
 				</View>
 			</View>
