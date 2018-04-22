@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
+import IconButton from 'app/components/common/Button/IconButton/';
+import styling from 'app/config/styling';
 
 class ForgotPassword extends Component {
 
@@ -15,8 +17,17 @@ class ForgotPassword extends Component {
 	 * @return {ReactElement} 
 	 */
 	render() {
+		const {navigation} = this.props;
+
 		return (
-			<Text>FORGOT PASSWORD</Text>
+			<View>
+			<IconButton
+					icon="arrow-left"
+					style={styling.fixedNavButton}
+					onPress={() => navigation.goBack(null)}
+				/>
+			<Text style={{marginTop: 100}}>FORGOT PASSWORD? FILL OUT FORM BELOW</Text>
+			</View>
 		);
 	}
 }
