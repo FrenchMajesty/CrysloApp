@@ -1,8 +1,9 @@
 import React from 'react';
-import { TouchableOpacity, Text,View } from 'react-native';
+import { TouchableOpacity, Text, View } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import style from './style';
 
-const RoundedButton = ({text, onPress, style: customStyle, inverted}) => {
+const RoundedButton = ({children, text, onPress, style: customStyle, inverted}) => {
 
 	return (
 		<TouchableOpacity
@@ -14,12 +15,14 @@ const RoundedButton = ({text, onPress, style: customStyle, inverted}) => {
 				customStyle
 			]}
 		>
-			<Text 
+			{text ? 
+				<Text 
 				style={[
 					style.text,
 				 	inverted ? style.invertedText : style.normalText,
-				]}
-			>{text.toUpperCase()}</Text>
+					]}
+				>{text.toUpperCase()}</Text> : children}
+			
 		</TouchableOpacity>
 	);
 };
