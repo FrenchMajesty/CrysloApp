@@ -50,7 +50,7 @@ class SignUpStep2 extends Component {
 					style={styling.fixedNavButton}
 					onPress={() => navigation.goBack(null)}
 				/>
-				<View style={[{alignSelf: 'center', top: '10%'}]}>
+				<View style={[{alignSelf: 'center', top: '20%'}]}>
 					{number ?
 						<ValidateSecurityCode />
 					: 
