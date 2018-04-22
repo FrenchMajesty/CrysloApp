@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { ScrollView, View, Text, TouchableOpacity, Image } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { connect } from 'react-redux';
+import SignUpActions from 'app/store/actions/signup';
 import RoundedButton from 'app/components/common/Button/RoundedButton/';
 import Input from 'app/components/common/Input/TextWithIcon/';
 import IconButton from 'app/components/common/Button/IconButton/';
@@ -20,6 +22,8 @@ class SignUp extends Component {
 		super(props);
 
 		this.state = this.getInitialState();
+
+		this._onFormSubmit = this._onFormSubmit.bind(this);
 	}
 
 	/**
@@ -35,6 +39,18 @@ class SignUp extends Component {
 			passwordIsHidden: true,
 			errors: {},
 		};
+	}
+
+	/**
+	 * Validate the input and save to store's state before continuing
+	 * @return {Void} 
+	 */
+	_onFormSubmit() {
+		const {email, password} = this.state;
+		const {navigation} = this.props;
+
+		this.props.dispatch(SignUpActions.setCredentials({email, password}));
+		navigation.navigate('SignUpStep2');
 	}
 
 	/**
@@ -105,7 +121,7 @@ class SignUp extends Component {
 									style={[style.submitButton]}
 									inverted={true}
 									text="Continue"
-									onPress={() => navigation.navigate('SignUpStep2')}
+									onPress={this._onFormSubmit}
 								/>
 							</View>
 						</View>
@@ -116,4 +132,4 @@ class SignUp extends Component {
 	}
 }
 
-export default SignUp;
+export default connect(null)(SignUp);
