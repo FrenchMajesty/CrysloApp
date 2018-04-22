@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
-import SignUpAction from 'app/store/actions/signup';
+import NumVerifAction from 'app/store/actions/verifyNumber';
 import Input from 'app/components/common/Input/TextWithIcon/';
 import RoundedButton from 'app/components/common/Button/RoundedButton/';
 import PhoneNumber from 'awesome-phonenumber';
@@ -42,11 +42,11 @@ class PhoneNumberVerification extends Component {
 
 			setTimeout(() => {
 				this.setState({isSubmitting: false});
-				
+
 				if(purpose == 'signup') {
-					this.props.dispatch(SignUpAction.setNumber(number));
+					this.props.dispatch(NumVerifAction.setNumber(number));
 				}else if(purpose == 'reset-pwd') {
-					this.props.dispatch(SignUpAction.setNumber(number));
+					this.props.dispatch(NumVerifAction.setNumber(number));
 				}
 			}, 1000);
 		}

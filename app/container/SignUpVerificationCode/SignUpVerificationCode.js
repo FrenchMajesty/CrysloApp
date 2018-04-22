@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
 import PhoneNumber from 'awesome-phonenumber';
 import { connect } from 'react-redux';
-import SignUpAction from 'app/store/actions/signup';
+import NumVerifAction from 'app/store/actions/verifyNumber';
 import Input from 'app/components/common/Input/TextWithIcon/';
 import RoundedButton from 'app/components/common/Button/RoundedButton/';
 import style from 'app/screens/Auth/style';
@@ -25,7 +25,7 @@ class SignUpVerificationCode extends Component {
 	 */
 	componentWillUnmount() {
 		if(! this.state.codeIsGood) {
-			this.props.dispatch(SignUpAction.setNumber(''));
+			this.props.dispatch(NumVerifAction.setNumber(''));
 		}
 	}
 
@@ -81,7 +81,7 @@ class SignUpVerificationCode extends Component {
 	 * @return {Void} 
 	 */
 	onChangeNumber() {
-		this.props.dispatch(SignUpAction.setNumber(''));
+		this.props.dispatch(NumVerifAction.setNumber(''));
 	}
 
 	/**
@@ -137,10 +137,10 @@ class SignUpVerificationCode extends Component {
 
 /**
  * Map the redux store's state to the component's props
- * @param  {Object} store.signup.number The user's phone number
+ * @param  {Object} store.verifyNumber.number The user's phone number
  * @return {Object}                  
  */
-const mapStateToProps = ({signup: {number}}) => ({
+const mapStateToProps = ({verifyNumber: {number}}) => ({
 		number,
 });
 
