@@ -52,7 +52,7 @@ class SignUpVerificationCode extends Component {
 
 		
 	/**
-	 * Dispatch an action to update the number and submit it to the API 
+	 * Dispatch an action to validate the verification code and submit it to the API 
 	 * @return {Void}
 	 */
 	onButtonPress() {
@@ -62,8 +62,8 @@ class SignUpVerificationCode extends Component {
 			this.setState({isSubmitting: true});
 			
 			setTimeout(() => {
+				// verify code here and if valid create user account
 				this.setState({isSubmitting: false});
-				this.props.dispatch(SignUpAction.setNumber(number));
 			}, 1000);
 		}
 	}
