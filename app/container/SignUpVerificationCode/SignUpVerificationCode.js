@@ -17,6 +17,7 @@ class SignUpVerificationCode extends Component {
 
 		this.onCodeChange = this.onCodeChange.bind(this);
 		this.onButtonPress = this.onButtonPress.bind(this);
+		this.onChangeNumber = this.onChangeNumber.bind(this);
 	}
 
 	/**
@@ -68,6 +69,22 @@ class SignUpVerificationCode extends Component {
 	}
 
 	/**
+	 * Make an API call to re-send a new verification code
+	 * @return {Void} 
+	 */
+	onResendCode() {
+		alert('Just sent you a new code!');
+	}
+
+	/**
+	 * Delete the phone number of the user from the store's state
+	 * @return {Void} 
+	 */
+	onChangeNumber() {
+		this.props.dispatch(SignUpAction.setNumber(''));
+	}
+
+	/**
 	 * Render the component's markup
 	 * @return {ReactElement} 
 	 */
@@ -79,8 +96,8 @@ class SignUpVerificationCode extends Component {
 			<View style={[{width: 300, flex:1, justifyContent: 'space-between'}]}>
 				<View>
 					<Text>A text message with a verification code was just sent to <Text style={{fontWeight: 'bold'}}>+1{formattedNum}</Text>. Did you not receive it?
-					You can <Text style={[style.link]}>press here</Text> to re-send a new code.</Text>
-					<Text style={{marginTop: 10}}>Did you enter the wrong number? <Text style={[style.link]}>Change my number</Text>.
+					You can <Text style={[style.link]} onPress={this.onResendCode}>press here</Text> to re-send a new code.</Text>
+					<Text style={{marginTop: 10}}>Did you enter the wrong number? <Text style={[style.link]} onPress={this.onChangeNumber}>Change my number</Text>.
 					</Text>
 				</View>
 				<View style={[{flex: 1, marginTop: 25}]}>
