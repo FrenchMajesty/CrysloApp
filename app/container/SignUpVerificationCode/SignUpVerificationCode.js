@@ -20,12 +20,22 @@ class SignUpVerificationCode extends Component {
 	}
 
 	/**
+	 * Clear the phone number from the store if it wasn't validated 
+	 */
+	componentWillUnmount() {
+		if(! this.state.codeIsGood) {
+			this.props.dispatch(SignUpAction.setNumber(''));
+		}
+	}
+
+	/**
 	 * Return the component's initial state
 	 * @return {Object} 
 	 */
 	getInitialState() {
 		return {
 			code: '',
+			codeIsGood: false,
 			isSubmitting: false,
 		};
 	}
