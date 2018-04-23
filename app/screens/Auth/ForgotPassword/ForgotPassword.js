@@ -7,7 +7,6 @@ import PhoneNumberVerification from 'app/container/PhoneNumberVerification/';
 import ValidateVerificationCode from 'app/container/ValidateVerificationCode/';
 import styling from 'app/config/styling';
 import style from '../style';
-import phoneImg from '../../../../assets/images/text.png';
 
 class ForgotPassword extends Component {
 
