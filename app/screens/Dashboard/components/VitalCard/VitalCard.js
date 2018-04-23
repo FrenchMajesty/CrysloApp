@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text, Image } from 'react-native';
 import distanceInWords from 'date-fns/distance_in_words';
-import Card from 'app/components/common/Card';
+import Card from 'app/components/common/Card/';
+import FadeInView from 'app/container/FadeInView/';
 import style from './style';
 
 export default class VitalCard extends React.Component {
@@ -32,7 +33,7 @@ export default class VitalCard extends React.Component {
 	 * Set the time value and create the time updating interval at every second
 	 */
 	componentWillMount() {
-		const {lastReading} = this.props.item;
+		const {item: {lastReading}, icon: {uri: url}} = this.props;
 
 		if(lastReading) {
 			const time = distanceInWords(lastReading, new Date());
@@ -40,6 +41,8 @@ export default class VitalCard extends React.Component {
 
 			this.setState({time, intervalId});
 		}
+
+		Image.prefetch(url);
 	}
 
 	/**
@@ -74,18 +77,20 @@ export default class VitalCard extends React.Component {
 	 * @return {ReactElement} 
 	 */
 	render() {
-		const {children, item, onPress, icon} = this.props;
+		const {children, item, onPress, icon, fadeInDuration} = this.props;
 		const {time} = this.state;
 
 		return (
-			<Card card={style.card} body={style.body} onPress={onPress}>
-				<Text style={style.name}>{item.name}</Text>
-				<View style={style.logoContainer}>
-					<Image style={style.logo} source={icon} />
-				</View>
-				<Text style={style.vitalValue}>{item.value} {item.measure}</Text>
-				<Text style={style.date}>{time} ago</Text>
-			</Card>
+			<FadeInView duration={fadeInDuration}>
+				<Card card={style.card} body={style.body} onPress={onPress}>
+					<Text style={style.name}>{item.name}</Text>
+					<View style={style.logoContainer}>
+						<Image style={style.logo} source={icon} />
+					</View>
+					<Text style={style.vitalValue}>{item.value} {item.measure}</Text>
+					<Text style={style.date}>{time} ago</Text>
+				</Card>
+			</FadeInView>
 		);
 	}
 }
