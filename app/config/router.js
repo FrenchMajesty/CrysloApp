@@ -21,6 +21,7 @@ import DetailedHistory from 'app/screens/DetailedHistory/';
 
 // Drawers screens
 import Syncing from 'app/screens/Syncing/';
+import RedirectToAuth from 'app/components/RedirectToAuth/';
 
 import styling from 'app/config/styling';
 
@@ -168,11 +169,19 @@ const TabsInDrawer = DrawerNavigator(
 				title: 'Sync Device',
 			},
 		},
+		Logout: {
+			screen: RedirectToAuth,
+			navigationOptions: {
+				title: 'Log out',
+			},
+		},
 	}
 );
 
 export const SwitchNavigation = SwitchNavigator({
-	App: TabsInDrawer,
+	App: ({navigation}) => {
+		return <TabsInDrawer screenProps={{authNav: navigation}} />
+	},
 	Auth: ({navigation}) => {
 		return <AuthStack screenProps={{authNav: navigation}} />
 	},
