@@ -15,7 +15,7 @@ const initialState = {
 		measure: 'bpm',
 		lastReading: Date.now(),
 	},
-	moood: {
+	mood: {
 		type: 'mood',
 		name: 'Mood',
 		value: 'Excited',
