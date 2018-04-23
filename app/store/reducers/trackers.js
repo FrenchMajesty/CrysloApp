@@ -6,21 +6,35 @@ const initialState = {
 		name: 'Heart pulse',
 		value: 80,
 		measure: 'bpm',
-		lastReading: null,
+		lastReading: Date.now(),
 	},
 	breaths: {
 		type: 'breaths',
 		name: 'Breaths Rate',
 		value: 16,
 		measure: 'bpm',
-		lastReading: null,
+		lastReading: Date.now(),
+	},
+	moood: {
+		type: 'mood',
+		name: 'Mood',
+		value: 'Excited',
+		measure: '',
+		lastReading: Date.now(),
+	},
+	energy: {
+		type: 'energy',
+		name: 'Energy Level',
+		value: 'Normal',
+		measure: '',
+		lastReading: Date.now(),
 	},
 	sleep: {
 		type: 'sleep',
 		name: 'Sleep',
 		value: '7:36',
 		measure: 'hours',
-		lastReading: null,
+		lastReading: Date.now(),
 	},
 };
 
