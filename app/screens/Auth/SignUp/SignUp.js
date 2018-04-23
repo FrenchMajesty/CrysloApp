@@ -10,7 +10,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import IosIcon from 'react-native-vector-icons/Ionicons';
 import styling from 'app/config/styling'; 
 import style from '../style';
-import illustration from '../../../../assets/images/signup.png';
+import illustration from 'assets/images/signup.png';
 
 
 class SignUp extends Component {
