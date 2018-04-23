@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import IconButton from 'app/components/common/Button/IconButton/';
 import Input from 'app/components/common/Input/TextWithIcon/';
 import PhoneNumberVerification from 'app/container/PhoneNumberVerification/';
-import ValidateSecurityCode from 'app/container/SignUpVerificationCode/';
+import ValidateVerificationCode from 'app/container/ValidateVerificationCode/';
 import styling from 'app/config/styling';
 import style from '../style';
 import phoneImg from '../../../../assets/images/text.png';
@@ -52,7 +52,7 @@ class SignUpStep2 extends Component {
 				/>
 				<View style={[{alignSelf: 'center', top: '20%'}]}>
 					{number ?
-						<ValidateSecurityCode />
+						<ValidateVerificationCode purpose="signup" />
 					: 
 						<PhoneNumberVerification purpose="signup" />
 					}

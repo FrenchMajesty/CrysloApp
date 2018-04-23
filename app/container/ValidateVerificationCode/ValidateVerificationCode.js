@@ -7,7 +7,7 @@ import Input from 'app/components/common/Input/TextWithIcon/';
 import RoundedButton from 'app/components/common/Button/RoundedButton/';
 import style from 'app/screens/Auth/style';
 
-class SignUpVerificationCode extends Component {
+class ValidateVerificationCode extends Component {
 
 	/** The component's constructor */
 	constructor(props) {
@@ -62,7 +62,8 @@ class SignUpVerificationCode extends Component {
 			this.setState({isSubmitting: true});
 			
 			setTimeout(() => {
-				// verify code here and if valid create user account
+				// verify code here and if valid create user account or send to page to set a
+				// new password depending on this.props.purpose
 				this.setState({isSubmitting: false});
 			}, 1000);
 		}
@@ -90,16 +91,24 @@ class SignUpVerificationCode extends Component {
 	 */
 	render() {
 		const {code, isSubmitting} = this.state;
+		const {purpose} = this.props;
 		const formattedNum = new PhoneNumber(this.props.number, 'US').getNumber('national');
 		
 		return (
 			<View style={[{width: 300, flex:1, justifyContent: 'space-between'}]}>
-				<View>
-					<Text>A text message with a verification code was just sent to <Text style={{fontWeight: 'bold'}}>+1{formattedNum}</Text>. Did you not receive it?
-					You can <Text style={[style.link]} onPress={this.onResendCode}>press here</Text> to re-send a new code.</Text>
-					<Text style={{marginTop: 10}}>Did you enter the wrong number? <Text style={[style.link]} onPress={this.onChangeNumber}>Change my number</Text>.
-					</Text>
-				</View>
+				{purpose == 'signup' ? 
+					<View>
+						<Text>A text message with a verification code was just sent to <Text style={{fontWeight: 'bold'}}>+1{formattedNum}</Text>. Did you not receive it?
+						You can <Text style={[style.link]} onPress={this.onResendCode}>press here</Text> to re-send a new code.</Text>
+						<Text style={{marginTop: 10}}>Did you enter the wrong number? <Text style={[style.link]} onPress={this.onChangeNumber}>Change my number</Text>.
+						</Text>
+					</View>
+				:
+					<View>
+						<Text>A text message with a verification code was just sent to <Text style={{fontWeight: 'bold'}}>+1{formattedNum}</Text>. Did you not receive it?
+						You can <Text style={[style.link]} onPress={this.onResendCode}>press here</Text> to re-send a new code.</Text>
+					</View>
+				}
 				<View style={[{flex: 1, marginTop: 25}]}>
 					<Input
 						iconColor="black"
@@ -144,4 +153,4 @@ const mapStateToProps = ({verifyNumber: {number}}) => ({
 		number,
 });
 
-export default connect(mapStateToProps)(SignUpVerificationCode);
+export default connect(mapStateToProps)(ValidateVerificationCode);
