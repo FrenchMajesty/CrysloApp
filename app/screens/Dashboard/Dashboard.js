@@ -16,11 +16,11 @@ import BedIcon from 'assets/images/bed-icon.png';
 import style from './style';
 
 const icons = {
-	heart: HeartIcon,
-	breaths: LungIcon,
-	energy: EnergyIcon,
-	mood: MoodIcon,
-	sleep: BedIcon,
+	heart: {uri: 'https://i.imgur.com/RFbR4i9.png'},//HeartIcon,
+	breaths: {uri: 'https://i.imgur.com/I32mEvm.png'},//LungIcon,
+	energy: {uri: 'https://i.imgur.com/OdJpzPq.png'},// EnergyIcon,
+	mood: {uri: 'https://i.imgur.com/30HhhiJ.png'},//MoodIcon,
+	sleep: {uri: 'https://i.imgur.com/mqO6hJs.png'},//BedIcon,
 };
 
 class Home extends Component {
