@@ -8,7 +8,20 @@ import FloatingIcon from 'app/components/common/Button/FloatingIcon/';
 import { connect } from 'react-redux';
 import TrackerAction from 'app/store/actions/trackers';
 import styling from 'app/config/styling';
+import HeartIcon from 'assets/images/heart-icon.png';
+import LungIcon from 'assets/images/lung-icon.png';
+import MoodIcon from 'assets/images/mood-icon.png';
+import EnergyIcon from 'assets/images/energy-icon.png';
+import BedIcon from 'assets/images/bed-icon.png';
 import style from './style';
+
+const icons = {
+	heart: HeartIcon,
+	breaths: LungIcon,
+	energy: EnergyIcon,
+	mood: MoodIcon,
+	sleep: BedIcon,
+};
 
 class Home extends Component {
 
@@ -52,6 +65,7 @@ class Home extends Component {
 			<VitalCard 
 				key={i} 
 				item={item} 
+				icon={icons[item.type]}
 				onPress={() => dispatch(TrackerAction.updateVitalValue(newValue))} 
 			/>
 		);

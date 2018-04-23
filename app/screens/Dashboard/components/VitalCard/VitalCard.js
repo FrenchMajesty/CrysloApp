@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import distanceInWords from 'date-fns/distance_in_words';
 import Card from 'app/components/common/Card';
 import style from './style';
@@ -74,13 +74,15 @@ export default class VitalCard extends React.Component {
 	 * @return {ReactElement} 
 	 */
 	render() {
-		const {children, item, onPress} = this.props;
+		const {children, item, onPress, icon} = this.props;
 		const {time} = this.state;
 
 		return (
 			<Card card={style.card} body={style.body} onPress={onPress}>
 				<Text style={style.name}>{item.name}</Text>
-				<View style={style.logo} />
+				<View style={style.logoContainer}>
+					<Image style={style.logo} source={icon} />
+				</View>
 				<Text style={style.vitalValue}>{item.value} {item.measure}</Text>
 				<Text style={style.date}>{time} ago</Text>
 			</Card>

@@ -30,10 +30,14 @@ export default StyleSheet.create({
 		marginLeft: 40,
 		width: '100%',
 	},
-	logo: {
+	logoContainer: {
 		flex: 3,
-		backgroundColor: 'lightblue',
-		opacity: .5,
+		justifyContent: 'center',
+		alignSelf: 'center',
+	},
+	logo: {
+		height: 80,
+		width: 80,
 	},
 	vitalValue: {
 		flex: 1,
