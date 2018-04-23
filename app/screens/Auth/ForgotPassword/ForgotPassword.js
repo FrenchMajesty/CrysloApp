@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { View, Image, Text } from 'react-native';
+import { connect } from 'react-redux';
 import IconButton from 'app/components/common/Button/IconButton/';
+import Input from 'app/components/common/Input/TextWithIcon/';
+import PhoneNumberVerification from 'app/container/PhoneNumberVerification/';
+import ValidateVerificationCode from 'app/container/ValidateVerificationCode/';
 import styling from 'app/config/styling';
+import style from '../style';
+import phoneImg from '../../../../assets/images/text.png';
 
 class ForgotPassword extends Component {
 
@@ -17,19 +23,34 @@ class ForgotPassword extends Component {
 	 * @return {ReactElement} 
 	 */
 	render() {
-		const {navigation} = this.props;
+		const {navigation, number} = this.props;
 
 		return (
-			<View>
-			<IconButton
+			<View style={[styling.statusBarPadding, style.container, {flex: 1}]}>
+				<IconButton
 					icon="arrow-left"
 					style={styling.fixedNavButton}
 					onPress={() => navigation.goBack(null)}
 				/>
-			<Text style={{marginTop: 100}}>FORGOT PASSWORD? FILL OUT FORM BELOW</Text>
+				<View style={[{alignSelf: 'center', top: '20%'}]}>
+					{number ?
+						<ValidateVerificationCode purpose="reset-pwd" />
+					: 
+						<PhoneNumberVerification purpose="reset-pwd" />
+					}
+				</View>
 			</View>
 		);
 	}
 }
 
-export default ForgotPassword;
+/**
+ * Map the redux store's state to the component's props
+ * @param  {Object} store.verifyNumber.number The user's phone number
+ * @return {Object}                  
+ */
+const mapStateToProps = ({verifyNumber :{number}}) => ({
+		number,
+})
+
+export default connect(mapStateToProps)(ForgotPassword);
