@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ScrollView, RefreshControl, StatusBar } from 'react-native';
+import { View, ScrollView, StatusBar } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Header from 'app/components/Header/';
@@ -116,10 +116,6 @@ class Home extends Component {
 					style={[style.trackersContainer]}
 					showsVerticalScrollIndicator={false}
 				>
-					<RefreshControl
-						refreshing={refreshing}
-						onRefresh={this._onRefresh}
-					/>
 		        	{Object.keys(trackers).map((name, i) => this.renderCard(trackers[name], i))}
 		        </ScrollView>
 		        
