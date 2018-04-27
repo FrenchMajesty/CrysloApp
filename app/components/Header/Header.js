@@ -5,7 +5,7 @@ import style from './style';
 import styling from 'app/config/styling';
 import cardStyle from '../common/Card/style';
 
-const Header = ({title, navigation, hint, elevated, forHistory, style: customStyle, color}) => {
+const Header = ({title, showBackButton, navigation, hint, elevated, forHistory, style: customStyle, color}) => {
 
 	const openMenu = () => {
 		navigation.navigate('DrawerToggle');
@@ -25,11 +25,18 @@ const Header = ({title, navigation, hint, elevated, forHistory, style: customSty
 			customStyle
 			]}
 		>
-			<IconButton
-				icon="bars"
-				style={{position: 'absolute', marginLeft: 10}}
-				onPress={openMenu}
-			/>
+			{showBackButton ?
+				<IconButton
+					icon="arrow-left"
+					style={{position: 'absolute', marginLeft: 10}}
+					onPress={()=> navigation.pop()}
+				/>
+			:	<IconButton
+					icon="bars"
+					style={{position: 'absolute', marginLeft: 10}}
+					onPress={() => navigation.navigate('DrawerToggle')}
+				/>
+		}
 			<Text 
 				style={[style.title, {color: color}]} 
 				OnPress={() => navigation.navigate('DrawerToggle')}
