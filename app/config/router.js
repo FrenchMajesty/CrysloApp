@@ -19,7 +19,10 @@ import Guardians from 'app/screens/Guardians/';
 import WeCare from 'app/screens/WeCare/';
 import ContactDetails from 'app/screens/ContactDetails/';
 import DetailedHistory from 'app/screens/DetailedHistory/';
-import Settings from 'app/screens/Settings/';
+
+// Settings Stack
+import SettingsMenu from 'app/screens/Settings/SettingsMenu/';
+import AccountSettings from 'app/screens/Settings/AccountSettings/';
 
 // Drawers screens
 import Syncing from 'app/screens/Syncing/';
@@ -59,6 +62,23 @@ const WeCareTab = StackNavigator({
 		navigationOptions: ({navigation}) => ({
 			header: null,
 			contact: navigation.state.params.contact,
+		}),
+	},
+});
+
+const SettingsStack = StackNavigator({
+	Settings: {
+		screen: SettingsMenu,
+		path: '/settings',
+		navigationOptions: {
+			header: null,
+		},
+	},
+	AccountSettings: {
+		screen: AccountSettings,
+		path: '/settings/account',
+		navigationOptions: ({navigation}) => ({
+			header: null,
 		}),
 	},
 });
@@ -179,8 +199,10 @@ const TabsInDrawer = DrawerNavigator(
 				title: 'Sync Device',
 			},
 		},
-		Settings: {
-			screen: Settings,
+		SettingsStack: {
+			screen:({navigation}) => {
+				return <SettingsStack screenProps={{rootNavigation: navigation}} />;
+			},
 			navigationOptions: {
 				title: 'Settings',
 			},
