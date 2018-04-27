@@ -138,6 +138,7 @@ export default class Guardians extends Component {
 					<View style={[style.buttonContainer]}>
 						<RoundedButton
 							text="Save Changes"
+							inverted={true}
 							center={true}
 						/>
 					</View>
