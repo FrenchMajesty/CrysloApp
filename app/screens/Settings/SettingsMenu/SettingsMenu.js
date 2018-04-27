@@ -4,7 +4,7 @@ import Header from 'app/components/Header/';
 import Button from 'app/components/common/Button/RectangularButton/';
 import ListItem from 'app/components/common/ListItem';
 import styling from 'app/config/styling';
-import style from './style';
+import style from '../style';
 
 const SettingsMenu = ({navigation, screenProps:{rootNavigation}}) => {
 
@@ -24,7 +24,7 @@ const SettingsMenu = ({navigation, screenProps:{rootNavigation}}) => {
 				<ListItem 
 					primaryText="Account settings" 
 					secondaryText="Here you can check all that stuff out bro."
-					onPress={() => navigation.navigate('AccountSettings')}
+					onPress={() => navigation.navigate('AccountSettingsMenu')}
 				/>
 				<ListItem 
 					primaryText="Terms and Conditions of Use" 
