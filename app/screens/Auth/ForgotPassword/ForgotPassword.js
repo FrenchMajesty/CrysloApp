@@ -32,7 +32,7 @@ class ForgotPassword extends Component {
 				/>
 				<View style={[{alignSelf: 'center', top: '20%'}]}>
 					{number ?
-						<ValidateVerificationCode purpose="reset-pwd" />
+						<ValidateVerificationCode purpose="reset-pwd" onNavigate={() => navigation.navigate('ResetPassword')} />
 					: 
 						<PhoneNumberVerification purpose="reset-pwd" />
 					}

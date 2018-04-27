@@ -18,6 +18,8 @@ class ValidateVerificationCode extends Component {
 		this.onCodeChange = this.onCodeChange.bind(this);
 		this.onButtonPress = this.onButtonPress.bind(this);
 		this.onChangeNumber = this.onChangeNumber.bind(this);
+		this.createNewAccount = this.createNewAccount.bind(this);
+		this.resetPassword = this.resetPassword.bind(this);
 	}
 
 	/**
@@ -57,16 +59,30 @@ class ValidateVerificationCode extends Component {
 	 */
 	onButtonPress() {
 		const {code} = this.state;
+		const {purpose} = this.props;
 
 		if(code.length < 4) {
 			this.setState({isSubmitting: true});
 			
 			setTimeout(() => {
-				// verify code here and if valid create user account or send to page to set a
-				// new password depending on this.props.purpose
-				this.setState({isSubmitting: false});
+				if(purpose == 'signup') {
+					this.createNewAccount();
+				}else if (purpose == 'reset-pwd') {
+					this.resetPassword();
+				}
 			}, 1000);
 		}
+	}
+
+	createNewAccount() {
+		// send verif code to API and if valid, create user account
+		this.setState({isSubmitting: false});
+	}
+
+	resetPassword() {
+		// send verif code to API and if valid, redirect to reset password screen
+		this.setState({isSubmitting: false});
+		this.props.onNavigate();
 	}
 
 	/**
