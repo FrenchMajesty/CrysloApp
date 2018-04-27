@@ -66,7 +66,8 @@ class Home extends Component {
 				key={i} 
 				item={item} 
 				icon={icons[item.type]}
-				fadeInDuration={(i * 500)+1}
+				delay={(i * 100)+1}
+				fadeInDuration={600}
 				onPress={() => dispatch(TrackerAction.updateVitalValue(newValue))} 
 			/>
 		);

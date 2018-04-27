@@ -77,11 +77,11 @@ export default class VitalCard extends React.Component {
 	 * @return {ReactElement} 
 	 */
 	render() {
-		const {children, item, onPress, icon, fadeInDuration} = this.props;
+		const {children, item, onPress, icon, fadeInDuration, delay} = this.props;
 		const {time} = this.state;
 
 		return (
-			<FadeInView duration={fadeInDuration}>
+			<FadeInView duration={fadeInDuration} delay={delay}>
 				<Card card={style.card} body={style.body} onPress={onPress}>
 					<Text style={style.name}>{item.name}</Text>
 					<View style={style.logoContainer}>

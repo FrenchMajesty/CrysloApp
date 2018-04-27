@@ -14,12 +14,15 @@ class FadeInView extends Component {
 	 * Start the animation to fade in the view
 	 */
 	componentDidMount() {
-		const {duration} = this.props;
+		const {delay, duration} = this.props;
 
-		Animated.timing(
-			this.state.fade,
-			{ toValue: 1, duration: duration ? duration : 1000 }
-		).start();
+		Animated.sequence([
+			Animated.delay(delay ? delay : 0),
+			Animated.timing(this.state.fade, {
+				toValue: 1,
+				duration: duration ? duration : 1000 
+			})
+		]).start();
 	}
 
 	/**
