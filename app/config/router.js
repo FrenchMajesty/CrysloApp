@@ -11,6 +11,7 @@ import Login from 'app/screens/Auth/Login/';
 import SignUp from 'app/screens/Auth/SignUp/';
 import SignUpStep2 from 'app/screens/Auth/SignUpStep2/';
 import ForgotPassword from 'app/screens/Auth/ForgotPassword/';
+import ResetPassword from 'app/screens/Auth/ResetPassword/';
 
 import Dashboard from 'app/screens/Dashboard/';
 import History from 'app/screens/History/';
@@ -150,6 +151,14 @@ const AuthStack = StackNavigator({
 	ForgotPassword: {
 		screen: ForgotPassword,
 		path: '/forgot-pwd',
+		navigationOptions: {
+			header: null,
+		},
+	},
+
+	ResetPassword: {
+		screen: ResetPassword,
+		path: '/reset-pwd',
 		navigationOptions: {
 			header: null,
 		},
