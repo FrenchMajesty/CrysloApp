@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text, TouchableOpacity, Image } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { connect } from 'react-redux';
 import SignUpActions from 'app/store/actions/signup';
 import RoundedButton from 'app/components/common/Button/RoundedButton/';
 import Input from 'app/components/common/Input/TextWithIcon/';
 import IconButton from 'app/components/common/Button/IconButton/';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import IosIcon from 'react-native-vector-icons/Ionicons';
 import styling from 'app/config/styling'; 
 import style from '../style';
 import illustration from 'assets/images/signup.png';
