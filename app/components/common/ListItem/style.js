@@ -23,5 +23,10 @@ export default StyleSheet.create({
 	},
 	black: {
 		color: styling.black,
-	}
+	},
+	separator: {
+		flex: 1,
+    	height: StyleSheet.hairlineWidth,
+		backgroundColor: styling.text.gray,
+	},
 });

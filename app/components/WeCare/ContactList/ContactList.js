@@ -11,6 +11,7 @@ const ContactList = ({data, onItemPress}) => {
 		return (<ListItem 
 					primaryText={item.name} 
 					secondaryText={item.number}
+					separator={false}
 					onPress={() => onItemPress(item.id)} 
 				/>);
 	};
