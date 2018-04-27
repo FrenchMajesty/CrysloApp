@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { View, Image, Text } from 'react-native';
+import { View } from 'react-native';
 import { connect } from 'react-redux';
 import IconButton from 'app/components/common/Button/IconButton/';
-import Input from 'app/components/common/Input/TextWithIcon/';
 import PhoneNumberVerification from 'app/container/PhoneNumberVerification/';
 import ValidateVerificationCode from 'app/container/ValidateVerificationCode/';
 import styling from 'app/config/styling';
