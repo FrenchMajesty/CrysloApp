@@ -19,6 +19,7 @@ import Guardians from 'app/screens/Guardians/';
 import WeCare from 'app/screens/WeCare/';
 import ContactDetails from 'app/screens/ContactDetails/';
 import DetailedHistory from 'app/screens/DetailedHistory/';
+import Settings from 'app/screens/Settings/';
 
 // Drawers screens
 import Syncing from 'app/screens/Syncing/';
@@ -176,6 +177,12 @@ const TabsInDrawer = DrawerNavigator(
 			screen: Syncing,
 			navigationOptions: {
 				title: 'Sync Device',
+			},
+		},
+		Settings: {
+			screen: Settings,
+			navigationOptions: {
+				title: 'Settings',
 			},
 		},
 		Logout: {
