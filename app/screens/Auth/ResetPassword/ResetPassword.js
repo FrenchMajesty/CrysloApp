@@ -59,7 +59,7 @@ class SignUp extends Component {
 				<IconButton
 					icon="arrow-left"
 					style={styling.fixedNavButton}
-					onPress={() => navigation.goBack(null)}
+					onPress={() => navigation.navigate('Login')}
 				/>
 				<KeyboardAwareScrollView
 				    resetScrollToCoords={{ x: 0, y: 0 }}
