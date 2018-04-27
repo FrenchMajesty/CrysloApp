@@ -22,7 +22,7 @@ import DetailedHistory from 'app/screens/DetailedHistory/';
 
 // Settings Stack
 import SettingsMenu from 'app/screens/Settings/SettingsMenu/';
-import AccountSettings from 'app/screens/Settings/AccountSettings/';
+import AccountSettings from 'app/screens/Settings/Account/AccountProfile/';
 
 // Drawers screens
 import Syncing from 'app/screens/Syncing/';

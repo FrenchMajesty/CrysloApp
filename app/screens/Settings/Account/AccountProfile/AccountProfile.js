@@ -6,7 +6,7 @@ import Input from 'app/components/common/Input/TextInput/';
 import styling from 'app/config/styling';
 import style from './style';
 
-class AccountSettings extends Component {
+class AccountProfile extends Component {
 
 	/**
 	 * Component constructor
@@ -140,4 +140,4 @@ class AccountSettings extends Component {
 	}
 };
 
-export default AccountSettings;
+export default AccountProfile;
