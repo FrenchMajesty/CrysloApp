@@ -20,13 +20,13 @@ class Settings extends Component {
 	 * @return {ReactElement} Markup
 	 */
 	render() {
-		const {rootNavigation} = this.props.screenProps;
+		const {navigation} = this.props;
 
 		return (
 			<View style={[styling.container, styling.grayScreenBackground]}>
 				<View style={{backgroundColor: '#fff', height: 120}}>
 					<Header
-						navigation={rootNavigation}
+						navigation={navigation}
 						title="Settings"
 						color={styling.black}
 						hint="Here is the place where you update all of your account and app settings."
