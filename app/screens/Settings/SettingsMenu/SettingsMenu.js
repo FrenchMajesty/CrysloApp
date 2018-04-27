@@ -6,13 +6,13 @@ import ListItem from 'app/components/common/ListItem';
 import styling from 'app/config/styling';
 import style from './style';
 
-const SettingsMenu = ({navigation}) => {
+const SettingsMenu = ({navigation, screenProps:{rootNavigation}}) => {
 
 	return (
 		<View style={[styling.container, styling.grayScreenBackground]}>
 			<View style={{backgroundColor: '#fff', height: 120}}>
 				<Header
-					navigation={navigation}
+					navigation={rootNavigation}
 					title="Settings"
 					color={styling.black}
 					hint="Here is the place where you update all of your account and app settings."
