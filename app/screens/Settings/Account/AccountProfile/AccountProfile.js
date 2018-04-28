@@ -4,7 +4,7 @@ import Header from 'app/components/Header/';
 import Button from 'app/components/common/Button/RectangularButton/';
 import Input from 'app/components/common/Input/TextInput/';
 import styling from 'app/config/styling';
-import style from './style';
+import style from '../style';
 
 class AccountProfile extends Component {
 
