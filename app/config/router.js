@@ -19,10 +19,12 @@ import Guardians from 'app/screens/Guardians/';
 import WeCare from 'app/screens/WeCare/';
 import ContactDetails from 'app/screens/ContactDetails/';
 import DetailedHistory from 'app/screens/DetailedHistory/';
+import Onboarding from 'app/screens/Onboarding/';
 
 // Settings Stack
 import SettingsMenu from 'app/screens/Settings/SettingsMenu/';
-import AccountSettings from 'app/screens/Settings/Account/AccountProfile/';
+import AccountMenu from 'app/screens/Settings/Account/AccountMenu/';
+import AccountProfile from 'app/screens/Settings/Account/AccountProfile/';
 
 // Drawers screens
 import Syncing from 'app/screens/Syncing/';
@@ -66,20 +68,40 @@ const WeCareTab = StackNavigator({
 	},
 });
 
+const AccountSettingsStack = StackNavigator({
+	AccountMenu: {
+		screen: AccountMenu,
+		path: '/settings/account/home',
+		navigationOptions: {
+			header: null,
+		},
+	},
+	AccountProfile: {
+		screen: AccountProfile,
+		path: '/settings/account/profile',
+		navigationOptions: ({navigation}) => ({
+			header: null,
+		}),
+	},
+});
+
+
 const SettingsStack = StackNavigator({
-	Settings: {
+	SettingsMenu: {
 		screen: SettingsMenu,
 		path: '/settings',
 		navigationOptions: {
 			header: null,
 		},
 	},
-	AccountSettings: {
-		screen: AccountSettings,
+	AccountSettingsMenu: {
+		screen: ({navigation}) => {
+			return <AccountSettingsStack screenProps={{rootNavigation: navigation}} />
+		},
 		path: '/settings/account',
-		navigationOptions: ({navigation}) => ({
+		navigationOptions: {
 			header: null,
-		}),
+		},
 	},
 });
 
