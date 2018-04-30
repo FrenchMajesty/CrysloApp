@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, ScrollView, Text, ActivityIndicator as Spinner } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Header from 'app/components/Header/';
 import Button from 'app/components/common/Button/RectangularButton/';
 import Input from 'app/components/common/Input/TextInput/';
@@ -16,7 +17,6 @@ class AccountProfile extends Component {
 
 		this.state = this.getInitialState();
 
-		this.openContactDetails = this.openContactDetails.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
 	}
 
@@ -31,18 +31,6 @@ class AccountProfile extends Component {
 			lastname: 'Kapuku',
 			isSubmitting: false,
 		};
-	}
-
-	/**
-	 * Open the contact's details screen
-	 * @param {number} contactId Contact's ID
-	 * @return {Void} 
-	 */
-	openContactDetails(contactId) {
-		const {navigation} = this.props;
-		const contact = this.state.contacts.find(contact => contact.id == contactId);
-
-		navigation.navigate('ContactDetails', {contact});
 	}
 
 	/**
@@ -66,7 +54,7 @@ class AccountProfile extends Component {
 		const {email, firstname, lastname, isSubmitting} = this.state;
 
 		return (
-			<View style={[styling.container, styling.grayScreenBackground]}>
+			<View style={[styling.container, styling.grayScreenBackground, {height: '100%'}]}>
 				<View style={{backgroundColor: '#fff', height: 140}}>
 					<Header
 						navigation={navigation}
@@ -78,7 +66,12 @@ class AccountProfile extends Component {
 						style={{flex: 2, position: 'absolute'}}
 					/>
 				</View>
-				<ScrollView style={[style.screenPadding, style.listContainer]}>
+				<KeyboardAwareScrollView
+					style={[style.screenPadding, style.listContainer, {height: null}]}
+				    resetScrollToCoords={{ x: 0, y: 0 }}
+					showsVerticalScrollIndicator={false}
+				    scrollEnabled={true}
+				>
 					<View style={[style.formContainer, {flex: 3}]}>
 						<View style={[style.inputContainer]}>
 							<Input
@@ -134,7 +127,7 @@ class AccountProfile extends Component {
 							/>
 						}
 					</View>
-				</ScrollView>
+				</KeyboardAwareScrollView>
 			</View>
 		);
 	}
