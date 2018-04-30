@@ -27,6 +27,11 @@ const AccountMenu = ({navigation, screenProps: {rootNavigation}}) => {
 					onPress={() => navigation.navigate('AccountProfile')}
 				/>
 				<ListItem 
+					primaryText="Account Password" 
+					secondaryText="You can update your password at any time here."
+					onPress={() => navigation.navigate('UpdatePassword')}
+				/>
+				<ListItem 
 					primaryText="Medical Profile Settings" 
 					secondaryText="Your medical profile used to show you relevant advices."
 					onPress={() => { /* navigate to the right screen here */ }}

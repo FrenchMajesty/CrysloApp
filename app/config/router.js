@@ -25,6 +25,7 @@ import Onboarding from 'app/screens/Onboarding/';
 import SettingsMenu from 'app/screens/Settings/SettingsMenu/';
 import AccountMenu from 'app/screens/Settings/Account/AccountMenu/';
 import AccountProfile from 'app/screens/Settings/Account/AccountProfile/';
+import UpdatePassword from 'app/screens/Settings/Account/UpdatePassword/';
 
 // Drawers screens
 import Syncing from 'app/screens/Syncing/';
@@ -79,9 +80,16 @@ const AccountSettingsStack = StackNavigator({
 	AccountProfile: {
 		screen: AccountProfile,
 		path: '/settings/account/profile',
-		navigationOptions: ({navigation}) => ({
+		navigationOptions: {
 			header: null,
-		}),
+		},
+	},
+	UpdatePassword: {
+		screen: UpdatePassword,
+		path: '/settings/account/password',
+		navigationOptions: {
+			header: null,
+		},
 	},
 });
 
