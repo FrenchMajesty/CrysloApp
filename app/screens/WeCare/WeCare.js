@@ -92,7 +92,7 @@ export default class WeCare extends Component {
 						navigation={rootNavigation}
 						title="WeCare"
 						color={styling.black}
-						hint="These contacts are the people we are going to notify via text or call if your vitals go into your danger zone."
+						hint="These contacts are the people we are going to notify via text or call if your vitals go into your danger zone or if you press the panic button."
 						elevated={true}
 						style={{flex: 2, position: 'absolute'}}
 					/>
