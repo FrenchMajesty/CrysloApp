@@ -15,17 +15,24 @@ class Referral extends Component {
 	constructor(props) {
 		super(props);
 
-
+		this.onSocialShare = this.onSocialShare.bind(this);
+		this.onTextShare = this.onTextShare.bind(this);
 	}
 
 	/**
-	 * Return the component's initial state
-	 * @return {Object} 
+	 * When the button is pressed, show the prompt to share an invite link on social medias
+	 * @return {Void} 
 	 */
-	getInitialState() {
-		return {
-			c: '',
-		};
+	onSocialShare() {
+		// cool prompt
+	}
+
+	/**
+	 * When the button is pressed, show the contact list to send a text invite
+	 * @return {Void} 
+	 */
+	onTextShare() {
+		// cool contact list
 	}
 
 	/**
@@ -65,11 +72,13 @@ class Referral extends Component {
 								color="#5be"
 								text="Share on social media"
 								style={[style.button]}
+								onPress={this.onSocialShare}
 							/>
 							<Button
 								inverted
 								text="Send Text Invite"
 								style={[style.button]}
+								onPress={this.onTextShare}
 							/>
 						</View>
 					</Card>
