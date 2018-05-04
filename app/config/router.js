@@ -20,6 +20,7 @@ import WeCare from 'app/screens/WeCare/';
 import ContactDetails from 'app/screens/ContactDetails/';
 import DetailedHistory from 'app/screens/DetailedHistory/';
 import Onboarding from 'app/screens/Onboarding/';
+import Referral from 'app/screens/Referral/';
 
 // Settings Stack
 import SettingsMenu from 'app/screens/Settings/SettingsMenu/';
@@ -216,7 +217,7 @@ const AuthStack = StackNavigator({
 	},
 });
 
-const TabsInDrawer = DrawerNavigator(
+const DrawerStack = DrawerNavigator(
 	{
 		Home: {
 			screen: ({navigation}) => {
@@ -227,6 +228,12 @@ const TabsInDrawer = DrawerNavigator(
 			screen: Syncing,
 			navigationOptions: {
 				title: 'Sync Device',
+			},
+		},
+		Referral: {
+			screen: Referral,
+			navigationOptions: {
+				title: 'Referral Program',
 			},
 		},
 		SettingsStack: {
@@ -248,7 +255,7 @@ const TabsInDrawer = DrawerNavigator(
 
 export const SwitchNavigation = SwitchNavigator({
 	App: ({navigation}) => {
-		return <TabsInDrawer screenProps={{authNav: navigation}} />
+		return <DrawerStack screenProps={{authNav: navigation}} />
 	},
 	Auth: ({navigation}) => {
 		return <AuthStack screenProps={{authNav: navigation}} />
