@@ -4,6 +4,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Header from 'app/components/Header/';
 import Card from 'app/components/common/Card/';
+import Link from 'app/components/common/Link/';
 import Button from 'app/components/common/Button/RectangularButton/';
 import GiftIcon from 'assets/images/gift.png';
 import styling from 'app/config/styling';
@@ -80,6 +81,8 @@ class Referral extends Component {
 								style={[style.button]}
 								onPress={this.onTextShare}
 							/>
+
+							<Link style={{marginTop: 10}} onPress={() => alert('You have referred 99 people!')}>View Referral History</Link>
 						</View>
 					</Card>
 
