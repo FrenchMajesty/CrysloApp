@@ -4,6 +4,7 @@ import PhoneNumber from 'awesome-phonenumber';
 import { connect } from 'react-redux';
 import NumVerifAction from 'app/store/actions/verifyNumber';
 import Input from 'app/components/common/Input/TextWithIcon/';
+import Link from 'app/components/common/Link/';
 import RoundedButton from 'app/components/common/Button/RoundedButton/';
 import style from 'app/screens/Auth/style';
 
@@ -117,8 +118,8 @@ class ValidateVerificationCode extends Component {
 				{purpose == 'signup' ? 
 					<View>
 						<Text>A text message with a verification code was just sent to <Text style={{fontWeight: 'bold'}}>+1{formattedNum}</Text>. Did you not receive it?
-						You can <Text style={[style.link]} onPress={this.onResendCode}>press here</Text> to re-send a new code.</Text>
-						<Text style={{marginTop: 10}}>Did you enter the wrong number? <Text style={[style.link]} onPress={this.onChangeNumber}>Change my number</Text>.
+						You can <Link onPress={this.onResendCode}>press here</Link> to re-send a new code.</Text>
+						<Text style={{marginTop: 10}}>Did you enter the wrong number? <Link Press={this.onChangeNumber}>Change my number</Link>.
 						</Text>
 					</View>
 				:

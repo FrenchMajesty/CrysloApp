@@ -66,8 +66,4 @@ export default StyleSheet.create({
 		paddingRight: 120,
 		paddingLeft: 120,
 	},
-	link: {
-		color: styling.mainColor,
-		textDecorationLine: 'underline',
-	},
 });
