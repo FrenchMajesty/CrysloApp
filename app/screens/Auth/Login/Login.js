@@ -92,16 +92,16 @@ class Login extends Component {
 								onPress={this._onSignOn}
 							/>
 						</View>
-						<View style={[style.touchId]}>
+						{/*<View style={[style.touchId]}>
 							<Text style={[style.text, {marginTop: 10, marginRight: 5}]}>
 								Or login with your Touch ID {"\b"}
 								</Text>
 							<TouchableOpacity>
 								<IosIcon name="ios-finger-print" size={40} color="white" />
 							</TouchableOpacity>
-						</View>
+						</View>*/}
 					</View>
-					<View style={{flex: 3, marginTop: 25}}>
+					<View style={{flex: 4, marginTop: 25}}>
 					<TouchableOpacity onPress={() => navigate('ForgotPassword')}>
 						<Text style={[style.text]}>
 							Forgot your password?</Text>
