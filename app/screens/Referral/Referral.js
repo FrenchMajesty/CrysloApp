@@ -63,7 +63,7 @@ class Referral extends Component {
 					<Text style={[style.text, style.title]}>Refer your friends to sign up for Cryslo and get a 2 weeks credit for free!</Text>
 					<Text style={[style.text, style.subtitle]}>PS: They also get 2 extra weeks for free!</Text>
 
-					<Card style={[{marginTop: 30}]}>
+					<Card style={[{marginTop: 40}]}>
 						<Text style={[style.text, style.subtitle]}>Your Referral Code:</Text>
 						<Text style={[style.text, style.code]}>ABC123</Text>
 

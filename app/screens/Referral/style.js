@@ -9,15 +9,16 @@ export default StyleSheet.create({
 		width: 100, 
 		height: 100,
 		alignSelf: 'center',
-		marginBottom: 20,
+		marginTop: 40,
+		marginBottom: 40,
 	},
 	text: { 
 		...styling.text.prop.light,
 	},
 	title: {
-		fontSize: 18,
+		fontSize: 23,
 		textAlign: 'center',
-		marginBottom: 10,
+		marginBottom: 14,
 	},
 	subtitle: {
 		opacity: 0.6,
@@ -26,7 +27,7 @@ export default StyleSheet.create({
 	code: {
 		...styling.text.prop.heavy,
 		textAlign: 'center',
-		fontSize: 18,
+		fontSize: 26,
 	},
 	buttonContainer: {
 		marginTop: 20,
