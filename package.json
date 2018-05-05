@@ -29,6 +29,7 @@
     "font-awesome": "^4.7.0",
     "react": "16.2.0",
     "react-native": "^0.52.2",
+    "react-native-animatable": "^1.2.4",
     "react-native-calendars": "^1.17.0",
     "react-native-keyboard-aware-scroll-view": "^0.5.0",
     "react-native-onboarding-swiper": "^0.6.0",
