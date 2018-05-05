@@ -78,7 +78,7 @@ class DeviceStats extends Component {
 					<StatsRow
 						label="Location"
 						content="Your GPS location is not activated."
-						hint="Please allow Cryslo to have access to your location, or else the S.O.S. feature won't work as planned."
+						hint="Please allow Cryslo to have access to your location, or else the WeCare feature won't work as planned."
 						icon={<Icon name="map-marker" color="gray" size={35} />}
 						button={<Button text="Fix now" onPress={() => alert('Ask access to GPS location.')} />}
 						depth={2}
