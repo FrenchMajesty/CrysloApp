@@ -6,7 +6,7 @@ export default CommonText = ({weight, color, style, children}) => {
 
 	const fontWeight = weight == 'heavy' ? 'heavy' : 'light';
 	const textColor = {
-		color: color ? color : 'black',
+		color: color ? color : styling.black,
 	};
 
 	const styleProps = [
