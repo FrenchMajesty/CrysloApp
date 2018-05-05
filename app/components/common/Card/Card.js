@@ -1,8 +1,9 @@
 import React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
+import * as Animatable from 'react-native-animatable';
 import style from './style';
 
-export default Card = ({children, depth, card, body, onPress}) => {
+export default Card = ({children, depth, card, body, animation, onPress}) => {
 
 	const hasLink = onPress ? 0.7 : 1;
 	const getDepthStyle = () => {
@@ -17,14 +18,18 @@ export default Card = ({children, depth, card, body, onPress}) => {
 	};
 
 	return (
-		<TouchableOpacity 
-			activeOpacity={hasLink} 
-			style={[style.card, getDepthStyle(), card]}
-			onPress={onPress}
+		<Animatable.View 
+			{...animation}
 		>
-			<View style={[style.cardBody, body]}>
-				{children}
-			</View>
-		</TouchableOpacity>
+			<TouchableOpacity 
+				activeOpacity={hasLink} 
+				style={[style.card, getDepthStyle(), card]}
+				onPress={onPress}
+			>
+				<View style={[style.cardBody, body]}>
+					{children}
+				</View>
+			</TouchableOpacity>
+		</Animatable.View>
 	)
 }
