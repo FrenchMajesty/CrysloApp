@@ -81,6 +81,14 @@ class DeviceStats extends Component {
 						hint="Please allow Cryslo to have access to your location, or else the S.O.S. feature won't work as planned."
 						icon={<Icon name="map-marker" color="gray" size={35} />}
 						button={<Button text="Fix now" onPress={() => alert('Ask access to GPS location.')} />}
+						depth={2}
+						animation={{
+							animation: 'pulse',
+							delay: 200,
+							duration: 1000,
+							iterationCount: 'infinite',
+							easing: 'ease-in-out',
+						}}
 					/>
 				</View>
 				</ScrollView>
