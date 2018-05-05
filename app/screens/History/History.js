@@ -39,8 +39,8 @@ export default class History extends Component {
 	 * @param  {Object} day New date selected
 	 * @return {Void}     
 	 */
-	updateDateExpanded({dateString: dateExpanded}) {
-		this.setState({dateExpanded});
+	updateDateExpanded({dateString: today}) {
+		this.setState({today});
 	}
 
 	/**
@@ -50,33 +50,34 @@ export default class History extends Component {
 	 * @return {ReactElement}      markup
 	 */
 	renderDay(day, firstMetric) {
-		const {dateExpanded} = this.state;
 		const {navigation} = this.props;
 
 		if(day) {
-			const readableDate = moment(day.dateString).format('ddd DD');
-
 			return (
 				<View style={style.dayContainer}>
-					<CommonText style={{
-						flex: 1,
-						alignSelf: 'stretch',
-						backgroundColor: 'yellow',
-					}}>{readableDate}</CommonText>
-					{
-						firstMetric ?
-							<DataRow metric={firstMetric} onPress={() => navigation.navigate('Details', {vital: firstMetric.type})} />
-						:
-							<CommonText>Empty day</CommonText>
+					<View style={style.day}>
+						<CommonText style={style.dayNum}>{day.day}</CommonText>
+						<CommonText style={style.dayText}>{new Date(day.dateString).toLocaleString('en-US', {month: 'short'})}</CommonText>
+					</View>
+					{firstMetric ?
+						<DataRow metric={firstMetric} onPress={() => navigation.navigate('Details', {vital: firstMetric.type})} />
+					:
+						<View>
+							<CommonText style={[style.empty]}>Oops! No data was recorded on this day.</CommonText>
+						</View>
 					}
 				</View>
 			);
 		}
 	}
 
+	/**
+	 * Render a day's subsequent statistics
+	 * @param  {Object}  item                The data row to render
+	 * @param  {Boolean} isTheFirstItemOfDay Whether this data row is the first item of the day
+	 * @return {ReactElement}                      
+	 */
 	renderDayContent(item, isTheFirstItemOfDay) {
-		const {dateExpanded} = this.state;
-
 		if(!isTheFirstItemOfDay) {
 			return (<DataRow metric={item} />);
 		}
@@ -94,20 +95,6 @@ export default class History extends Component {
 		const minusThree = moment().subtract(3,'d').format('YYYY-MM-DD');
 
 		const items = {
-			[minusOne]: [
-				{
-					type: 'heart',
-					name: 'Heart Pulse',
-					value: 88, 
-					date: minusOne,
-				},
-				{
-					type: 'breaths',
-					name: 'Breaths Pulse',
-					value: 17, 
-					date: minusOne,
-				},
-			],
 			[today]: [
 				{
 					type: 'sleep',
@@ -122,7 +109,21 @@ export default class History extends Component {
 					date: today,
 				},
 			],
-			[minusTwo]: [],
+			[minusOne]: [
+				{
+					type: 'heart',
+					name: 'Heart Pulse',
+					value: 88, 
+					date: minusOne,
+				},
+				{
+					type: 'breaths',
+					name: 'Breaths Pulse',
+					value: 17, 
+					date: minusOne,
+				},
+			],
+			[minusTwo] : [],
 			[minusThree]: [
 				{
 					type: 'heart',
@@ -184,7 +185,7 @@ export default class History extends Component {
 				  	onDayChange={(day) => console.log('Scrolled onto another day')}
 					selected={today}
 					minDate={moment().subtract(7,'d').format('YYYY-MM-DD')}
-					maxDate={moment().add(0,'d').format('YYYY-MM-DD')}
+					maxDate={moment().format('YYYY-MM-DD')}
 					pastScrollRange={3}
 					futureScrollRange={1}
 					hideKnob={false}
