@@ -85,7 +85,7 @@ class DeviceStats extends Component {
 						animation={{
 							animation: 'pulse',
 							delay: 200,
-							duration: 1000,
+							duration: 800,
 							iterationCount: 'infinite',
 							easing: 'ease-in-out',
 						}}
