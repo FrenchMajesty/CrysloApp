@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Animated, View } from 'react-native';
+import { Animated } from 'react-native';
 
 class FadeInView extends Component {
 
