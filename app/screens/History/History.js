@@ -53,11 +53,12 @@ export default class History extends Component {
 		const {navigation} = this.props;
 
 		if(day) {
+			const date = new Date(`${day.year}/${day.month}/${day.day}`);
 			return (
 				<View style={style.dayContainer}>
 					<View style={style.day}>
 						<CommonText style={style.dayNum}>{day.day}</CommonText>
-						<CommonText style={style.dayText}>{new Date(day.dateString).toLocaleString('en-US', {month: 'short'})}</CommonText>
+						<CommonText style={style.dayText}>{date.toLocaleString('en-US', {month: 'short'})}</CommonText>
 					</View>
 					{firstMetric ?
 						<DataRow metric={firstMetric} onPress={() => navigation.navigate('Details', {vital: firstMetric.type})} />
@@ -162,9 +163,9 @@ export default class History extends Component {
 	   		dotColor: white,
 	   		dayTextColor: white,
 	   		textDisabledColor: '#ffffff40',
-	   		todayTextColor: '#000',
+	   		todayTextColor: 'yellow',
 	   		monthTextColor: white,
-	   		textSectionTitleColor: '#ffffff80'
+	   		textSectionTitleColor: '#ffffff80',
 	   	};
 
 		return (
