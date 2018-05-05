@@ -4,6 +4,7 @@ import styling from 'app/config/styling';
 export default StyleSheet.create({
 	input: {
 		...styling.text.prop.light,
+		color: styling.black,
 		fontSize: 15,
 		padding: 15,
 		borderRadius: 5,

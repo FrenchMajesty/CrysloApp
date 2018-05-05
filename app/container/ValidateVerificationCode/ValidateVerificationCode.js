@@ -117,14 +117,14 @@ class ValidateVerificationCode extends Component {
 			<View style={[{width: 300, flex:1, justifyContent: 'space-between'}]}>
 				{purpose == 'signup' ? 
 					<View>
-						<Text>A text message with a verification code was just sent to <Text style={{fontWeight: 'bold'}}>+1{formattedNum}</Text>. Did you not receive it?
+						<Text style={style.blackText}>A text message with a verification code was just sent to <Text style={{fontWeight: 'bold'}}>+1{formattedNum}</Text>. Did you not receive it?
 						You can <Link onPress={this.onResendCode}>press here</Link> to re-send a new code.</Text>
-						<Text style={{marginTop: 10}}>Did you enter the wrong number? <Link Press={this.onChangeNumber}>Change my number</Link>.
+						<Text style={[style.blackText, {marginTop: 10}]}>Did you enter the wrong number? <Link Press={this.onChangeNumber}>Change my number</Link>.
 						</Text>
 					</View>
 				:
 					<View>
-						<Text>A text message with a verification code was just sent to <Text style={{fontWeight: 'bold'}}>+1{formattedNum}</Text>. Did you not receive it?
+						<Text style={style.blackText}>A text message with a verification code was just sent to <Text style={{fontWeight: 'bold'}}>+1{formattedNum}</Text>. Did you not receive it?
 						You can <Text style={[style.link]} onPress={this.onResendCode}>press here</Text> to re-send a new code.</Text>
 					</View>
 				}

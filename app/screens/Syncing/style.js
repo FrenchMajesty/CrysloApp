@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import styling from 'app/config/styling';
 
 export default StyleSheet.create({
 	buttonContainer: {
@@ -9,5 +10,7 @@ export default StyleSheet.create({
 	},
 	title: {
 		textAlign: 'center',
+		fontSize: 16,
+		color: styling.black,
 	},
 });

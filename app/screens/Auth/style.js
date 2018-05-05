@@ -44,11 +44,11 @@ export default StyleSheet.create({
 		alignSelf: 'center'
 	},
 	title: {
-		color: 'black',
+		color: styling.black,
 		fontSize: 25,
 	},
 	subtitle: {
-		color: 'black',
+		color: styling.black,
 		fontSize: 18,
 	},
 	actionButtonContainer: {
@@ -65,5 +65,8 @@ export default StyleSheet.create({
 		height: 8,
 		paddingRight: 120,
 		paddingLeft: 120,
+	},
+	blackText: {		
+		color: styling.black,
 	},
 });

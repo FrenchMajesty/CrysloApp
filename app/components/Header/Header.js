@@ -38,7 +38,7 @@ const Header = ({title, showBackButton, navigation, hint, elevated, forHistory, 
 				/>
 		}
 			<Text 
-				style={[style.title, {color: color}]} 
+				style={[style.title, {color: color ? color : styling.black}]} 
 				OnPress={() => navigation.navigate('DrawerToggle')}
 			>{title}</Text>
 			{hint ? 

@@ -19,6 +19,7 @@ export default StyleSheet.create({
 		fontSize: 23,
 		textAlign: 'center',
 		marginBottom: 14,
+		color: styling.black,
 	},
 	subtitle: {
 		opacity: 0.6,
@@ -27,6 +28,7 @@ export default StyleSheet.create({
 	code: {
 		...styling.text.prop.heavy,
 		textAlign: 'center',
+		color: styling.black,
 		fontSize: 26,
 	},
 	buttonContainer: {

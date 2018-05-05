@@ -15,17 +15,17 @@ export default StyleSheet.create({
 		padding: 10,
 	},
 	name: {
+		...styling.text.prop.light,
 		color: styling.text.lightgray,
 		fontSize: 13.1,
-		fontFamily: 'montserrat-regular',
 		textAlign: 'center',
 		flex: 1,
 		position: 'relative',
 	},
 	date: {
+		...styling.text.prop.light,
 		color: styling.text.lightgray,
 		fontSize: 8,
-		fontFamily: 'montserrat-regular',
 		marginTop: 'auto',
 		marginLeft: 40,
 		width: '100%',
@@ -40,8 +40,9 @@ export default StyleSheet.create({
 		width: 80,
 	},
 	vitalValue: {
-		flex: 1,
+		...styling.text.prop.heavy,
 		textAlign: 'center',
-		fontFamily: 'montserrat-medium',
+		color: styling.black,
+		flex: 1,
 	},
 })

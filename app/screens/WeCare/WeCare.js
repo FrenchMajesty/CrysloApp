@@ -86,7 +86,7 @@ export default class WeCare extends Component {
 		const {contacts} = this.state;
 
 		return (
-			<View style={[styling.container, styling.grayScreenBackground]}>
+			<View style={[styling.grayScreenBackground]}>
 				<View style={{backgroundColor: '#fff', height: 140}}>
 					<Header
 						navigation={rootNavigation}
