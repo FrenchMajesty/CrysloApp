@@ -1,23 +1,25 @@
-import React from 'react'
-import { Text, View, TouchableOpacity } from 'react-native'
-import style from './style'
+import React from 'react';
+import { Text, View, TouchableOpacity } from 'react-native';
+import style from './style';
 
-export default Card = ({children, depth, card, body, onPress, style: additionalStyle}) => {
-
-	let depthStyle = style.depth1
-	let cardStyle = null
-
-	if(depth == 2) {
-		depthStyle = style.depth2
-	}else if(depth == 3) {
-		depthStyle = style.depth3
-	}
+export default Card = ({children, depth, card, body, onPress}) => {
 
 	const hasLink = onPress ? 0.7 : 1;
+	const getDepthStyle = () => {
+		switch(depth) {
+			case 2:
+				return style.depth2;
+			case 3:
+				return style.depth3;
+			default:
+				return style.depth1;
+		}
+	};
+
 	return (
 		<TouchableOpacity 
 			activeOpacity={hasLink} 
-			style={[style.card, depthStyle, card, additionalStyle]}
+			style={[style.card, getDepthStyle(), card]}
 			onPress={onPress}
 		>
 			<View style={[style.cardBody, body]}>

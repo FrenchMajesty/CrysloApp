@@ -6,7 +6,7 @@ import style from './style';
 const StatsRow = ({rowStyle, label, content, hint, button, icon}) => {
 
 	return (
-		<Card style={[style.row, rowStyle]}>
+		<Card card={[style.row, rowStyle]}>
 			<Text style={[style.label]}>{label}:</Text>
 			<View style={[style.statContainer]}>
 				<Text style={[style.stat]}>{content}</Text>
