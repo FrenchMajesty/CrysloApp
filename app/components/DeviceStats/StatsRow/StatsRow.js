@@ -3,10 +3,11 @@ import { View, Text } from 'react-native';
 import Card from 'app/components/common/Card/';
 import style from './style';
 
-const StatsRow = ({rowStyle, label, content, hint, button, animation, icon}) => {
+const StatsRow = ({rowStyle, depth, label, content, hint, button, animation, icon}) => {
 
 	return (
 		<Card 
+			depth={depth}
 			card={[style.row, rowStyle]}
 			animation={animation}
 		>
