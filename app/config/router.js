@@ -20,7 +20,6 @@ import WeCare from 'app/screens/WeCare/';
 import ContactDetails from 'app/screens/ContactDetails/';
 import DetailedHistory from 'app/screens/DetailedHistory/';
 import Onboarding from 'app/screens/Onboarding/';
-import Referral from 'app/screens/Referral/';
 
 // Settings Stack
 import SettingsMenu from 'app/screens/Settings/SettingsMenu/';
@@ -29,7 +28,9 @@ import AccountProfile from 'app/screens/Settings/Account/AccountProfile/';
 import UpdatePassword from 'app/screens/Settings/Account/UpdatePassword/';
 
 // Drawers screens
+import Referral from 'app/screens/Referral/';
 import Syncing from 'app/screens/Syncing/';
+import DeviceStats from 'app/screens/DeviceStats/';
 import RedirectToAuth from 'app/components/RedirectToAuth/';
 
 import styling from 'app/config/styling';
@@ -227,7 +228,13 @@ const DrawerStack = DrawerNavigator(
 		Sync: {
 			screen: Syncing,
 			navigationOptions: {
-				title: 'Sync Device',
+				title: 'Sync a Watch',
+			},
+		},
+		Manage: {
+			screen: DeviceStats,
+			navigationOptions: {
+				title: 'Manage my Watch',
 			},
 		},
 		Referral: {
