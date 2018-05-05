@@ -27,7 +27,6 @@ export default class Guardians extends Component {
 	getInitialState() {
 		return {
 			notifyMe: false,
-			notifyWeCare: true,
 			notifySOS: true,
 			bloodMin: 85,
 			bloodMax: 105,
@@ -50,14 +49,6 @@ export default class Guardians extends Component {
 						value={notifyMe}
 					/>
 					<Text style={[styling.text.prop.light, style.alertText]}>Notify me</Text>
-				</View>
-				<View style={[style.alertOption]}>
-					<Switch
-						onTintColor={styling.mainColor}
-						onValueChange={() => this.setState({notifyWeCare: !notifyWeCare})}
-						value={notifyWeCare}
-					/>
-					<Text style={[styling.text.prop.light, style.alertText]}>Notify my WeCare followers</Text>
 				</View>
 				<View style={[style.alertOption]}>
 					<Switch
