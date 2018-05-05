@@ -9,7 +9,7 @@ import style from '../../style';
 const AccountMenu = ({navigation, screenProps: {rootNavigation}}) => {
 
 	return (
-		<View style={[styling.container, styling.grayScreenBackground]}>
+		<View style={[styling.grayScreenBackground]}>
 			<View style={{backgroundColor: '#fff', height: 70}}>
 				<Header
 					navigation={rootNavigation}
