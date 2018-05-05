@@ -49,7 +49,7 @@ export default class WeCare extends Component {
 		const {navigation} = this.props;
 		const contact = this.state.contacts.find(contact => contact.id == contactId);
 
-		navigation.navigate('ContactDetails', {contact});
+		navigation.navigate('ContactDetails', {contact, mode: 'update'});
 	}
 
 	/**
@@ -57,22 +57,23 @@ export default class WeCare extends Component {
 	 * @return {ReactElement} 
 	 */
 	renderAddButton() {
+		const {navigation} = this.props;
 		const {contacts} = this.state;
 
-		if(contacts.length >= 3) {
-			return (
-				<Button
-					text="You have reached the limit"
-					style={{width: '70%'}}
-					disabled={true}
-				/>
-			);
+		const text = () => {
+			if(contacts.length >= 3) {
+				return 'You have reached the limit';
+			}
+
+			return `Add ${3-contacts.length} more`;
 		}
 
 		return (
 			<Button
-				text={`Add ${3-contacts.length} more`}
+				text={text()}
 				style={{width: '70%'}}
+				disabled={contacts.length >= 3}
+				onPress={() => navigation.navigate('ContactDetails', {mode: 'add'})}
 			/>
 		);
 	}

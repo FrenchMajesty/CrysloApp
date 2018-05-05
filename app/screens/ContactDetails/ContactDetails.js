@@ -18,8 +18,11 @@ export default class ContactDetails extends Component {
 
 		this.state = this.getInitialState();
 
+		this.onCreate = this.onCreate.bind(this);
 		this.onUpdate = this.onUpdate.bind(this);
 		this.onDelete = this.onDelete.bind(this);
+		this.renderEditButtons = this.renderEditButtons.bind(this);
+		this.renderCreateButton = this.renderCreateButton.bind(this);
 	}
 
 	/**
@@ -39,8 +42,22 @@ export default class ContactDetails extends Component {
 	 * Transfer the person's contact information from prop to th state for editing
 	 */
 	componentWillMount() {
-		const {id, name, number} = this.props.navigation.state.params.contact;
-		this.setState({id, name, number});
+		if(this.props.navigation.state.params.contact) {
+			const {id, name, number} = this.props.navigation.state.params.contact;
+			this.setState({id, name, number});
+		}
+	}
+
+	/**
+	 * On submit, create a new WeCare contact point
+	 * @return {Void} 
+	 */
+	onCreate() {
+		this.setState({isSubmitting: true});
+		setTimeout(() => {
+			this.setState({isSubmitting: false});
+			alert('Your person was successfully added to your account!');
+		}, 1000);
 	}
 
 	/**
@@ -52,6 +69,7 @@ export default class ContactDetails extends Component {
 
 		setTimeout(() => { 
 			this.setState({isSubmitting: false})
+			alert('Your person was successfully updated!');
 		}, 1000);
 	}
 
@@ -64,12 +82,70 @@ export default class ContactDetails extends Component {
 	}
 
 	/**
+	 * Render the buttons when editing a person's contact informations
+	 * @return {ReactElement} 
+	 */
+	renderEditButtons() {
+		const {isSubmitting} = this.state;
+
+		return (
+			<View style={[style.buttonStyle]}>
+				{isSubmitting ? 
+					<Button inverted style={{width: '80%'}}>
+						<Spinner color="#fff" />
+					</Button>
+				:
+					<Button
+						inverted
+						text="Update this contact"
+						style={{width: '80%'}}
+						onPress={this.onUpdate}
+					/>
+				}
+				<Button 
+					color="red" 
+					style={{width: '80%', marginTop: 20}} 
+					onPress={this.onDelete}
+				>
+					<Icon name="trash" color="red" size={19} />
+				</Button>
+			</View>
+		);
+	}
+
+	/**
+	 * Render the button for submitting when adding a new WeCare contact person
+	 * @return {ReactElement} 
+	 */
+	renderCreateButton() {
+		const {isSubmitting} = this.state;
+		
+		return (
+			<View style={[style.buttonStyle]}>
+				{isSubmitting ? 
+					<Button inverted style={{width: '80%'}}>
+						<Spinner color="#fff" />
+					</Button>
+				: 
+					<Button
+						inverted
+						text="Add this new contact"
+						style={{width: '80%'}}
+						onPress={this.onCreate}
+					/>
+				}
+			</View>
+		);
+	}
+
+	/**
 	 * Render the component
 	 * @return {ReactElement} 
 	 */
 	render() {
 		const {name, number, isSubmitting} = this.state;
 		const {navigation} = this.props;
+		const {mode} = navigation.state.params;
 		const formattedNum = new PhoneNumber(number, 'US').getNumber('national');
 
 		return (
@@ -112,27 +188,12 @@ export default class ContactDetails extends Component {
 								onChangeText={(number) => this.setState({number})}
 							/>
 						</View>
-						<View style={[style.buttonStyle]}>
-							{isSubmitting ? 
-								<Button inverted style={{width: '80%'}}>
-									<Spinner color="#fff" />
-								</Button>
-							:
-								<Button
-									inverted
-									text="Update this contact"
-									style={{width: '80%'}}
-									onPress={this.onUpdate}
-								/>
-							}
-							<Button 
-								color="red" 
-								style={{width: '80%', marginTop: 20}} 
-								onPress={this.onDelete}
-							>
-								<Icon name="trash" color="red" size={19} />
-							</Button>
-						</View>
+
+						{mode == 'update' ?
+							this.renderEditButtons()
+						:
+							this.renderCreateButton()
+						}
 					</View>
 				</ScrollView>
 			</View>
