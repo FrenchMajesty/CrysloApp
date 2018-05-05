@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, Share } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Header from 'app/components/Header/';
@@ -25,7 +25,19 @@ class Referral extends Component {
 	 * @return {Void} 
 	 */
 	onSocialShare() {
-		// cool prompt
+		Share.share({
+			message: 'Hey check out the new Cryslo app for the Helo watch, you even get a free credit for using my code!',
+			url: 'https://victron.tech',
+		}, {
+			subject: 'Have you heard about the Cryslo app for the Helo watch?',
+			tintColor: 'red',
+		}).then(({action, activityType}) => {
+			if(action == 'dismissedAction') {
+				// do stuff...
+			}else if(action == 'sharedAction') {
+				// do other stuff with activityType...
+			}
+		});
 	}
 
 	/**
@@ -45,7 +57,7 @@ class Referral extends Component {
 
 		return (
 			<View
-				style={[styling.statusBarPadding, styling.screenPadding, style.container, styling.grayScreenBackground]}
+				style={[styling.statusBarPadding, styling.screenPadding, styling.grayScreenBackground]}
 			>
 				<Header 
 					title="Referral Program"
@@ -71,15 +83,9 @@ class Referral extends Component {
 							<Button
 								inverted
 								color="#5be"
-								text="Share on social media"
+								text="Share with a friend"
 								style={[style.button]}
 								onPress={this.onSocialShare}
-							/>
-							<Button
-								inverted
-								text="Send Text Invite"
-								style={[style.button]}
-								onPress={this.onTextShare}
 							/>
 
 							<Link style={{marginTop: 10}} onPress={() => alert('You have referred 99 people!')}>View Referral History</Link>
