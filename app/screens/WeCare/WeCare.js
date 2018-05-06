@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { View, ScrollView, Text } from 'react-native';
+import { connect } from 'react-redux';
 import Header from 'app/components/Header/';
 import Button from 'app/components/common/Button/RectangularButton/';
+import CommonText from 'app/components/common/CommonText/';
 import ContactList from 'app/components/WeCare/ContactList/';
-import style from './style';
 import styling from 'app/config/styling';
+import style from './style';
 
-export default class WeCare extends Component {
+class WeCare extends Component {
 
 	/**
 	 * Component constructor
@@ -14,30 +16,7 @@ export default class WeCare extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = this.getInitialState();
-
 		this.openContactDetails = this.openContactDetails.bind(this);
-	}
-
-	/**
-	 * Return the initial state of the component
-	 * @return {Object} 
-	 */
-	getInitialState() {
-		return {
-			contacts: [
-				{
-					id: 2,
-					name: 'John Dope',
-					number: '+1 (123)-444-3309',
-				},
-				{
-					id: 3,
-					name: 'Marie Antoinette',
-					number: '+33 7 33 78 56 29',
-				},
-			]
-		};
 	}
 
 	/**
@@ -46,8 +25,8 @@ export default class WeCare extends Component {
 	 * @return {Void} 
 	 */
 	openContactDetails(contactId) {
-		const {navigation} = this.props;
-		const contact = this.state.contacts.find(contact => contact.id == contactId);
+		const {navigation, contacts: contactsList} = this.props;
+		const contact = contactsList.find(contact => contact.id == contactId);
 
 		navigation.navigate('ContactDetails', {contact, mode: 'update'});
 	}
@@ -57,8 +36,7 @@ export default class WeCare extends Component {
 	 * @return {ReactElement} 
 	 */
 	renderAddButton() {
-		const {navigation} = this.props;
-		const {contacts} = this.state;
+		const {navigation, contacts} = this.props;
 
 		const text = () => {
 			if(contacts.length >= 3) {
@@ -84,7 +62,7 @@ export default class WeCare extends Component {
 	 */
 	render() {
 		const {rootNavigation} = this.props.screenProps;
-		const {contacts} = this.state;
+		const {contacts} = this.props;
 
 		return (
 			<View style={[styling.grayScreenBackground]}>
@@ -92,17 +70,24 @@ export default class WeCare extends Component {
 					<Header
 						navigation={rootNavigation}
 						title="WeCare"
-						color={styling.black}
 						hint="These contacts are the people we are going to notify via text or call if your vitals go into your danger zone or if you press the panic button."
 						elevated={true}
 						style={{flex: 2, position: 'absolute'}}
 					/>
 				</View>
-				<ScrollView style={[style.screenPadding, style.listContainer]}>
+				<ScrollView style={[styling.screenPadding, style.listContainer]}>
+					{contacts.length > 0 ?
 					<ContactList 
 						data={contacts} 
 						onItemPress={this.openContactDetails}
 					/>
+					:
+						<View style={{marginTop: 35, marginBottom: 35}}>
+							<CommonText weight="heavy" style={{fontSize: 16, textAlign: 'center'}}>
+								You have not added any emergency contacts to your account yet!
+							</CommonText>
+						</View>
+					}
 					<View style={[style.buttonStyle]}>
 						{this.renderAddButton()}
 					</View>
@@ -111,3 +96,14 @@ export default class WeCare extends Component {
 		);
 	}
 };
+
+/**
+ * Map the redux store's state to the component's props
+ * @param  {Object} state.wecare.contacts The WeCare contacts list
+ * @return {Object}                  
+ */
+const mapStateToProps = ({wecare: {contacts}}) => ({
+		contacts,
+});
+
+export default connect(mapStateToProps, null)(WeCare);
