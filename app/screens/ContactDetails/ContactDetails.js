@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
 import { View, ScrollView, Text, ActivityIndicator as Spinner } from 'react-native';
+import { connect } from 'react-redux';
+import BtnIcon from 'react-native-vector-icons/MaterialIcons';
+import WeCareAction from 'app/store/actions/wecare';
 import PhoneNumber from 'awesome-phonenumber';
 import Header from 'app/components/Header/';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Input from 'app/components/common/Input/TextInput/';
 import Button from 'app/components/common/Button/RectangularButton/';
+import isEqual from 'app/lib/form/equality';
 import styling from 'app/config/styling';
 import style from './style';
 
-export default class ContactDetails extends Component {
+class ContactDetails extends Component {
 
 	/**
 	 * Component constructor
@@ -21,6 +25,7 @@ export default class ContactDetails extends Component {
 		this.onCreate = this.onCreate.bind(this);
 		this.onUpdate = this.onUpdate.bind(this);
 		this.onDelete = this.onDelete.bind(this);
+		this.navigateBack = this.navigateBack.bind(this);
 		this.renderEditButtons = this.renderEditButtons.bind(this);
 		this.renderCreateButton = this.renderCreateButton.bind(this);
 	}
@@ -34,18 +39,42 @@ export default class ContactDetails extends Component {
 			id: null,
 			name: '',
 			number: '',
-			isSubmitting: false,
+			buttonIndicator: null,
+			deleteBtnIndicator: null,
 		};
 	}
 
 	/**
-	 * Transfer the person's contact information from prop to th state for editing
+	 * Transfer the person's contact info from prop to the state for editing
 	 */
 	componentWillMount() {
-		if(this.props.navigation.state.params.contact) {
-			const {id, name, number} = this.props.navigation.state.params.contact;
+		const {contact} = this.props.navigation.state.params;
+
+		if(contact) {
+			const {id, name, number} = contact;
 			this.setState({id, name, number});
 		}
+	}
+
+	/**
+	 * Reset the button indicator based on component's state change
+	 * @param  {Object} nextProps The new props
+	 * @param  {Object} nextState The next state
+	 */
+	shouldComponentUpdate(nextProps, nextState) {
+		const newState2 = Object.assign({}, nextState);
+		const currentState = Object.assign({}, this.state);
+		delete newState2.buttonIndicator;
+		delete currentState.buttonIndicator;
+
+		if(nextState.buttonIndicator && ! isEqual(newState2, currentState)) {
+			this.setState({
+				...nextState,
+				buttonIndicator: null,
+			});
+		}
+
+		return true;
 	}
 
 	/**
@@ -53,10 +82,25 @@ export default class ContactDetails extends Component {
 	 * @return {Void} 
 	 */
 	onCreate() {
-		this.setState({isSubmitting: true});
+		this.setState({
+			buttonIndicator: <Spinner color="#fff" />,
+		});
+
 		setTimeout(() => {
-			this.setState({isSubmitting: false});
-			alert('Your person was successfully added to your account!');
+			const {name, number} = this.state;
+			const {navigation} = this.props;
+
+			this.props.addNewContact({
+				name,
+				number,
+				id: Date.now(), // until I can get real IDs from the server
+			});
+
+			this.setState({
+				buttonIndicator: <BtnIcon name="check" color="#fff" size={30} style={{margin: -5}} />,
+			});
+
+			this.navigateBack();
 		}, 1000);
 	}
 
@@ -65,11 +109,21 @@ export default class ContactDetails extends Component {
 	 * @return {Void} 
 	 */
 	onUpdate() {
-		this.setState({isSubmitting: true});
+		this.setState({
+			buttonIndicator: <Spinner color="#fff" />,
+		});
 
 		setTimeout(() => { 
-			this.setState({isSubmitting: false})
-			alert('Your person was successfully updated!');
+			const {id, name, number} = this.state;
+			const {navigation} = this.props;
+
+			this.props.updateContact({id, name, number});
+
+			this.setState({
+				buttonIndicator: <BtnIcon name="check" color="#fff" size={30} style={{margin: -5}} />,
+			});
+
+			this.navigateBack();
 		}, 1000);
 	}
 
@@ -78,7 +132,28 @@ export default class ContactDetails extends Component {
 	 * @return {Void} 
 	 */
 	onDelete() {
-		alert('Are you sure you want to delete this contact?');
+		this.setState({
+			deleteBtnIndicator: <Spinner color="red" />,
+		});
+
+		setTimeout(() => { 
+			const {id} = this.state;
+			const {navigation} = this.props;
+			
+			this.props.deleteContact(id);
+
+			this.setState({deleteBtnIndicator: null});
+
+			this.navigateBack();
+		}, 1000);
+	}
+
+	/**
+	 * Wait about a second before navigating back to the previous screen
+	 * @return {Void} 
+	 */
+	navigateBack() {
+		setTimeout(() => this.props.navigation.pop(), 700);
 	}
 
 	/**
@@ -86,13 +161,13 @@ export default class ContactDetails extends Component {
 	 * @return {ReactElement} 
 	 */
 	renderEditButtons() {
-		const {isSubmitting} = this.state;
+		const {buttonIndicator, deleteBtnIndicator} = this.state;
 
 		return (
 			<View style={[style.buttonStyle]}>
-				{isSubmitting ? 
+				{buttonIndicator ? 
 					<Button inverted style={{width: '80%'}}>
-						<Spinner color="#fff" />
+						{buttonIndicator}
 					</Button>
 				:
 					<Button
@@ -102,13 +177,21 @@ export default class ContactDetails extends Component {
 						onPress={this.onUpdate}
 					/>
 				}
-				<Button 
-					color="red" 
-					style={{width: '80%', marginTop: 20}} 
-					onPress={this.onDelete}
-				>
-					<Icon name="trash" color="red" size={19} />
-				</Button>
+
+				{deleteBtnIndicator ?
+					<Button 
+						color="red" 
+						style={{width: '80%', marginTop: 20}} 
+					>{deleteBtnIndicator}</Button>
+				:
+					<Button 
+						color="red" 
+						style={{width: '80%', marginTop: 20}} 
+						onPress={this.onDelete}
+					>
+						<Icon name="trash" color="red" size={19} />
+					</Button>
+				}
 			</View>
 		);
 	}
@@ -118,13 +201,13 @@ export default class ContactDetails extends Component {
 	 * @return {ReactElement} 
 	 */
 	renderCreateButton() {
-		const {isSubmitting} = this.state;
+		const {buttonIndicator} = this.state;
 		
 		return (
 			<View style={[style.buttonStyle]}>
-				{isSubmitting ? 
+				{buttonIndicator ? 
 					<Button inverted style={{width: '80%'}}>
-						<Spinner color="#fff" />
+						{buttonIndicator}
 					</Button>
 				: 
 					<Button
@@ -143,7 +226,7 @@ export default class ContactDetails extends Component {
 	 * @return {ReactElement} 
 	 */
 	render() {
-		const {name, number, isSubmitting} = this.state;
+		const {name, number} = this.state;
 		const {navigation} = this.props;
 		const {mode} = navigation.state.params;
 		const formattedNum = new PhoneNumber(number, 'US').getNumber('national');
@@ -155,7 +238,6 @@ export default class ContactDetails extends Component {
 						navigation={navigation}
 						showBackButton={true}
 						title="WeCare Contact"
-						color={styling.black}
 						elevated={true}
 						style={{flex: 2, position: 'absolute'}}
 					/>
@@ -184,6 +266,8 @@ export default class ContactDetails extends Component {
 								label="Phone Number"
 								placeholder={(name.length > 0 ? `Enter ${name}'s` : 'Enter your contact\'s') + ' phone number'}
 								returnKeyType="done"
+								keyboardType="numeric"
+								hint="Only valid U.S. numbers are supported for now."
 								value={formattedNum}
 								onChangeText={(number) => this.setState({number})}
 							/>
@@ -200,3 +284,21 @@ export default class ContactDetails extends Component {
 		);
 	}
 }
+/**
+ * Map the store's action dispatcher to the component's props
+ * @param  {Function} dispatch The dispatch function
+ * @return {Object}           
+ */
+const mapDispatchToProps = (dispatch) => ({
+	addNewContact: (details) => {
+		dispatch(WeCareAction.addNewContact(details));
+	},
+	updateContact: (details) => {
+		dispatch(WeCareAction.updateContact(details));
+	},
+	deleteContact: (id) => {
+		dispatch(WeCareAction.deleteContact(id));
+	},
+});
+
+export default connect(null, mapDispatchToProps)(ContactDetails);
