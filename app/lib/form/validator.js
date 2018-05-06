@@ -30,7 +30,7 @@ export default class Validator {
 	 */
 	validateField(input, rules) {
 
-		if(typeof input ==! 'object') {
+		if(typeof input !== 'object') {
 			throw new Error('The input parameter to validateField must be a valid object.');
 		}
 
@@ -38,7 +38,7 @@ export default class Validator {
 			throw new Error('The input object given to validateField cannot have more than one key.');
 		}
 
-		if(typeof rules ==! 'array') {
+		if(typeof rules !== 'array') {
 			throw new Error('The rules parameter of validateField must be a valid array.');
 		}
 
