@@ -11,7 +11,7 @@ export default function wecare(state = initialState, action) {
 				...state,
 				contacts: [
 					...state.contacts,
-					{name: action.name, number: action.number},
+					{name: action.name, number: action.number, id: action.id},
 				]
 			};
 

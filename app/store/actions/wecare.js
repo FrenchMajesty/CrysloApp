@@ -5,12 +5,14 @@ export default class WeCare {
 
 	/**
 	 * Return an action to add a new WeCare contact
+	 * @param {String} options.id   The contact's ID
 	 * @param {String} options.name   The contact's name
 	 * @param {String} options.number The contact's phone number
 	 */
-	static addNewContact({name, number}) {
+	static addNewContact({id, name, number}) {
 		return {
 			type: this.ADD_NEW_CONTACT,
+			id,
 			name,
 			number,
 		};
