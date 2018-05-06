@@ -34,8 +34,7 @@ class Home extends Component {
 		this.state = this.getInitialState();
 
 		this.renderCard = this.renderCard.bind(this);
-		this._onRefresh = this._onRefresh.bind(this);
-		this.triggerNavigation = this.triggerNavigation.bind(this);
+		this.onRefresh = this.onRefresh.bind(this);
 	}
 
 	/**
@@ -73,24 +72,9 @@ class Home extends Component {
 		);
 	}
 
-	_onRefresh() {
+	onRefresh() {
 		this.setState({refreshing: true});
 		setTimeout(() => this.setState({refreshing: false}), 1400);
-	}
-
-	triggerNavigation(item) {
-		/*const {navigation} = this.props;
-
-		return;
-		navigation.navigate('DashboardDetails', {vital: item.type});
-		const action = NavigationActions.navigate({
-			index: 0,
-			actions: [NavigationActions.navigate({
-					routeName: 'History',
-				})],
-		});
-
-		navigation.dispatch(action);*/
 	}
 
 	/**
