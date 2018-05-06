@@ -87,6 +87,7 @@ class AccountProfile extends Component {
 
 			const {firstname, lastname, email} = this.state;
 			this.props.updateAccountProfile({
+				name: `${firstname} ${lastname}`,
 				firstname,
 				lastname,
 				email,
