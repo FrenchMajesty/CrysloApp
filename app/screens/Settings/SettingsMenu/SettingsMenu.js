@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { View, ScrollView, Text } from 'react-native';
+import { connect } from 'react-redux';
 import Header from 'app/components/Header/';
 import Button from 'app/components/common/Button/RectangularButton/';
 import ListItem from 'app/components/common/ListItem';
 import styling from 'app/config/styling';
 import style from '../style';
 
-const SettingsMenu = ({navigation, screenProps:{rootNavigation}}) => {
+const SettingsMenu = ({name, navigation, screenProps:{rootNavigation}}) => {
 
 	return (
 		<View style={[styling.container, styling.grayScreenBackground]}>
@@ -23,7 +24,7 @@ const SettingsMenu = ({navigation, screenProps:{rootNavigation}}) => {
 			<ScrollView style={[style.screenPadding, style.listContainer]}>
 				<ListItem 
 					primaryText="Account settings" 
-					secondaryText="Here you can check all that stuff out bro."
+					secondaryText={`All of ${name}'s account settings.`}
 					onPress={() => navigation.navigate('AccountSettingsMenu')}
 				/>
 				<ListItem 
@@ -41,4 +42,13 @@ const SettingsMenu = ({navigation, screenProps:{rootNavigation}}) => {
 	);
 };
 
-export default SettingsMenu;
+/**
+ * Map the redux store's state to the component's props
+ * @param  {Object} options.profile.account.profile.name The name of the user
+ * @return {Object}                  
+ */
+const mapStateToProps = ({profile: {account: {profile: {name}}}}) => ({
+		name,
+});
+
+export default connect(mapStateToProps, null)(SettingsMenu);

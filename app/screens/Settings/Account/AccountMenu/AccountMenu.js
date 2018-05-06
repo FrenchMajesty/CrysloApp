@@ -15,7 +15,6 @@ const AccountMenu = ({navigation, screenProps: {rootNavigation}}) => {
 					navigation={rootNavigation}
 					showBackButton={true}
 					title="Account"
-					color={styling.black}
 					elevated={true}
 					style={{flex: 2, position: 'absolute'}}
 				/>
@@ -23,7 +22,7 @@ const AccountMenu = ({navigation, screenProps: {rootNavigation}}) => {
 			<ScrollView style={[style.screenPadding, style.listContainer]}>
 				<ListItem 
 					primaryText="Profile Settings" 
-					secondaryText="Here you can check all that stuff out bro."
+					secondaryText="Here you can update your name and email."
 					onPress={() => navigation.navigate('AccountProfile')}
 				/>
 				<ListItem 
@@ -45,5 +44,6 @@ const AccountMenu = ({navigation, screenProps: {rootNavigation}}) => {
 		</View>
 	);
 };
+
 
 export default AccountMenu;
