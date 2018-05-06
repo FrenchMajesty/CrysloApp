@@ -55,7 +55,7 @@ class Home extends Component {
 	 * @return {ReactElement}      
 	 */
 	renderCard(item, i) {
-		const {dispatch} = this.props;
+		const {updateVitalValue} = this.props;
 		const newValue = {
 			type: item.type,
 			value: 99,
@@ -68,7 +68,7 @@ class Home extends Component {
 				icon={icons[item.type]}
 				delay={(i * 100)+1}
 				fadeInDuration={600}
-				onPress={() => dispatch(TrackerAction.updateVitalValue(newValue))} 
+				onPress={() => updateVitalValue(newValue)} 
 			/>
 		);
 	}
@@ -133,7 +133,18 @@ class Home extends Component {
  */
 const mapStateToProps = ({trackers}) => ({
 		trackers,
-})
+});
+
+/**
+ * Map the store's action dispatcher to the component's props
+ * @param  {Function} dispatch The dispatch function
+ * @return {Object}           
+ */
+const mapDispatchToProps = (dispatch) => ({
+	updateVitalValue: (newValue) => {
+		dispatch(TrackerAction.updateVitalValue(newValue));
+	},
+});
 
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
