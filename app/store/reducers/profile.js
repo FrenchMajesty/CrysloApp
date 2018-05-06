@@ -13,6 +13,14 @@ const initialState = {
 			},
 		},
 	},
+	account: {
+		profile: {
+			firstname: 'Verdi',
+			lastname: 'Kapuku',
+			name: 'Verdi Kapuku',
+			email: 'awesome@cryslo.com',
+		},
+	},
 };
 
 export default function profile(state = initialState, action) {
@@ -24,6 +32,18 @@ export default function profile(state = initialState, action) {
 					...state.guardians,
 					notify: action.notify, 
 					configs: action.configs,
+				}
+			};
+
+		case ProfileAction.UPDATE_ACCOUNT_PROFILE:
+			return {
+				...state,
+				account: {
+					...state.account,
+					profile: {
+						...state.account.profile,
+						...action.profile,
+					},
 				}
 			};
 
