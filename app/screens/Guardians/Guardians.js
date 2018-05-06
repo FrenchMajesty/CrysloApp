@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { ScrollView, View, Switch, Text, ActivityIndicator as Spinner } from 'react-native';
 import { connect } from 'react-redux';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import Header from 'app/components/Header/';
 import Slider from 'app/components/common/Slider/';
 import RoundedButton from 'app/components/common/Button/RoundedButton/';
 import ProfileAction from 'app/store/actions/profile';
+import isEqual from 'app/lib/form/equality';
 import styling from 'app/config/styling';
 import style from './style';
 
@@ -34,6 +36,7 @@ class Guardians extends Component {
 			heartMin: null,
 			heartMax: null,
 			isSubmitting: false,
+			buttonIndicator: null,
 		};
 	}
 
@@ -52,13 +55,40 @@ class Guardians extends Component {
 	}
 
 	/**
+	 * Reset the button indicator based on component's state change
+	 * @param  {Object} nextProps The new props
+	 * @param  {Object} nextState The next state
+	 */
+	shouldComponentUpdate(nextProps, nextState) {
+		const newState2 = Object.assign({}, nextState);
+		const currentState = Object.assign({}, this.state);
+		delete newState2.buttonIndicator;
+		delete currentState.buttonIndicator;
+
+		if(nextState.buttonIndicator && ! isEqual(newState2, currentState)) {
+			this.setState({
+				...nextState,
+				buttonIndicator: null,
+			});
+		}
+
+		return true;
+	}
+
+	/**
 	 * When the button is pressed, submit the new configs to the server
 	 * @return {Void} 
 	 */
 	onSave() {
-		this.setState({isSubmitting: true});
+		this.setState({
+			buttonIndicator: <Spinner color="#fff" />,
+		});
+
 		setTimeout(() => {
-			this.setState({isSubmitting: false});
+			this.setState({
+				buttonIndicator: <Icon name="check" color="#fff" size={30} style={{margin: -5}} />,
+			});
+
 			this.props.updateGuardiansConfigs({
 				notify: {
 					self: this.state.notifyMe,
@@ -150,7 +180,7 @@ class Guardians extends Component {
 	 * @return {ReactElement} 
 	 */
 	render() {
-		const {isSubmitting} = this.state;
+		const {buttonIndicator} = this.state;
 		const {rootNavigation} = this.props.screenProps;
 
 		return (
@@ -170,11 +200,11 @@ class Guardians extends Component {
 					{this.renderHeartSettings()}
 
 					<View style={[style.buttonContainer]}>
-						{isSubmitting ?
+						{buttonIndicator ?
 							<RoundedButton
 								inverted={true}
 								center={true}
-							><Spinner color="#fff" /></RoundedButton>
+							>{buttonIndicator}</RoundedButton>
 						:
 							<RoundedButton
 								text="Save Changes"
