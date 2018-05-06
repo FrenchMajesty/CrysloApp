@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { View, ScrollView, StatusBar } from 'react-native';
-import { NavigationActions } from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Header from 'app/components/Header/';
 import VitalCard from './components/VitalCard/';
-import FloatingIcon from 'app/components/common/Button/FloatingIcon/';
 import { connect } from 'react-redux';
 import TrackerAction from 'app/store/actions/trackers';
 import styling from 'app/config/styling';
