@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import { View, ScrollView, Text, ActivityIndicator as Spinner } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { connect } from 'react-redux';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import Header from 'app/components/Header/';
 import Button from 'app/components/common/Button/RectangularButton/';
 import Input from 'app/components/common/Input/TextInput/';
+import ProfileAction from 'app/store/actions/profile';
+import isEqual from 'app/lib/form/equality';
 import styling from 'app/config/styling';
 import style from '../style';
 
@@ -26,11 +30,45 @@ class AccountProfile extends Component {
 	 */
 	getInitialState() {
 		return {
-			email: 'awesome@cryslo.com',
-			firstname: 'Verdi',
-			lastname: 'Kapuku',
-			isSubmitting: false,
+			email: '',
+			firstname: '',
+			lastname: '',
+			buttonIndicator: null,
 		};
+	}
+
+	/**
+	 * Transfer the account profile's data from the props to the component's state for editing
+	 */
+	componentWillMount() {
+		const {profile} = this.props;
+
+		this.setState({
+			firstname: profile.firstname,
+			lastname: profile.lastname,
+			email: profile.email,
+		});
+	}
+
+	/**
+	 * Reset the button indicator based on component's state change
+	 * @param  {Object} nextProps The new props
+	 * @param  {Object} nextState The next state
+	 */
+	shouldComponentUpdate(nextProps, nextState) {
+		const newState2 = Object.assign({}, nextState);
+		const currentState = Object.assign({}, this.state);
+		delete newState2.buttonIndicator;
+		delete currentState.buttonIndicator;
+
+		if(nextState.buttonIndicator && ! isEqual(newState2, currentState)) {
+			this.setState({
+				...nextState,
+				buttonIndicator: null,
+			});
+		}
+
+		return true;
 	}
 
 	/**
@@ -38,10 +76,21 @@ class AccountProfile extends Component {
 	 * @return {Void} 
 	 */
 	onSubmit() {
-		this.setState({isSubmitting: true});
+		this.setState({
+			buttonIndicator: <Spinner color={styling.mainColor} />,
+		});
 
 		setTimeout(() => {
-			this.setState({isSubmitting: false});
+			this.setState({
+				buttonIndicator: <Icon name="check" color={styling.mainColor} size={30} style={{margin: -5}} />
+			});
+
+			const {firstname, lastname, email} = this.state;
+			this.props.updateAccountProfile({
+				firstname,
+				lastname,
+				email,
+			});
 		}, 1000);
 	}
 
@@ -50,8 +99,8 @@ class AccountProfile extends Component {
 	 * @return {ReactElement} Markup
 	 */
 	render() {
+		const {email, firstname, lastname, buttonIndicator} = this.state;
 		const {navigation} = this.props;
-		const {email, firstname, lastname, isSubmitting} = this.state;
 
 		return (
 			<View style={[styling.container, styling.grayScreenBackground, {height: '100%'}]}>
@@ -60,7 +109,6 @@ class AccountProfile extends Component {
 						navigation={navigation}
 						showBackButton={true}
 						title="Account Settings"
-						color={styling.black}
 						hint="This is your personal profile. Your health information is private and only visible to you and authorized members."
 						elevated={true}
 						style={{flex: 2, position: 'absolute'}}
@@ -82,7 +130,7 @@ class AccountProfile extends Component {
 								label="First Name"
 								placeholder="Enter your first name"
 								returnKeyType="done"
-								value={firstname}
+								value={firstname.replace(/[^A-Za-z\s-]+/gi,'')}
 								onChangeText={(firstname) => this.setState({firstname})}
 							/>
 						</View>	
@@ -95,7 +143,7 @@ class AccountProfile extends Component {
 								label="Last Name"
 								placeholder="Enter your last name"
 								returnKeyType="done"
-								value={lastname}
+								value={lastname.replace(/[^A-Za-z\s-]+/gi,'')}
 								onChangeText={(lastname) => this.setState({lastname})}
 							/>
 						</View>	
@@ -115,9 +163,9 @@ class AccountProfile extends Component {
 						</View>
 					</View>
 					<View style={[style.buttonStyle]}>
-						{isSubmitting ? 
+						{buttonIndicator ? 
 							<Button style={{width: '70%'}}>
-								<Spinner color={styling.mainColor} />
+								{buttonIndicator}
 							</Button>
 						:
 							<Button
@@ -133,4 +181,24 @@ class AccountProfile extends Component {
 	}
 };
 
-export default AccountProfile;
+/**
+ * Map the redux store's state to the component's props
+ * @param  {Object} options.profile.account.profile Tree of the account's profile
+ * @return {Object}                  
+ */
+const mapStateToProps = ({profile: {account: {profile}}}) => ({
+		profile,
+});
+
+/**
+ * Map the store's action dispatcher to the component's props
+ * @param  {Function} dispatch The dispatch function
+ * @return {Object}           
+ */
+const mapDispatchToProps = (dispatch) => ({
+	updateAccountProfile: (profile) => {
+		dispatch(ProfileAction.updateAccountProfile(profile));
+	},
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AccountProfile);
