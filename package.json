@@ -24,6 +24,7 @@
     "@fortawesome/fontawesome-free-solid": "^5.0.6",
     "@fortawesome/react-fontawesome": "0.0.17",
     "awesome-phonenumber": "^2.2.5",
+    "axios": "^0.18.0",
     "date-fns": "^1.29.0",
     "expo": "^25.0.0",
     "font-awesome": "^4.7.0",
