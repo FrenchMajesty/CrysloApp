@@ -79,6 +79,7 @@ class ValidateVerificationCode extends Component {
 		// send verif code to API and if valid, create user account
 		this.setState({isSubmitting: false});
 		this.onChangeNumber();
+		this.props.onSuccess();
 	}
 
 	resetPassword() {

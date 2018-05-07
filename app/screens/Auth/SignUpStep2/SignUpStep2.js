@@ -52,9 +52,9 @@ class SignUpStep2 extends Component {
 				/>
 				<View style={[{alignSelf: 'center', top: '20%'}]}>
 					{number ?
-						<ValidateVerificationCode purpose="signup" />
+						<ValidateVerificationCode purpose="signup"  onSuccess={() => navigation.navigate('SignUpStep3')} />
 					: 
-						<PhoneNumberVerification purpose="signup" />
+						<PhoneNumberVerification purpose="signup"/>
 					}
 				</View>
 			</View>
