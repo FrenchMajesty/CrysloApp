@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, Image } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { connect } from 'react-redux';
+import { validate } from 'indicative'; 
 import SignUpActions from 'app/store/actions/signup';
 import RoundedButton from 'app/components/common/Button/RoundedButton/';
 import Input from 'app/components/common/Input/TextWithIcon/';
@@ -9,6 +10,9 @@ import IconButton from 'app/components/common/Button/IconButton/';
 import styling from 'app/config/styling'; 
 import style from '../style';
 import illustration from 'assets/images/signup.png';
+
+import ValidatorMessages from 'app/lib/form/validator';
+import { validateEmail } from 'app/lib/api';
 
 
 class SignUp extends Component {
@@ -21,7 +25,7 @@ class SignUp extends Component {
 
 		this.state = this.getInitialState();
 
-		this._onFormSubmit = this._onFormSubmit.bind(this);
+		this.onSubmit = this.onSubmit.bind(this);
 	}
 
 	/**
@@ -31,24 +35,36 @@ class SignUp extends Component {
 	getInitialState() {
 		return {
 			email: '',
-			emailHint: '',
 			password: '',
-			passwordHint: 'Use a password at least 6 characters long for security.',
 			passwordIsHidden: true,
 			errors: {},
 		};
 	}
 
 	/**
-	 * Validate the input and save to store's state before continuing
+	 * Validate the inputs and save to store's state before continuing
 	 * @return {Void} 
 	 */
-	_onFormSubmit() {
+	onSubmit() {
 		const {email, password} = this.state;
 		const {navigation} = this.props;
 
-		this.props.dispatch(SignUpActions.setCredentials({email, password}));
-		navigation.navigate('SignUpStep2');
+		// Validate inputs are okay
+		const validator = validate({email, password}, {
+			email: 'required|email',
+			password: 'required',
+		}, ValidatorMessages);
+
+		validator.then(() => {
+
+			// Verify that the email isn't already in use
+			validateEmail(email).then(() => {
+				this.props.setCredentials({email, password});
+				navigation.navigate('SignUpStep2');
+			})
+			.catch(({response: {data}}) => this.setState({errors: data[0]}));
+		})
+		.catch((errors) => this.setState({errors: errors[0]}));
 	}
 
 	/**
@@ -56,8 +72,11 @@ class SignUp extends Component {
 	 * @return {ReactElement} 
 	 */
 	render() {
-		const {email, password, passwordIsHidden, emailHint, passwordHint} = this.state;
+		const {email, password, errors, passwordIsHidden} = this.state;
 		const {navigation} = this.props;
+
+		const emailHint = '';
+		const passwordHint = 'Use a password at least 6 characters long for security.';
 
 		return (
 			<View>
@@ -95,7 +114,8 @@ class SignUp extends Component {
 									returnKeyType="done"
 									value={email}
 									onChangeText={(email) => this.setState({email})}
-									hint={emailHint}
+									hint={errors.field == 'email' ? errors.message : emailHint}
+									hasError={errors.field == 'email'}
 								/>
 							</View>
 							<View style={[style.inputContainer]}>
@@ -111,7 +131,8 @@ class SignUp extends Component {
 									returnKeyType="done"
 									value={password}
 									onChangeText={(password) => this.setState({password})}
-									hint={passwordHint}
+									hint={errors.field == 'password' ? errors.message : passwordHint}
+									hasError={errors.field == 'password'}
 								/>
 							</View>
 							<View style={[style.submitContainer, style.actionButtonContainer]}>
@@ -119,7 +140,7 @@ class SignUp extends Component {
 									style={[style.submitButton]}
 									inverted={true}
 									text="Continue"
-									onPress={this._onFormSubmit}
+									onPress={this.onSubmit}
 								/>
 							</View>
 						</View>
@@ -130,4 +151,15 @@ class SignUp extends Component {
 	}
 }
 
-export default connect(null)(SignUp);
+/**
+ * Map the store's action dispatcher to the component's props
+ * @param  {Function} dispatch The dispatch function
+ * @return {Object}           
+ */
+const mapDispatchToProps = (dispatch) => ({
+	setCredentials: (details) => {
+		dispatch(SignUpActions.setCredentials(details));
+	},
+});
+
+export default connect(null, mapDispatchToProps)(SignUp);
