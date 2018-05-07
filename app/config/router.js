@@ -10,6 +10,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Login from 'app/screens/Auth/Login/';
 import SignUp from 'app/screens/Auth/SignUp/';
 import SignUpStep2 from 'app/screens/Auth/SignUpStep2/';
+import SignUpStep3 from 'app/screens/Auth/SignUpStep3/';
 import ForgotPassword from 'app/screens/Auth/ForgotPassword/';
 import ResetPassword from 'app/screens/Auth/ResetPassword/';
 
@@ -197,6 +198,13 @@ const AuthStack = StackNavigator({
 	SignUpStep2: {
 		screen: SignUpStep2,
 		path: '/signup/2',
+		navigationOptions: {
+			header: null,
+		},
+	},
+	SignUpStep3: {
+		screen: SignUpStep3,
+		path: '/signup/3',
 		navigationOptions: {
 			header: null,
 		},
