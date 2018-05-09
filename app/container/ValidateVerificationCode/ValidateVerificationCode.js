@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
 import PhoneNumber from 'awesome-phonenumber';
 import { connect } from 'react-redux';
-import NumVerifAction from 'app/store/actions/verifyNumber';
+import VerificationAction from 'app/store/actions/verifyNumber';
 import Input from 'app/components/common/Input/TextWithIcon/';
 import Link from 'app/components/common/Link/';
 import RoundedButton from 'app/components/common/Button/RoundedButton/';
 import style from 'app/screens/Auth/style';
+
+import { validateNumber, verifyCode } from 'app/lib/api';
 
 class ValidateVerificationCode extends Component {
 
@@ -28,7 +30,7 @@ class ValidateVerificationCode extends Component {
 	 */
 	componentWillUnmount() {
 		if(! this.state.codeIsGood) {
-			this.props.dispatch(NumVerifAction.setNumber(''));
+			this.props.setNumber('');
 		}
 	}
 
@@ -41,6 +43,7 @@ class ValidateVerificationCode extends Component {
 			code: '',
 			codeIsGood: false,
 			isSubmitting: false,
+			errors: {},
 		};
 	}
 
@@ -60,19 +63,19 @@ class ValidateVerificationCode extends Component {
 	 */
 	onButtonPress() {
 		const {code} = this.state;
-		const {purpose} = this.props;
-
-		if(code.length < 4) {
-			this.setState({isSubmitting: true});
-			
-			setTimeout(() => {
-				if(purpose == 'signup') {
-					this.createNewAccount();
-				}else if (purpose == 'reset-pwd') {
-					this.resetPassword();
-				}
-			}, 1000);
-		}
+		const {purpose, number} = this.props;
+		
+		this.setState({isSubmitting: true});
+		
+		verifyCode({code, number})
+		.then(() => {
+			if(purpose == 'signup') {
+				this.createNewAccount();
+			}else if (purpose == 'reset-pwd') {
+				this.resetPassword();
+			}
+		})
+		.catch(({response: {data}}) => this.setState({errors: data[0], isSubmitting: false}));
 	}
 
 	createNewAccount() {
@@ -102,7 +105,7 @@ class ValidateVerificationCode extends Component {
 	 * @return {Void} 
 	 */
 	onChangeNumber() {
-		this.props.dispatch(NumVerifAction.setNumber(''));
+		this.props.setNumber('');
 	}
 
 	/**
@@ -110,7 +113,7 @@ class ValidateVerificationCode extends Component {
 	 * @return {ReactElement} 
 	 */
 	render() {
-		const {code, isSubmitting} = this.state;
+		const {code, isSubmitting, errors} = this.state;
 		const {purpose} = this.props;
 		const formattedNum = new PhoneNumber(this.props.number, 'US').getNumber('national');
 		
@@ -129,7 +132,7 @@ class ValidateVerificationCode extends Component {
 						You can <Text style={[style.link]} onPress={this.onResendCode}>press here</Text> to re-send a new code.</Text>
 					</View>
 				}
-				<View style={[{flex: 1, marginTop: 25}]}>
+				<View style={[{flex: 2, marginTop: 25}]}>
 					<Input
 						iconColor="black"
 						backgroundColor="rgba(0, 0, 0, 0.05)"
@@ -143,6 +146,8 @@ class ValidateVerificationCode extends Component {
 						value={code}
 						onChangeText={this.onCodeChange}
 						maxLength={10}
+						hint={errors.message}
+						hasError={errors.message}
 					/>
 				</View>
 				<View style={[style.actionButtonContainer, style.submitContainer2]}>
@@ -158,7 +163,7 @@ class ValidateVerificationCode extends Component {
 							onPress={this.onButtonPress} />)
 					}
 				</View>
-				<View style={{flex: 6}} />
+				<View style={{flex: 5}} />
 			</View>
 		);
 	}
@@ -173,4 +178,15 @@ const mapStateToProps = ({verifyNumber: {number}}) => ({
 		number,
 });
 
-export default connect(mapStateToProps)(ValidateVerificationCode);
+/**
+ * Map the store's action dispatcher to the component's props
+ * @param  {Function} dispatch The dispatch function
+ * @return {Object}           
+ */
+const mapDispatchToProps = (dispatch) => ({
+	setNumber: (number) => {
+		dispatch(VerificationAction.setNumber(number));
+	},
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ValidateVerificationCode);
