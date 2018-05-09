@@ -12,3 +12,7 @@ export function validateNumber(number) {
 export function verifyCode({number, code}) {
 	return axios.post(`${API_URL}/validate/verify`, {number, code});
 }
+
+export function signUp({email, password, number}) {	
+	return axios.post(`${API_URL}/validate/verify`, {number, password, email});
+}
