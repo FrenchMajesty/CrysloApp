@@ -5,7 +5,6 @@ import { StackNavigator,
 	  SwitchNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-
 // Authentication Stack
 import Login from 'app/screens/Auth/Login/';
 import SignUp from 'app/screens/Auth/SignUp/';
@@ -13,6 +12,7 @@ import SignUpStep2 from 'app/screens/Auth/SignUpStep2/';
 import SignUpStep3 from 'app/screens/Auth/SignUpStep3/';
 import ForgotPassword from 'app/screens/Auth/ForgotPassword/';
 import ResetPassword from 'app/screens/Auth/ResetPassword/';
+import Onboarding from 'app/screens/Onboarding/';
 
 import Dashboard from 'app/screens/Dashboard/';
 import History from 'app/screens/History/';
@@ -20,7 +20,6 @@ import Guardians from 'app/screens/Guardians/';
 import WeCare from 'app/screens/WeCare/';
 import ContactDetails from 'app/screens/ContactDetails/';
 import DetailedHistory from 'app/screens/DetailedHistory/';
-import Onboarding from 'app/screens/Onboarding/';
 
 // Settings Stack
 import SettingsMenu from 'app/screens/Settings/SettingsMenu/';
@@ -205,6 +204,13 @@ const AuthStack = StackNavigator({
 	SignUpStep3: {
 		screen: SignUpStep3,
 		path: '/signup/3',
+		navigationOptions: {
+			header: null,
+		},
+	},
+	Onboarding: {
+		screen: Onboarding,
+		path: '/orboarding',
 		navigationOptions: {
 			header: null,
 		},
