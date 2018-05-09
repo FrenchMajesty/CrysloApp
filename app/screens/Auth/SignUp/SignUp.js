@@ -34,8 +34,8 @@ class SignUp extends Component {
 	 */
 	getInitialState() {
 		return {
-			email: '',
-			password: '',
+			email: 'c@cool.com',
+			password: '123',
 			passwordIsHidden: true,
 			errors: {},
 		};
@@ -91,60 +91,60 @@ class SignUp extends Component {
 					showsVerticalScrollIndicator={false}
 				    scrollEnabled={true}
 				>
-						<Image
-							style={{width: '100%'}}
-							source={illustration}
-						/>
-						<View style={{marginBottom: 30}}>
-							<Text style={[style.text, style.title]}>Sign Up</Text>
-							<Text style={[style.text, style.subtitle]}>For a free trial of Cryslo today.</Text>
+					<Image
+						style={{width: '100%'}}
+						source={illustration}
+					/>
+					<View style={{marginBottom: 30}}>
+						<Text style={[style.text, style.title]}>Sign Up</Text>
+						<Text style={[style.text, style.subtitle]}>For a free trial of Cryslo today.</Text>
+					</View>
+					<View style={{flex: 1}} />
+					<View style={[style.screenPadding, style.formContainer, {flex: 3}]}>
+						<View style={[style.inputContainer]}>
+							<Input
+								iconColor="black"
+								backgroundColor="rgba(0, 0, 0, 0.05)"
+								placeholderTextColor="black"
+								selectionColor="black"
+								textColor="black"
+								iconName="envelope"
+								placeholder="Enter your email"
+								keyboardType="email-address"
+								returnKeyType="done"
+								value={email}
+								onChangeText={(email) => this.setState({email})}
+								hint={errors.field == 'email' ? errors.message : emailHint}
+								hasError={errors.field == 'email'}
+							/>
 						</View>
-						<View style={{flex: 1}} />
-						<View style={[style.screenPadding, style.formContainer, {flex: 3}]}>
-							<View style={[style.inputContainer]}>
-								<Input
-									iconColor="black"
-									backgroundColor="rgba(0, 0, 0, 0.05)"
-									placeholderTextColor="black"
-									selectionColor="black"
-									textColor="black"
-									iconName="envelope"
-									placeholder="Enter your email"
-									keyboardType="email-address"
-									returnKeyType="done"
-									value={email}
-									onChangeText={(email) => this.setState({email})}
-									hint={errors.field == 'email' ? errors.message : emailHint}
-									hasError={errors.field == 'email'}
-								/>
-							</View>
-							<View style={[style.inputContainer]}>
-								<Input
-									iconColor="black"
-									backgroundColor="rgba(0, 0, 0, 0.05)"
-									placeholderTextColor="black"
-									selectionColor="black"
-									textColor="black"
-									iconName="lock"
-									secureTextEntry={passwordIsHidden}
-									placeholder="Enter your password"
-									returnKeyType="done"
-									value={password}
-									onChangeText={(password) => this.setState({password})}
-									hint={errors.field == 'password' ? errors.message : passwordHint}
-									hasError={errors.field == 'password'}
-								/>
-							</View>
-							<View style={[style.submitContainer, style.actionButtonContainer]}>
-								<RoundedButton
-									style={[style.submitButton]}
-									inverted={true}
-									text="Continue"
-									onPress={this.onSubmit}
-								/>
-							</View>
+						<View style={[style.inputContainer]}>
+							<Input
+								iconColor="black"
+								backgroundColor="rgba(0, 0, 0, 0.05)"
+								placeholderTextColor="black"
+								selectionColor="black"
+								textColor="black"
+								iconName="lock"
+								secureTextEntry={passwordIsHidden}
+								placeholder="Enter your password"
+								returnKeyType="done"
+								value={password}
+								onChangeText={(password) => this.setState({password})}
+								hint={errors.field == 'password' ? errors.message : passwordHint}
+								hasError={errors.field == 'password'}
+							/>
 						</View>
-						<View style={{flex: 3}} />
+						<View style={[style.submitContainer, style.actionButtonContainer]}>
+							<RoundedButton
+								style={[style.submitButton]}
+								inverted={true}
+								text="Continue"
+								onPress={this.onSubmit}
+							/>
+						</View>
+					</View>
+					<View style={{flex: 3}} />
 				</KeyboardAwareScrollView>
 			</View>
 		);
