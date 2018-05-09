@@ -21,7 +21,6 @@ class ValidateVerificationCode extends Component {
 		this.onCodeChange = this.onCodeChange.bind(this);
 		this.onButtonPress = this.onButtonPress.bind(this);
 		this.onChangeNumber = this.onChangeNumber.bind(this);
-		this.createNewAccount = this.createNewAccount.bind(this);
 		this.resetPassword = this.resetPassword.bind(this);
 	}
 
@@ -63,26 +62,19 @@ class ValidateVerificationCode extends Component {
 	 */
 	onButtonPress() {
 		const {code} = this.state;
-		const {purpose, number} = this.props;
+		const {purpose, number, onSuccess} = this.props;
 		
 		this.setState({isSubmitting: true});
 		
 		verifyCode({code, number})
 		.then(() => {
 			if(purpose == 'signup') {
-				this.createNewAccount();
+				onSuccess();
 			}else if (purpose == 'reset-pwd') {
 				this.resetPassword();
 			}
 		})
 		.catch(({response: {data}}) => this.setState({errors: data[0], isSubmitting: false}));
-	}
-
-	createNewAccount() {
-		// send verif code to API and if valid, create user account
-		this.setState({isSubmitting: false});
-		this.onChangeNumber();
-		this.props.onSuccess();
 	}
 
 	resetPassword() {
