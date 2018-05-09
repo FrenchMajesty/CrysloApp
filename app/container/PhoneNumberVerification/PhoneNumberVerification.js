@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
-import NumVerifAction from 'app/store/actions/verifyNumber';
+import VerificationAction from 'app/store/actions/verifyNumber';
 import Input from 'app/components/common/Input/TextWithIcon/';
 import RoundedButton from 'app/components/common/Button/RoundedButton/';
 import PhoneNumber from 'awesome-phonenumber';
 import style from 'app/screens/Auth/style';
+
+import { validateNumber } from 'app/lib/api';
 
 class PhoneNumberVerification extends Component {
 
@@ -26,6 +28,7 @@ class PhoneNumberVerification extends Component {
 		return {
 			number: '',
 			isSubmitting: false,
+			errors: {},
 		};
 	}
 		
@@ -35,21 +38,18 @@ class PhoneNumberVerification extends Component {
 	 */
 	onButtonPress() {
 		const {number} = this.state;
-		const {purpose} = this.props;
+		const {purpose, setNumber} = this.props;
 
-		if(number.length > 8) {
-			this.setState({isSubmitting: true});
+		this.setState({isSubmitting: true});
 
-			setTimeout(() => {
-				this.setState({isSubmitting: false});
+		// Submit the number to different endpoints based on purpose of verification
+		const func = purpose == 'signup' ? validateNumber : null;
+		validateNumber(number).then(() => {
 
-				if(purpose == 'signup') {
-					this.props.dispatch(NumVerifAction.setNumber(number));
-				}else if(purpose == 'reset-pwd') {
-					this.props.dispatch(NumVerifAction.setNumber(number));
-				}
-			}, 1000);
-		}
+			this.setState({isSubmitting: false});
+			setNumber(number);
+		})
+		.catch(({response: {data}}) => this.setState({errors: data[0], isSubmitting: false}));
 	}
 
 	/**
@@ -57,12 +57,12 @@ class PhoneNumberVerification extends Component {
 	 * @return {ReactElement} 
 	 */
 	render() {
-		const {number, isSubmitting} = this.state;
+		const {number, isSubmitting, errors} = this.state;
 		const formattedNum = new PhoneNumber(number, 'US').getNumber('national');
 
 		return (
 			<View style={[{width: 300, flex:1, justifyContent: 'space-between'}]}>
-				<View style={[{flex: 1}]}>
+				<View style={[{flex: 3}]}>
 					<Input
 						iconColor="black"
 						backgroundColor="rgba(0, 0, 0, 0.05)"
@@ -75,7 +75,8 @@ class PhoneNumberVerification extends Component {
 						returnKeyType="done"
 						value={formattedNum}
 						onChangeText={(number) => this.setState({number})}
-						hint=""
+						hint={errors.message}
+						hasError={errors.field == 'number'}
 					/>
 				</View>
 				<View style={[style.actionButtonContainer, style.submitContainer2]}>
@@ -91,10 +92,21 @@ class PhoneNumberVerification extends Component {
 							onPress={this.onButtonPress} />)
 					}
 				</View>
-				<View style={{flex: 9}} />
+				<View style={{flex: 8}} />
 			</View>
 		);
 	}
 }
 
-export default connect(null)(PhoneNumberVerification);
+/**
+ * Map the store's action dispatcher to the component's props
+ * @param  {Function} dispatch The dispatch function
+ * @return {Object}           
+ */
+const mapDispatchToProps = (dispatch) => ({
+	setNumber: (number) => {
+		dispatch(VerificationAction.setNumber(number));
+	},
+});
+
+export default connect(null, mapDispatchToProps)(PhoneNumberVerification);
