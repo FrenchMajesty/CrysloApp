@@ -69,4 +69,9 @@ export default StyleSheet.create({
 	blackText: {		
 		color: styling.black,
 	},
+	errors: {
+		color: 'red',
+		textAlign: 'center',
+		top: '5%',
+	},
 });
