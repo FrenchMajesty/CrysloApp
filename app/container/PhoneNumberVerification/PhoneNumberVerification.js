@@ -7,7 +7,7 @@ import RoundedButton from 'app/components/common/Button/RoundedButton/';
 import PhoneNumber from 'awesome-phonenumber';
 import style from 'app/screens/Auth/style';
 
-import { validateNumber } from 'app/lib/api';
+import { validateNumberSignUp, validateNumberForgotPwd } from 'app/lib/api';
 
 class PhoneNumberVerification extends Component {
 
@@ -43,8 +43,8 @@ class PhoneNumberVerification extends Component {
 		this.setState({isSubmitting: true});
 
 		// Submit the number to different endpoints based on purpose of verification
-		const func = purpose == 'signup' ? validateNumber : null;
-		validateNumber(number).then(() => {
+		const func = purpose == 'signup' ? validateNumberSignUp : validateNumberForgotPwd;
+		func(number).then(() => {
 
 			this.setState({isSubmitting: false});
 			setNumber(number);
