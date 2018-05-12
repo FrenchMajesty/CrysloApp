@@ -51,9 +51,8 @@ class SignUpStep2 extends Component {
 			setCredentials({email: '', password: ''});
 			navigation.navigate('SignUpStep3');
 		})
-		.catch(err => {
-			console.log(err);
-			this.setState({errors: 'Oops! An error occured while creating your account. Please try again.'});
+		.catch(({response}) => {
+			alert('Oops! An error occured while creating your account. Please try again.');
 		});
 	}
 
@@ -73,7 +72,7 @@ class SignUpStep2 extends Component {
 					onPress={() => navigation.goBack(null)}
 				/>
 				<CommonText weight="heavy" style={style.errors}>{errors}</CommonText>
-				<View style={[{alignSelf: 'center', top: '20%'}]}>
+				<View style={[{alignSelf: 'center', top: errors ? '5%' : '20%'}]}>
 					{number ?
 						<ValidateVerificationCode purpose="signup"  onSuccess={this.onSuccess} />
 					: 
