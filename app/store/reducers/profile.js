@@ -20,6 +20,9 @@ const initialState = {
 			name: 'Verdi Kapuku',
 			email: 'awesome@cryslo.com',
 		},
+		billing: {
+			subscriptionStatus: '',
+		},
 	},
 };
 
@@ -43,6 +46,18 @@ export default function profile(state = initialState, action) {
 					profile: {
 						...state.account.profile,
 						...action.profile,
+					},
+				}
+			};
+
+		case ProfileAction.UPDATE_SUBSCRIPTION_STATUS:
+			return {
+				...state,
+				account: {
+					...state.account,
+					billing: {
+						...state.account.billing,
+						subscriptionStatus: action.status,
 					},
 				}
 			};
