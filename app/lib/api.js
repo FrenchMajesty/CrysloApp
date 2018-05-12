@@ -5,8 +5,12 @@ export function validateEmail(email) {
 	return axios.post(`${API_URL}/validate/email`, {email});
 }
 
-export function validateNumber(number) {
-	return axios.post(`${API_URL}/validate/number`, {number});
+export function validateNumberSignUp(number) {
+	return axios.post(`${API_URL}/validate/number/signup`, {number});
+}
+
+export function validateNumberForgotPwd(number) {
+	return axios.post(`${API_URL}/validate/number/forgotpwd`, {number});
 }
 
 export function verifyCode({number, code}) {
