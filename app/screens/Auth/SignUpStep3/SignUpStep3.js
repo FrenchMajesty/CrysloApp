@@ -27,7 +27,8 @@ class SignUpStep3 extends Component {
 
 	onSubscribe() {
 		this.props.updateSubscriptionStatus('active');
-		this.props.screenProps.authNav.navigate('App');
+		this.props.navigation.navigate('Onboarding');
+		//this.props.screenProps.authNav.navigate('App');
 	}
 
 	/**
