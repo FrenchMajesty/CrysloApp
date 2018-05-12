@@ -18,5 +18,9 @@ export function verifyCode({number, code}) {
 }
 
 export function signUp({email, password, number}) {	
-	return axios.post(`${API_URL}/validate/verify`, {number, password, email});
+	return axios.post(`${API_URL}/users`, {number, password, email});
+}
+
+export function login({email, password}) {	
+	return axios.post(`${API_URL}/login`, {password, email});
 }
