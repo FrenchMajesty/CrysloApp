@@ -10,7 +10,7 @@ import IosIcon from 'react-native-vector-icons/Ionicons';
 import styling from 'app/config/styling'; 
 import style from '../style';
 
-import { login } from 'app/lib/api';
+import { login, loadProfile } from 'app/lib/api';
 
 class Login extends Component {
 
@@ -48,6 +48,23 @@ class Login extends Component {
 
 		login({email, password}).then(({data: {token}}) => {
 			this.props.updateAuthToken(token);
+
+			loadProfile()
+			.then(({data: {firstname, lastname, referral_id, number}}) => {
+
+				this.props.updateAccountProfile({email, referral_id, number});
+
+				// Since the first & last name are optional check they exist before setting them
+				if(firstname && lastname) {
+					this.props.updateAccountProfile({
+						firstname,
+						lastname,
+						name: `${firstname} ${lastname}`,
+					});
+				}
+			})
+			.catch(({response}) => console.log(response))
+
 			navigate('App');
 		})
 		.catch(({response: {data}}) => {
@@ -152,6 +169,9 @@ const mapStateToProps = ({profile: {auth: {token}}}) => ({
 const mapDispatchToProps = (dispatch) => ({
 	updateAuthToken: (token) => {
 		dispatch(ProfileAction.updateAuthToken(token));
+	},
+	updateAccountProfile: (profile) => {
+		dispatch(ProfileAction.updateAccountProfile(profile));
 	},
 });
 
