@@ -34,7 +34,7 @@ class Login extends Component {
 	getInitialState() {
 		return {
 			email: 'c@cool.com',
-			password: '123',
+			password: '123456',
 			passwordIsHidden: true,
 			errors: {},
 		};
