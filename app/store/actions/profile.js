@@ -3,6 +3,7 @@ export default class Profile {
 	static UPDATE_GUARDIANS_CONFIGS = 'UPDATE_GUARDIANS_CONFIGS';
 	static UPDATE_ACCOUNT_PROFILE = 'UPDATE_ACCOUNT_PROFILE';
 	static UPDATE_SUBSCRIPTION_STATUS = 'UPDATE_SUBSCRIPTION_STATUS';
+	static UPDATE_AUTH_TOKEN = 'UPDATE_AUTH_TOKEN';
 
 	/**
 	 * Return the action to update the Guardians feature's settings
@@ -29,6 +30,18 @@ export default class Profile {
 			profile,
 		};
 	}
+
+	/**
+	 * Return the action to update the user's auth token
+	 * @param  {String} token The JWT token
+	 * @return {Object}         
+	 */
+	static updateAuthToken(token) {
+		return {
+			type: this.UPDATE_AUTH_TOKEN,
+			token,
+		};
+	}	
 	
 	/**
 	 * Return the action to update the user's subscription status

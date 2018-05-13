@@ -24,6 +24,9 @@ const initialState = {
 			subscriptionStatus: '',
 		},
 	},
+	auth: {
+		token: '',
+	},
 };
 
 export default function profile(state = initialState, action) {
@@ -60,6 +63,15 @@ export default function profile(state = initialState, action) {
 						subscriptionStatus: action.status,
 					},
 				}
+			};
+
+		case ProfileAction.UPDATE_AUTH_TOKEN:
+			return {
+				...state,
+				auth: {
+					...state.auth,
+					token: action.token,
+				},
 			};
 
 		default:
