@@ -50,9 +50,9 @@ class Login extends Component {
 			this.props.updateAuthToken(token);
 
 			loadProfile()
-			.then(({data: {firstname, lastname, referral_id, number}}) => {
+			.then(({data: {id, firstname, lastname, referral_id, number}}) => {
 
-				this.props.updateAccountProfile({email, referral_id, number});
+				this.props.updateAccountProfile({id, email, referral_id, number});
 
 				// Since the first & last name are optional check they exist before setting them
 				if(firstname && lastname) {

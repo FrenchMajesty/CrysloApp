@@ -15,6 +15,7 @@ const initialState = {
 	},
 	account: {
 		profile: {
+			id: '',
 			firstname: '',
 			lastname: '',
 			name: '',
