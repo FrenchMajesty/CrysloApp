@@ -15,10 +15,10 @@ const initialState = {
 	},
 	account: {
 		profile: {
-			firstname: 'Verdi',
-			lastname: 'Kapuku',
-			name: 'Verdi Kapuku',
-			email: 'awesome@cryslo.com',
+			firstname: '',
+			lastname: '',
+			name: '',
+			email: '',
 			referral_id: '',
 			number: '',
 		},
