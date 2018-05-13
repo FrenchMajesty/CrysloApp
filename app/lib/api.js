@@ -34,6 +34,9 @@ export function login(data) {
 	return axios.post(`${API_URL}/login`, data);
 }
 
+export function resetPassword(data) {
+	return axios.post(`${API_URL}/resetpwd`, data);
+}
 
 /**
  * Account actions endpoints
