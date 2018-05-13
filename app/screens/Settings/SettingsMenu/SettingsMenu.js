@@ -24,7 +24,7 @@ const SettingsMenu = ({name, navigation, screenProps:{rootNavigation}}) => {
 			<ScrollView style={[style.screenPadding, style.listContainer]}>
 				<ListItem 
 					primaryText="Account settings" 
-					secondaryText={`All of ${name}'s account settings.`}
+					secondaryText={`All of ${name ? name+`'s` : 'your'} account settings.`}
 					onPress={() => navigation.navigate('AccountSettingsMenu')}
 				/>
 				<ListItem 
