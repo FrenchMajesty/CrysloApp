@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo';
 import { connect } from 'react-redux';
 import ProfileAction from 'app/store/actions/profile';
+import WeCareAction from 'app/store/actions/wecare';
 import RoundedButton from 'app/components/common/Button/RoundedButton';
 import Input from 'app/components/common/Input/TextWithIcon/';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -10,7 +11,7 @@ import IosIcon from 'react-native-vector-icons/Ionicons';
 import styling from 'app/config/styling'; 
 import style from '../style';
 
-import { login, loadProfile } from 'app/lib/api';
+import { login, loadProfile, loadWeCareContacts } from 'app/lib/api';
 
 class Login extends Component {
 
@@ -23,6 +24,7 @@ class Login extends Component {
 		this.state = this.getInitialState();
 
 		this.onSignOn = this.onSignOn.bind(this);
+		this.loadUserData = this.loadUserData.bind(this);
 	}
 
 	/**
@@ -39,6 +41,35 @@ class Login extends Component {
 	}
 
 	/**
+	 * Load all of the user's data from the server
+	 * @param  {Function} callback The callback function after successful fetching
+	 * @return {Void}            
+	 */
+	loadUserData(callback) {
+		Promise.all([loadWeCareContacts(), loadProfile()])
+		.then((res) => {
+			const {data: contacts} = res[0];
+			const {data: {id, firstname, lastname, email, referral_id, number}} = res[1];
+
+
+			this.props.setContacts(contacts);
+			this.props.updateAccountProfile({id, email, referral_id, number});
+
+			// Since the first & last name are optional check they exist before setting them
+			if(firstname && lastname) {
+				this.props.updateAccountProfile({
+					firstname,
+					lastname,
+					name: `${firstname} ${lastname}`,
+				});
+			}
+
+			callback()
+		})
+		.catch((response) => console.log(response));
+	}
+
+	/**
 	 * Send the user's credentials to the server for authentication
 	 * @return {Void} 
 	 */
@@ -48,24 +79,7 @@ class Login extends Component {
 
 		login({email, password}).then(({data: {token}}) => {
 			this.props.updateAuthToken(token);
-
-			loadProfile()
-			.then(({data: {id, firstname, lastname, referral_id, number}}) => {
-
-				this.props.updateAccountProfile({id, email, referral_id, number});
-
-				// Since the first & last name are optional check they exist before setting them
-				if(firstname && lastname) {
-					this.props.updateAccountProfile({
-						firstname,
-						lastname,
-						name: `${firstname} ${lastname}`,
-					});
-				}
-			})
-			.catch(({response}) => console.log(response))
-
-			navigate('App');
+			this.loadUserData(() => navigate('App'));
 		})
 		.catch(({response: {data}}) => {
 			alert(data[0].message);
@@ -172,6 +186,9 @@ const mapDispatchToProps = (dispatch) => ({
 	},
 	updateAccountProfile: (profile) => {
 		dispatch(ProfileAction.updateAccountProfile(profile));
+	},
+	setContacts: (contacts) => {
+		dispatch(WeCareAction.setContacts(contacts));
 	},
 });
 
