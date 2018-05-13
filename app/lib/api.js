@@ -63,3 +63,9 @@ export function loadWeCareContacts() {
 	const {token} = store.getState().profile.auth;
 	return axios.get(`${API_URL}/wecare`, authHeaders(token));
 }
+
+export function addWeCareContact(data) {	
+	const {token} = store.getState().profile.auth;
+	return axios.post(`${API_URL}/wecare`, data, authHeaders(token));
+}
+
