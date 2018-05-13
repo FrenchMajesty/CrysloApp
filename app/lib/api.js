@@ -48,3 +48,8 @@ export function loadProfile(query = '') {
 	const {token} = store.getState().profile.auth;
 	return axios.get(`${API_URL}/user${query}`, authHeaders(token));
 }
+
+export function updateAccountProfile(profile) {	
+	const {token} = store.getState().profile.auth;
+	return axios.put(`${API_URL}/users/${profile.id}`, profile, authHeaders(token));
+}
