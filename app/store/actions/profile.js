@@ -7,15 +7,26 @@ export default class Profile {
 
 	/**
 	 * Return the action to update the Guardians feature's settings
-	 * @param  {Object} options.notify  The notifying options
-	 * @param  {Object} options.configs The delimiters for the vitals
+	 * @param  {Object} settings  The guardians settings to set
 	 * @return {Object}                 
 	 */
-	static updateGuardiansConfigs({notify, configs}) {
+	static updateGuardiansConfigs(settings) {
 		return {
 			type: this.UPDATE_GUARDIANS_CONFIGS,
-			notify,
-			configs,
+			notify: {
+				self: settings.notify_self,
+				wecare: settings.notify_wecare,
+			},
+			configs: {
+				heart: {
+					min: settings.heart_min,
+					max: settings.heart_max,
+				},
+				breath: {
+					min: settings.breath_min,
+					max: settings.breath_max,
+				},
+			},
 		};
 	}
 
