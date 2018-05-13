@@ -19,6 +19,8 @@ const initialState = {
 			lastname: 'Kapuku',
 			name: 'Verdi Kapuku',
 			email: 'awesome@cryslo.com',
+			referral_id: '',
+			number: '',
 		},
 		billing: {
 			subscriptionStatus: '',
