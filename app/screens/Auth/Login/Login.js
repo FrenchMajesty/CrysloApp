@@ -11,7 +11,7 @@ import IosIcon from 'react-native-vector-icons/Ionicons';
 import styling from 'app/config/styling'; 
 import style from '../style';
 
-import { login, loadProfile, loadWeCareContacts } from 'app/lib/api';
+import { login, loadProfile } from 'app/lib/api';
 
 class Login extends Component {
 
@@ -46,11 +46,9 @@ class Login extends Component {
 	 * @return {Void}            
 	 */
 	loadUserData(callback) {
-		Promise.all([loadWeCareContacts(), loadProfile()])
+		Promise.all([loadProfile('?withContact=true')])
 		.then((res) => {
-			const {data: contacts} = res[0];
-			const {data: {id, firstname, lastname, email, referral_id, number}} = res[1];
-
+			const {data: {id, firstname, lastname, email, referral_id, number, contacts}} = res[0];
 
 			this.props.setContacts(contacts);
 			this.props.updateAccountProfile({id, email, referral_id, number});
