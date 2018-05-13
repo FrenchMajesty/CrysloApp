@@ -78,3 +78,12 @@ export function deleteWeCareContact(id) {
 	const {token} = store.getState().profile.auth;
 	return axios.delete(`${API_URL}/wecare/${id}`, authHeaders(token));
 }
+
+/**
+ * Guardians endpoints
+ */
+
+export function updateGuardiansConfigs(data) {	
+	const {auth, account: {profile: {id}}} = store.getState().profile;
+	return axios.put(`${API_URL}/guardian/${id}`, data, authHeaders(auth.token));
+}
