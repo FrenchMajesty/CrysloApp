@@ -20,8 +20,6 @@ class ValidateVerificationCode extends Component {
 
 		this.onCodeChange = this.onCodeChange.bind(this);
 		this.onButtonPress = this.onButtonPress.bind(this);
-		this.onChangeNumber = this.onChangeNumber.bind(this);
-		this.resetPassword = this.resetPassword.bind(this);
 	}
 
 	/**
@@ -67,21 +65,8 @@ class ValidateVerificationCode extends Component {
 		this.setState({isSubmitting: true});
 		
 		verifyCode({code, number})
-		.then(() => {
-			if(purpose == 'signup') {
-				onSuccess();
-			}else if (purpose == 'reset-pwd') {
-				this.resetPassword();
-			}
-		})
+		.then(() => onSuccess())
 		.catch(({response: {data}}) => this.setState({errors: data[0], isSubmitting: false}));
-	}
-
-	resetPassword() {
-		// send verif code to API and if valid, redirect to reset password screen
-		this.setState({isSubmitting: false});
-		this.onChangeNumber();
-		this.props.onNavigate();
 	}
 
 	/**
@@ -90,14 +75,6 @@ class ValidateVerificationCode extends Component {
 	 */
 	onResendCode() {
 		alert('Just sent you a new code!');
-	}
-
-	/**
-	 * Delete the phone number of the user from the store's state
-	 * @return {Void} 
-	 */
-	onChangeNumber() {
-		this.props.setNumber('');
 	}
 
 	/**

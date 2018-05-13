@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
+import VerificationAction from 'app/store/actions/verifyNumber';
 import IconButton from 'app/components/common/Button/IconButton/';
 import PhoneNumberVerification from 'app/container/PhoneNumberVerification/';
 import ValidateVerificationCode from 'app/container/ValidateVerificationCode/';
@@ -14,6 +15,15 @@ class ForgotPassword extends Component {
 	 */
 	constructor(props) {
 		super(props);
+
+		this.onSuccess = this.onSuccess.bind(this);
+	}
+
+	onSuccess() {
+		const {navigation} = this.props;
+
+		this.props.setNumber('');
+		navigation.navigate('ResetPassword');
 	}
 
 	/**
@@ -32,7 +42,7 @@ class ForgotPassword extends Component {
 				/>
 				<View style={[{alignSelf: 'center', top: '20%'}]}>
 					{number ?
-						<ValidateVerificationCode purpose="reset-pwd" onNavigate={() => navigation.navigate('ResetPassword')} />
+						<ValidateVerificationCode purpose="reset-pwd" onSuccess={this.onSuccess} />
 					: 
 						<PhoneNumberVerification purpose="reset-pwd" />
 					}
@@ -51,4 +61,18 @@ const mapStateToProps = ({verifyNumber :{number}}) => ({
 		number,
 })
 
-export default connect(mapStateToProps)(ForgotPassword);
+/**
+ * Map the store's action dispatcher to the component's props
+ * @param  {Function} dispatch The dispatch function
+ * @return {Object}           
+ */
+const mapDispatchToProps = (dispatch) => ({
+	setNumber: (number) => {
+		dispatch(VerificationAction.setNumber(number));
+	},
+	setUserId: (id) => {
+		dispatch(VerificationAction.setUserId(id));
+	},
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ForgotPassword);
