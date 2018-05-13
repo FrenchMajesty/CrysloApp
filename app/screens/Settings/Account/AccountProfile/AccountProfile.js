@@ -11,6 +11,8 @@ import isEqual from 'app/lib/form/equality';
 import styling from 'app/config/styling';
 import style from '../style';
 
+import { updateAccountProfile } from 'app/lib/api';
+
 class AccountProfile extends Component {
 
 	/**
@@ -34,6 +36,7 @@ class AccountProfile extends Component {
 			firstname: '',
 			lastname: '',
 			buttonIndicator: null,
+			errors: {},
 		};
 	}
 
@@ -41,13 +44,8 @@ class AccountProfile extends Component {
 	 * Transfer the account profile's data from the props to the component's state for editing
 	 */
 	componentWillMount() {
-		const {profile} = this.props;
-
-		this.setState({
-			firstname: profile.firstname,
-			lastname: profile.lastname,
-			email: profile.email,
-		});
+		const {firstname, lastname, email} = this.props.profile;
+		this.setState({firstname, lastname, email});
 	}
 
 	/**
@@ -76,23 +74,26 @@ class AccountProfile extends Component {
 	 * @return {Void} 
 	 */
 	onSubmit() {
+		const {firstname, lastname, email} = this.state;
+		const {id} = this.props.profile;
+
 		this.setState({
 			buttonIndicator: <Spinner color={styling.mainColor} />,
 		});
 
-		setTimeout(() => {
+		updateAccountProfile({id, firstname, lastname, email}).then(() => {
 			this.setState({
 				buttonIndicator: <Icon name="check" color={styling.mainColor} size={30} style={{margin: -5}} />
 			});
 
-			const {firstname, lastname, email} = this.state;
 			this.props.updateAccountProfile({
 				name: `${firstname} ${lastname}`,
 				firstname,
 				lastname,
 				email,
 			});
-		}, 1000);
+		})
+		.catch(({response: {data}}) => this.setState({errors: data[0], buttonIndicator: null}));
 	}
 
 	/**
@@ -100,7 +101,7 @@ class AccountProfile extends Component {
 	 * @return {ReactElement} Markup
 	 */
 	render() {
-		const {email, firstname, lastname, buttonIndicator} = this.state;
+		const {email, firstname, lastname, buttonIndicator, errors} = this.state;
 		const {navigation} = this.props;
 
 		return (
@@ -133,6 +134,8 @@ class AccountProfile extends Component {
 								returnKeyType="done"
 								value={firstname.replace(/[^A-Za-z\s-]+/gi,'')}
 								onChangeText={(firstname) => this.setState({firstname})}
+								hasError={errors.field == 'firstname'}
+								hint={errors.field == 'firstname' ? errors.message : null}
 							/>
 						</View>	
 						<View style={[style.inputContainer]}>
@@ -146,6 +149,8 @@ class AccountProfile extends Component {
 								returnKeyType="done"
 								value={lastname.replace(/[^A-Za-z\s-]+/gi,'')}
 								onChangeText={(lastname) => this.setState({lastname})}
+								hasError={errors.field == 'lastname'}
+								hint={errors.field == 'lastname' ? errors.message : null}
 							/>
 						</View>	
 						<View style={[style.inputContainer]}>
@@ -160,6 +165,8 @@ class AccountProfile extends Component {
 								returnKeyType="done"
 								value={email}
 								onChangeText={(email) => this.setState({email})}
+								hasError={errors.field == 'email'}
+								hint={errors.field == 'email' ? errors.message : null}
 							/>
 						</View>
 					</View>
