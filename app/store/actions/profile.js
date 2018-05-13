@@ -64,5 +64,15 @@ export default class Profile {
 			type: this.UPDATE_SUBSCRIPTION_STATUS,
 			status,
 		};
-	}	
+	}
+
+	/**
+	 * Return an undefined action in order to reset the state to initial value
+	 * @return {Object} 
+	 */
+	static resetState() {
+		return {
+			type: '',
+		};
+	}
 }
