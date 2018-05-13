@@ -53,3 +53,13 @@ export function updateAccountProfile(profile) {
 	const {token} = store.getState().profile.auth;
 	return axios.put(`${API_URL}/users/${profile.id}`, profile, authHeaders(token));
 }
+
+
+/**
+ * WeCare contact endpoints
+ */
+
+export function loadWeCareContacts() {	
+	const {token} = store.getState().profile.auth;
+	return axios.get(`${API_URL}/wecare`, authHeaders(token));
+}
