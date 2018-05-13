@@ -12,6 +12,13 @@ const initialState = {
 
 export default function wecare(state = initialState, action) {
 	switch(action.type) {
+		
+		case WeCareAction.SET_CONTACTS:
+			return {
+				...state,
+				contacts: action.contacts,
+			};
+
 		case WeCareAction.ADD_NEW_CONTACT:
 			return {
 				...state,

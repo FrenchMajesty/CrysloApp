@@ -1,8 +1,21 @@
 export default class WeCare {
 
+	static SET_CONTACTS = 'SET_CONTACTS';
 	static ADD_NEW_CONTACT = 'ADD_NEW_CONTACT';
 	static UPDATE_CONTACT = 'UPDATE_CONTACT';
 	static DELETE_CONTACT = 'DELETE_CONTACT';
+
+	/**
+	 * Return an action to add set the list of WeCare contacts
+	 * @param {Array} contacts   The list of contacts
+	 * @return {Object} 
+	 */
+	static setContacts(contacts) {
+		return {
+			type: this.SET_CONTACTS,
+			contacts,
+		};
+	}
 
 	/**
 	 * Return an action to add a new WeCare contact
