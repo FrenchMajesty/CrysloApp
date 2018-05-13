@@ -8,8 +8,12 @@ const initialState = {
 		},
 		configs: {
 			heart: {
-				min: 65,
-				max: 105,
+				min: 0,
+				max: 0,
+			},
+			breath: {
+				min: 0,
+				max: 0,
 			},
 		},
 	},
