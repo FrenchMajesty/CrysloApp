@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo';
+import { connect } from 'react-redux';
+import ProfileAction from 'app/store/actions/profile';
 import RoundedButton from 'app/components/common/Button/RoundedButton';
 import Input from 'app/components/common/Input/TextWithIcon/';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -8,6 +10,7 @@ import IosIcon from 'react-native-vector-icons/Ionicons';
 import styling from 'app/config/styling'; 
 import style from '../style';
 
+import { login } from 'app/lib/api';
 
 class Login extends Component {
 
@@ -19,7 +22,7 @@ class Login extends Component {
 
 		this.state = this.getInitialState();
 
-		this._onSignOn = this._onSignOn.bind(this);
+		this.onSignOn = this.onSignOn.bind(this);
 	}
 
 	/**
@@ -28,15 +31,28 @@ class Login extends Component {
 	 */
 	getInitialState() {
 		return {
-			email: '',
-			password: '',
+			email: 'c@cool.com',
+			password: '123',
 			passwordIsHidden: true,
+			errors: {},
 		};
 	}
 
-	_onSignOn() {
+	/**
+	 * Send the user's credentials to the server for authentication
+	 * @return {Void} 
+	 */
+	onSignOn() {
 		const {navigate} = this.props.screenProps.authNav;
-		navigate('App');
+		const {email, password} = this.state;
+
+		login({email, password}).then(({data: {token}}) => {
+			this.props.updateAuthToken(token);
+			navigate('App');
+		})
+		.catch(({response: {data}}) => {
+			alert(data[0].message);
+		});
 	}
 
 	/**
@@ -89,7 +105,7 @@ class Login extends Component {
 							<RoundedButton
 								style={[style.submitButton]}
 								text="Sign In"
-								onPress={this._onSignOn}
+								onPress={this.onSignOn}
 							/>
 						</View>
 						{/*<View style={[style.touchId]}>
@@ -119,4 +135,24 @@ class Login extends Component {
 	}
 }
 
-export default Login;
+/**
+ * Map the redux store's state to the component's props
+ * @param  {String} store.profile.auth.token The JWT token of the signed in user
+ * @return {Object}                  
+ */
+const mapStateToProps = ({profile: {auth: {token}}}) => ({
+		token,
+});
+
+/**
+ * Map the store's action dispatcher to the component's props
+ * @param  {Function} dispatch The dispatch function
+ * @return {Object}           
+ */
+const mapDispatchToProps = (dispatch) => ({
+	updateAuthToken: (token) => {
+		dispatch(ProfileAction.updateAuthToken(token));
+	},
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
