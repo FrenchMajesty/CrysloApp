@@ -18,21 +18,22 @@ export function validateNumberForgotPwd(number) {
 	return axios.post(`${API_URL}/validate/number/forgotpwd`, {number});
 }
 
-export function verifyCode({number, code}) {
-	return axios.post(`${API_URL}/validate/verify`, {number, code});
+export function verifyCode(data) {
+	return axios.post(`${API_URL}/validate/verify`, data);
 }
 
 /**
  * Auth endpoints
  */
 
-export function signUp({email, password, number}) {	
-	return axios.post(`${API_URL}/users`, {number, password, email});
+export function signUp(data) {	
+	return axios.post(`${API_URL}/users`, data);
 }
 
-export function login({email, password}) {	
-	return axios.post(`${API_URL}/login`, {password, email});
+export function login(data) {	
+	return axios.post(`${API_URL}/login`, data);
 }
+
 
 /**
  * Account actions endpoints
