@@ -38,16 +38,20 @@ class PhoneNumberVerification extends Component {
 	 */
 	onButtonPress() {
 		const {number} = this.state;
-		const {purpose, setNumber} = this.props;
+		const {purpose, setNumber, setUserId} = this.props;
 
 		this.setState({isSubmitting: true});
 
 		// Submit the number to different endpoints based on purpose of verification
 		const func = purpose == 'signup' ? validateNumberSignUp : validateNumberForgotPwd;
-		func(number).then(() => {
+		func(number).then(({data}) => {
 
 			this.setState({isSubmitting: false});
 			setNumber(number);
+
+			if(purpose == 'reset-pwd') {
+				setUserId(data.id);
+			}
 		})
 		.catch(({response: {data}}) => this.setState({errors: data[0], isSubmitting: false}));
 	}
@@ -106,6 +110,9 @@ class PhoneNumberVerification extends Component {
 const mapDispatchToProps = (dispatch) => ({
 	setNumber: (number) => {
 		dispatch(VerificationAction.setNumber(number));
+	},
+	setUserId: (id) => {
+		dispatch(VerificationAction.setUserId(id));
 	},
 });
 
