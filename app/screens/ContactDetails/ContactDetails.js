@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ScrollView, Text, ActivityIndicator as Spinner } from 'react-native';
+import { View, ScrollView, Text, ActivityIndicator as Spinner, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import BtnIcon from 'react-native-vector-icons/MaterialIcons';
 import WeCareAction from 'app/store/actions/wecare';
@@ -28,6 +28,7 @@ class ContactDetails extends Component {
 		this.onUpdate = this.onUpdate.bind(this);
 		this.onDelete = this.onDelete.bind(this);
 		this.navigateBack = this.navigateBack.bind(this);
+		this.confirmPopup = this.confirmPopup.bind(this);
 		this.renderEditButtons = this.renderEditButtons.bind(this);
 		this.renderCreateButton = this.renderCreateButton.bind(this);
 	}
@@ -152,6 +153,17 @@ class ContactDetails extends Component {
 	}
 
 	/**
+	 * Security popup to confirm the action to delete the contact
+	 * @return {Void} 
+	 */
+	confirmPopup() {
+		Alert.alert('Hold on!','You are about to delete this contact. Are you sure you want to this? This action is irreversible.', [
+			{text: 'Cancel', style: 'cancel', onPress: null},
+			{text: 'Yes', onPress: this.onDelete },
+		]);
+	}
+
+	/**
 	 * Render the buttons when editing a person's contact informations
 	 * @return {ReactElement} 
 	 */
@@ -182,7 +194,7 @@ class ContactDetails extends Component {
 					<Button 
 						color="red" 
 						style={{width: '80%', marginTop: 20}} 
-						onPress={this.onDelete}
+						onPress={this.confirmPopup}
 					>
 						<Icon name="trash" color="red" size={19} />
 					</Button>
