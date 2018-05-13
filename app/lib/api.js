@@ -69,3 +69,12 @@ export function addWeCareContact(data) {
 	return axios.post(`${API_URL}/wecare`, data, authHeaders(token));
 }
 
+export function updateWeCareContact(data) {	
+	const {token} = store.getState().profile.auth;
+	return axios.put(`${API_URL}/wecare/${data.id}`, data, authHeaders(token));
+}
+
+export function deleteWeCareContact(id) {	
+	const {token} = store.getState().profile.auth;
+	return axios.delete(`${API_URL}/wecare/${id}`, authHeaders(token));
+}
