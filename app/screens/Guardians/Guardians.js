@@ -10,6 +10,8 @@ import isEqual from 'app/lib/form/equality';
 import styling from 'app/config/styling';
 import style from './style';
 
+import { updateGuardiansConfigs } from 'app/lib/api';
+
 class Guardians extends Component {
 
 	/**
@@ -21,8 +23,9 @@ class Guardians extends Component {
 		this.state = this.getInitialState();
 
 		this.onSave = this.onSave.bind(this);
-		this.renderAlerts = this.renderAlerts.bind(this);
+		this.renderAlertsSettings = this.renderAlertsSettings.bind(this);
 		this.renderHeartSettings = this.renderHeartSettings.bind(this);
+		this.renderBreathSettings = this.renderBreathSettings.bind(this);
 	}
 
 	/**
@@ -31,10 +34,12 @@ class Guardians extends Component {
 	 */
 	getInitialState() {
 		return {
-			notifyMe: null,
-			notifyWeCare: null,
-			heartMin: null,
-			heartMax: null,
+			notify_self: null,
+			notify_wecare: null,
+			heart_min: null,
+			heart_max: null,
+			breath_min: null,
+			breath_max: null,
 			isSubmitting: false,
 			buttonIndicator: null,
 		};
@@ -47,10 +52,12 @@ class Guardians extends Component {
 		const {notify, configs} = this.props.guardians;
 
 		this.setState({
-			notifyMe: notify.self,
-			notifyWeCare: notify.wecare,
-			heartMin: configs.heart.min,
-			heartMax: configs.heart.max,
+			notify_self: notify.self,
+			notify_wecare: notify.wecare,
+			heart_min: configs.heart.min,
+			heart_max: configs.heart.max,
+			breath_min: configs.breath.min,
+			breath_max: configs.breath.max,
 		});
 	}
 
@@ -84,48 +91,59 @@ class Guardians extends Component {
 			buttonIndicator: <Spinner color="#fff" />,
 		});
 
-		setTimeout(() => {
+		const {notify_self, notify_wecare, heart_min, heart_max, breath_min, breath_max} = this.state;
+		const config = {
+			notify_self,
+			notify_wecare,
+			heart_min,
+			heart_max,
+			breath_min,
+			breath_max,
+		};
+
+		updateGuardiansConfigs(config).then(() => {
 			this.setState({
 				buttonIndicator: <Icon name="check" color="#fff" size={30} style={{margin: -5}} />,
 			});
 
 			this.props.updateGuardiansConfigs({
 				notify: {
-					self: this.state.notifyMe,
-					wecare: this.state.notifyWeCare,
+					self: this.state.notify_self,
+					wecare: this.state.notify_wecare,
 				},
 				configs: {
 					heart: {
-						min: this.state.heartMin,
-						max: this.state.heartMax,
+						min: this.state.heart_min,
+						max: this.state.heart_max,
 					},
 				}
 			});
-		}, 1000);
+		})
+		.catch(({response}) => console.log(response));
 	}
 
 	/**
 	 * Render the alert section of the form
 	 * @return {ReactElement}
 	 */
-	renderAlerts() {
-		const {notifyMe, notifyWeCare} = this.state;
+	renderAlertsSettings() {
+		const {notify_self, notify_wecare} = this.state;
 		return (
 			<View>
 				<Text style={[styling.text.prop.heavy, style.sectionTitle]}>Alerts</Text>
 				<View style={[style.alertOption]}>
 					<Switch
 						onTintColor={styling.mainColor}
-						onValueChange={() => this.setState({notifyMe: !notifyMe})}
-						value={notifyMe}
+						onValueChange={() => this.setState({notify_self: !notify_self})}
+						value={notify_self}
 					/>
 					<Text style={[styling.text.prop.light, style.alertText]}>Notify me</Text>
 				</View>
 				<View style={[style.alertOption]}>
 					<Switch
 						onTintColor={styling.mainColor}
-						onValueChange={() => this.setState({notifyWeCare: !notifyWeCare})}
-						value={notifyWeCare}
+						onValueChange={() => this.setState({notify_wecare: !notify_wecare})}
+						value={notify_wecare}
 					/>
 					<Text style={[styling.text.prop.light, style.alertText]}>Notify my emergency contacts</Text>
 				</View>
@@ -138,7 +156,7 @@ class Guardians extends Component {
 	 * @return {ReactElement} 
 	 */
 	renderHeartSettings() {
-		const {heartMin, heartMax} = this.state;
+		const {heart_min, heart_max} = this.state;
 
 		return (
 			<View>
@@ -147,26 +165,67 @@ class Guardians extends Component {
 				{/*<Text style={[styling.text.prop.light, style.sectionSubtitle]}>Systollic</Text>*/}
 				<View style={[style.sliderContainer]}>	
 					<View style={[style.sliderWrapper]}>
-						<Text style={[styling.text.prop.heavy, style.sliderValue]}>{heartMin}</Text>
+						<Text style={[styling.text.prop.heavy, style.sliderValue]}>{heart_min}</Text>
 						<Slider 
 							label="Minimum"
 							minimumValue={30}
 							maximumValue={80}
 							step={5}
-							value={heartMin}
-							onValueChange={(newVal) => this.setState({heartMin: newVal})}
+							value={heart_min}
+							onValueChange={(newVal) => this.setState({heart_min: newVal})}
 							style={{flex: 1}}
 						/>
 					</View>
 					<View style={[style.sliderWrapper]}>
-						<Text style={[styling.text.prop.heavy, style.sliderValue]}>{heartMax}</Text>
+						<Text style={[styling.text.prop.heavy, style.sliderValue]}>{heart_max}</Text>
 						<Slider 
 							label="Maximum"
 							minimumValue={60}
 							maximumValue={180}
 							step={5}
-							value={heartMax}
-							onValueChange={(newVal) => this.setState({heartMax: newVal})}
+							value={heart_max}
+							onValueChange={(newVal) => this.setState({heart_max: newVal})}
+							style={{flex: 1}}
+						/>
+					</View>
+				</View>
+			</View>
+		);
+	}
+
+	/**
+	 * Render the breathing rate's section of the form
+	 * @return {ReactElement} 
+	 */
+	renderBreathSettings() {
+		const {breath_min, breath_max} = this.state;
+
+		return (
+			<View>
+				<Text style={[styling.text.prop.heavy, style.sectionTitle]}>Breathing Rate</Text>
+				
+				<View style={[style.sliderContainer]}>	
+					<View style={[style.sliderWrapper]}>
+						<Text style={[styling.text.prop.heavy, style.sliderValue]}>{breath_min}</Text>
+						<Slider 
+							label="Minimum"
+							minimumValue={10}
+							maximumValue={30}
+							step={2}
+							value={breath_min}
+							onValueChange={(newVal) => this.setState({breath_min: newVal})}
+							style={{flex: 1}}
+						/>
+					</View>
+					<View style={[style.sliderWrapper]}>
+						<Text style={[styling.text.prop.heavy, style.sliderValue]}>{breath_max}</Text>
+						<Slider 
+							label="Maximum"
+							minimumValue={20}
+							maximumValue={50}
+							step={2}
+							value={breath_max}
+							onValueChange={(newVal) => this.setState({breath_max: newVal})}
 							style={{flex: 1}}
 						/>
 					</View>
@@ -196,8 +255,9 @@ class Guardians extends Component {
 				</View>
 
 				<ScrollView style={[styling.screenPadding]}>
-					{this.renderAlerts()}
+					{this.renderAlertsSettings()}
 					{this.renderHeartSettings()}
+					{this.renderBreathSettings()}
 
 					<View style={[style.buttonContainer]}>
 						{buttonIndicator ?
