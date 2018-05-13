@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { connect } from 'react-redux';
+import VerificationAction from 'app/store/actions/verifyNumber';
 import RoundedButton from 'app/components/common/Button/RoundedButton/';
 import Input from 'app/components/common/Input/TextWithIcon/';
 import IconButton from 'app/components/common/Button/IconButton/';
 import styling from 'app/config/styling'; 
 import style from '../style';
+
+import { resetPassword } from 'app/lib/api';
 
 class SignUp extends Component {
 
@@ -18,7 +21,7 @@ class SignUp extends Component {
 
 		this.state = this.getInitialState();
 
-		this._onSubmit = this._onSubmit.bind(this);
+		this.onSubmit = this.onSubmit.bind(this);
 	}
 
 	/**
@@ -30,20 +33,23 @@ class SignUp extends Component {
 			password: '',
 			repeated: '',
 			isSubmitting: false,
+			errors: {},
 		};
 	}
 
 	/**
-	 * When the form is submitted send the data to the API for updating the password
+	 * Send the new password data to the API for updating
 	 * @return {Void} 
 	 */
-	_onSubmit() {
+	onSubmit() {
+		const {password, repeated: password_confirmation} = this.state;
+		const {id} = this.props;
 		this.setState({isSubmitting: true});
 
-		setTimeout(() => {
-			this.setState({isSubmitting: false});
-			// make api calls to set new password then redirect to dashboard...
-		}, 1000);
+		resetPassword({id, password, password_confirmation}).then(() => {
+			this.props.navigation.navigate('Login');
+		})
+		.catch(({response: {data}}) => this.setState({errors: data[0], isSubmitting: false}));
 	}
 
 	/**
@@ -51,9 +57,9 @@ class SignUp extends Component {
 	 * @return {ReactElement} 
 	 */
 	render() {
-		const {password ,repeated, isSubmitting} = this.state;
+		const {password ,repeated, isSubmitting, errors} = this.state;
 		const {navigation} = this.props;
-
+		const pwdHint = 'Make sure your password is at least 6 characters long for security.';
 		return (
 			<View style={[styling.statusBarPadding]}>
 				<IconButton
@@ -84,7 +90,8 @@ class SignUp extends Component {
 								returnKeyType="done"
 								value={password}
 								onChangeText={(password) => this.setState({password})}
-								hint="Make sure your password is at least 6 characters long for security."
+								hasError={errors.field ? true : false}
+								hint={errors.message ? errors.message : pwdHint}
 							/>
 						</View>
 						<View style={[style.inputContainer]}>
@@ -112,7 +119,7 @@ class SignUp extends Component {
 									style={[style.submitButton]}
 									inverted={true}
 									text="Reset my password"
-									onPress={this._onSubmit} />)
+									onPress={this.onSubmit} />)
 							}
 						</View>
 					</View>
@@ -123,4 +130,24 @@ class SignUp extends Component {
 	}
 }
 
-export default connect(null)(SignUp);
+/**
+ * Map the redux store's state to the component's props
+ * @param  {Object} store.verifyNumber.id The user's account ID
+ * @return {Object}                  
+ */
+const mapStateToProps = ({verifyNumber: {id}}) => ({
+		id,
+});
+
+/**
+ * Map the store's action dispatcher to the component's props
+ * @param  {Function} dispatch The dispatch function
+ * @return {Object}           
+ */
+const mapDispatchToProps = (dispatch) => ({
+	setUserId: (id) => {
+		dispatch(VerificationAction.setUserId(id));
+	},
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
