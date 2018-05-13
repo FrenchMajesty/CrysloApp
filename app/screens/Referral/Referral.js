@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, Image, Share } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { connect } from 'react-redux';
 import Header from 'app/components/Header/';
 import Card from 'app/components/common/Card/';
 import Link from 'app/components/common/Link/';
@@ -53,7 +54,7 @@ class Referral extends Component {
 	 * @return {ReactElement} 
 	 */
 	render() {
-		const {navigation} = this.props;
+		const {navigation, referralId} = this.props;
 
 		return (
 			<View
@@ -77,7 +78,7 @@ class Referral extends Component {
 
 					<Card card={[{marginTop: 40}]}>
 						<Text style={[style.text, style.subtitle]}>Your Referral Code:</Text>
-						<Text style={[style.text, style.code]}>ABC123</Text>
+						<Text style={[style.text, style.code]}>{referralId}</Text>
 
 						<View style={[style.buttonContainer]}>
 							<Button
@@ -104,4 +105,13 @@ class Referral extends Component {
 	}
 }
 
-export default Referral;
+/**
+ * Map the redux store's state to the component's props
+ * @param  {String} store.profile.account.profile The User model of the current customer
+ * @return {Object}                  
+ */
+const mapStateToProps = ({profile: {account: {profile}}}) => ({
+		referralId: profile.referral_id,
+});
+
+export default connect(mapStateToProps, null)(Referral);
