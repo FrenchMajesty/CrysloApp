@@ -46,7 +46,7 @@ class Login extends Component {
 	 * @return {Void}            
 	 */
 	loadUserData(callback) {
-		Promise.all([loadProfile('?withContact=true&withGuardians=true')])
+		loadProfile('?withContact=true&withGuardians=true')
 		.then((res) => {
 			const {data: {
 				id,
@@ -57,7 +57,7 @@ class Login extends Component {
 				number,
 				contacts,
 				guardians
-			}} = res[0];
+			}} = res;
 
 			this.props.setContacts(contacts);
 			this.props.updateAccountProfile({id, email, referral_id, number});
