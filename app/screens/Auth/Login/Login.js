@@ -46,12 +46,22 @@ class Login extends Component {
 	 * @return {Void}            
 	 */
 	loadUserData(callback) {
-		Promise.all([loadProfile('?withContact=true')])
+		Promise.all([loadProfile('?withContact=true&withGuardians=true')])
 		.then((res) => {
-			const {data: {id, firstname, lastname, email, referral_id, number, contacts}} = res[0];
+			const {data: {
+				id,
+				firstname,
+				lastname,
+				email,
+				referral_id,
+				number,
+				contacts,
+				guardians
+			}} = res[0];
 
 			this.props.setContacts(contacts);
 			this.props.updateAccountProfile({id, email, referral_id, number});
+			this.props.updateGuardiansConfigs(guardians);
 
 			// Since the first & last name are optional check they exist before setting them
 			if(firstname && lastname) {
@@ -184,6 +194,9 @@ const mapDispatchToProps = (dispatch) => ({
 	},
 	updateAccountProfile: (profile) => {
 		dispatch(ProfileAction.updateAccountProfile(profile));
+	},
+	updateGuardiansConfigs: (configs) => {
+		dispatch(ProfileAction.updateGuardiansConfigs(configs));
 	},
 	setContacts: (contacts) => {
 		dispatch(WeCareAction.setContacts(contacts));
