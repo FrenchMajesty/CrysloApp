@@ -12,7 +12,7 @@ import isEqual from 'app/lib/form/equality';
 import styling from 'app/config/styling';
 import style from './style';
 
-import { addWeCareContact } from 'app/lib/api';
+import { addWeCareContact, updateWeCareContact, deleteWeCareContact } from 'app/lib/api';
 
 class ContactDetails extends Component {
 
@@ -81,7 +81,7 @@ class ContactDetails extends Component {
 	}
 
 	/**
-	 * Send the form fields to the API for insertion
+	 * Send the form fields to the server for insertion
 	 * @return {Void} 
 	 */
 	onCreate() {
@@ -103,7 +103,7 @@ class ContactDetails extends Component {
 	}
 
 	/**
-	 * On submit, update that person contact's information
+	 * Send that contact's new info to the server for updating
 	 * @return {Void} 
 	 */
 	onUpdate() {
@@ -111,36 +111,36 @@ class ContactDetails extends Component {
 			buttonIndicator: <Spinner color="#fff" />,
 		});
 
-		setTimeout(() => { 
-			const {navigation} = this.props;
-
-			this.props.updateContact({id, name, number});
+		const {id, name, number} = this.state;
+		updateWeCareContact({id, name, number}).then(() => {
 
 			this.setState({
 				buttonIndicator: <BtnIcon name="check" color="#fff" size={30} style={{margin: -5}} />,
 			});
 
+			this.props.updateContact({id, name, number});
 			this.navigateBack();
-		}, 1000);
+		})
+		.catch(({response: {data}}) => this.setState({errors: data[0]}));
 	}
 
 	/**
-	 * On delete, get confirmation and remove that person as an emergency contact
+	 * Send a request to remove that person as a contact to the server
 	 * @return {Void} 
 	 */
 	onDelete() {
 		this.setState({
 			deleteBtnIndicator: <Spinner color="red" />,
 		});
+		
+		const {id} = this.state;
+		deleteWeCareContact(id).then(() => {
 
-		setTimeout(() => { 
-			const {id} = this.state;
-			const {navigation} = this.props;
-			
-			this.props.deleteContact(id);
 			this.setState({deleteBtnIndicator: null});
+			this.props.deleteContact(id);
 			this.navigateBack();
-		}, 1000);
+		})
+		.catch(({response: {data}}) => this.setState({errors: data[0]}));
 	}
 
 	/**
@@ -226,7 +226,7 @@ class ContactDetails extends Component {
 		const {mode} = navigation.state.params;
 		const formattedNum = new PhoneNumber(number, 'US').getNumber('national');
 		const numberHint = 'Only valid U.S. numbers are supported for now.';
-		
+
 		return (
 			<View>
 				<View style={{backgroundColor: '#fff', height: 30}}>
