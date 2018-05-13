@@ -7,6 +7,7 @@ import CommonText from 'app/components/common/CommonText/';
 import PhoneNumberVerification from 'app/container/PhoneNumberVerification/';
 import ValidateVerificationCode from 'app/container/ValidateVerificationCode/';
 import VerificationAction from 'app/store/actions/verifyNumber';
+import ProfileAction from 'app/store/actions/profile';
 import SignUpAction from 'app/store/actions/signup';
 import styling from 'app/config/styling';
 import style from '../style';
@@ -43,12 +44,13 @@ class SignUpStep2 extends Component {
 	 * @return {Void} 
 	 */
 	onSuccess() {
-		const {email, password, number, navigation, setNumber, setCredentials} = this.props; 
+		const {email, password, number, navigation, setNumber, setCredentials, setAuthToken} = this.props; 
 
-		signUp({email, password, number}).then(() => {
+		signUp({email, password, number}).then(({data: {token}}) => {
 
 			setNumber('');
 			setCredentials({email: '', password: ''});
+			setAuthToken(token);
 			navigation.navigate('SignUpStep3');
 		})
 		.catch(({response}) => {
@@ -108,6 +110,9 @@ const mapDispatchToProps = (dispatch) => ({
 	},
 	setCredentials: (details) => {
 		dispatch(SignUpAction.setCredentials(details));
+	},
+	setAuthToken: (token) => {
+		dispatch(ProfileAction.setAuthToken(token));
 	},
 });
 
