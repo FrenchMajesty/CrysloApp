@@ -12,6 +12,8 @@ import isEqual from 'app/lib/form/equality';
 import styling from 'app/config/styling';
 import style from './style';
 
+import { addWeCareContact } from 'app/lib/api';
+
 class ContactDetails extends Component {
 
 	/**
@@ -41,6 +43,7 @@ class ContactDetails extends Component {
 			number: '',
 			buttonIndicator: null,
 			deleteBtnIndicator: null,
+			errors: {},
 		};
 	}
 
@@ -78,7 +81,7 @@ class ContactDetails extends Component {
 	}
 
 	/**
-	 * On submit, create a new WeCare contact point
+	 * Send the form fields to the API for insertion
 	 * @return {Void} 
 	 */
 	onCreate() {
@@ -86,22 +89,17 @@ class ContactDetails extends Component {
 			buttonIndicator: <Spinner color="#fff" />,
 		});
 
-		setTimeout(() => {
-			const {name, number} = this.state;
-			const {navigation} = this.props;
-
-			this.props.addNewContact({
-				name,
-				number,
-				id: Date.now(), // until I can get real IDs from the server
-			});
+		const {name, number} = this.state;
+		addWeCareContact({name, number}).then(({data: {id}}) => {
 
 			this.setState({
 				buttonIndicator: <BtnIcon name="check" color="#fff" size={30} style={{margin: -5}} />,
 			});
 
+			this.props.addNewContact({id, name, number});
 			this.navigateBack();
-		}, 1000);
+		})
+		.catch(({response: {data}}) => this.setState({errors: data[0]}));
 	}
 
 	/**
@@ -114,7 +112,6 @@ class ContactDetails extends Component {
 		});
 
 		setTimeout(() => { 
-			const {id, name, number} = this.state;
 			const {navigation} = this.props;
 
 			this.props.updateContact({id, name, number});
@@ -141,9 +138,7 @@ class ContactDetails extends Component {
 			const {navigation} = this.props;
 			
 			this.props.deleteContact(id);
-
 			this.setState({deleteBtnIndicator: null});
-
 			this.navigateBack();
 		}, 1000);
 	}
@@ -226,11 +221,12 @@ class ContactDetails extends Component {
 	 * @return {ReactElement} 
 	 */
 	render() {
-		const {name, number} = this.state;
+		const {name, number, errors} = this.state;
 		const {navigation} = this.props;
 		const {mode} = navigation.state.params;
 		const formattedNum = new PhoneNumber(number, 'US').getNumber('national');
-
+		const numberHint = 'Only valid U.S. numbers are supported for now.';
+		
 		return (
 			<View>
 				<View style={{backgroundColor: '#fff', height: 30}}>
@@ -255,6 +251,8 @@ class ContactDetails extends Component {
 								returnKeyType="done"
 								value={name}
 								onChangeText={(name) => this.setState({name})}
+								hasError={errors.field == 'name'}
+								hint={errors.field == 'name' ? errors.message : null}
 							/>
 						</View>	
 						<View style={[style.inputContainer]}>
@@ -267,9 +265,10 @@ class ContactDetails extends Component {
 								placeholder={(name.length > 0 ? `Enter ${name}'s` : 'Enter your contact\'s') + ' phone number'}
 								returnKeyType="done"
 								keyboardType="numeric"
-								hint="Only valid U.S. numbers are supported for now."
 								value={formattedNum}
 								onChangeText={(number) => this.setState({number})}
+								hasError={errors.field == 'number'}
+								hint={errors.field == 'number' ? errors.message : numberHint}
 							/>
 						</View>
 
