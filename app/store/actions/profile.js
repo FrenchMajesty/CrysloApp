@@ -14,8 +14,8 @@ export default class Profile {
 		return {
 			type: this.UPDATE_GUARDIANS_CONFIGS,
 			notify: {
-				self: settings.notify_self,
-				wecare: settings.notify_wecare,
+				self: Boolean(settings.notify_self),
+				wecare: Boolean(settings.notify_wecare),
 			},
 			configs: {
 				heart: {
