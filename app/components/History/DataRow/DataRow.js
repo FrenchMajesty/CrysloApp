@@ -48,10 +48,11 @@ const DataRow = ({metric: {name, type, value}, onPress}) => {
 							style={[style.metricValue]}
 						>{value} </CommonText>
 
-						<CommonText
-							weight="light"
-							color="white"
-						>{count}</CommonText>
+						{count && 
+							<CommonText
+								weight="light"
+								color="white"
+							>{count}</CommonText>}
 					</View>
 					{
 						count == 'hours' ? 
@@ -71,7 +72,11 @@ DataRow.propTypes = {
 		type: string.isRequired,
 		value: string.isRequired,
 	}).isRequired,
-	onPress: func.isRequired,
+	onPress: func,
+};
+
+DataRow.defaultProps = {
+	onPress: null,
 };
 
 export default DataRow;
