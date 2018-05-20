@@ -8,6 +8,8 @@ import ValidateVerificationCode from 'app/container/ValidateVerificationCode/';
 import styling from 'app/config/styling';
 import style from '../style';
 
+import { validateNumberForgotPwd } from 'app/lib/api';
+
 class ForgotPassword extends Component {
 
 	/**
@@ -17,13 +19,35 @@ class ForgotPassword extends Component {
 		super(props);
 
 		this.onSuccess = this.onSuccess.bind(this);
+		this.onSendCode = this.onSendCode.bind(this);
 	}
 
+	/**
+	 * Move on to the next step when the verification code is verified
+	 * @return {Void} 
+	 */
 	onSuccess() {
 		const {navigation} = this.props;
 
 		this.props.setNumber('');
 		navigation.navigate('ResetPassword');
+	}
+
+	/**
+	 * Make a call to the API to text a verification code to the number
+	 * @param  {String} number The number where to send the code
+	 * @param  {Function} callb  The callback function
+	 * @return {Void}        
+	 */
+	onSendCode(number, callb) {
+		const callback = callb || (() => {}) // default callback value
+
+		validateNumberForgotPwd(number).then(({data}) => {
+			this.props.setNumber(number);
+			this.props.setUserId(data.id);
+			callback();
+		})
+		.catch(({response: {data}}) => data[0] ? callback(data[0]) : callback());
 	}
 
 	/**
@@ -42,9 +66,16 @@ class ForgotPassword extends Component {
 				/>
 				<View style={[{alignSelf: 'center', top: '20%'}]}>
 					{number ?
-						<ValidateVerificationCode purpose="reset-pwd" onSuccess={this.onSuccess} />
+						<ValidateVerificationCode
+							purpose="reset-pwd"
+							onSuccess={this.onSuccess}
+							onResendCode={this.onSendCode}
+						/>
 					: 
-						<PhoneNumberVerification purpose="reset-pwd" />
+						<PhoneNumberVerification 
+							purpose="reset-pwd" 
+							onSendCode={this.onSendCode}
+						/>
 					}
 				</View>
 			</View>
