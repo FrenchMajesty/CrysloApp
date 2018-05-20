@@ -4,7 +4,7 @@ import { Agenda } from 'react-native-calendars';
 import moment from 'moment';
 import Header from 'app/components/Header/';
 import CommonText from 'app/components/common/CommonText/';
-import DataRow from 'app/components/History/DataRow/DataRow/';
+import DataRow from 'app/components/History/DataRow/';
 import styling from 'app/config/styling';
 import style from './style';
 
