@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { View, Text, Image } from 'react-native';
 import distanceInWords from 'date-fns/distance_in_words';
 import Card from 'app/components/common/Card/';
 import FadeInView from 'app/container/FadeInView/';
 import style from './style';
 
-export default class VitalCard extends React.Component {
+class VitalCard extends Component {
 
 	/**
 	 * Component constructor
@@ -30,14 +30,14 @@ export default class VitalCard extends React.Component {
 	}
 
 	/**
-	 * Set the time value and create the time updating interval at every second
+	 * Set the time value and create the time updating interval at every minute
 	 */
 	componentWillMount() {
 		const {item: {lastReading}, icon: {uri: url}} = this.props;
 
 		if(lastReading) {
 			const time = distanceInWords(lastReading, new Date());
-			const intervalId = setInterval(this.timer, 60000);
+			const intervalId = setInterval(this.timer, 1000 * 60);
 
 			this.setState({time, intervalId});
 		}
@@ -46,14 +46,14 @@ export default class VitalCard extends React.Component {
 	}
 
 	/**
-	 * Set the time value and create the time updating interval at every second
+	 * Set the time value and create the time updating interval at every minute
 	 */
 	componentWillReceiveProps({item: {lastReading}}) {
 		const {intervalId} = this.state;
 
 		if(!intervalId && lastReading) {
 			const time = distanceInWords(lastReading, new Date());
-			const newIntervalId = setInterval(this.timer, 60000);
+			const newIntervalId = setInterval(this.timer, 1000 * 60);
 			clearInterval(intervalId);
 
 			this.setState({time, intervalId: newIntervalId});
@@ -67,17 +67,21 @@ export default class VitalCard extends React.Component {
 		clearInterval(this.state.intervalId);
 	}
 
+	/**
+	 * On Interval loop, update the time in the state
+	 * @return {Void} 
+	 */
 	timer() {
 		const {lastReading} = this.props.item;
 		this.setState({time: distanceInWords(lastReading, new Date())});
 	}
 
 	/**
-	 * Render the component
+	 * Render the component markup
 	 * @return {ReactElement} 
 	 */
 	render() {
-		const {children, item, onPress, icon, fadeInDuration, delay} = this.props;
+		const {item, onPress, icon, fadeInDuration, delay} = this.props;
 		const {time} = this.state;
 
 		return (
@@ -94,3 +98,5 @@ export default class VitalCard extends React.Component {
 		);
 	}
 }
+
+export default VitalCard;

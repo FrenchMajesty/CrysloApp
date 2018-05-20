@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, ScrollView, StatusBar } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Header from 'app/components/Header/';
-import VitalCard from './components/VitalCard/';
+import VitalCard from 'app/components/Dashboard/VitalCard/';
 import { connect } from 'react-redux';
 import TrackerAction from 'app/store/actions/trackers';
 import styling from 'app/config/styling';
