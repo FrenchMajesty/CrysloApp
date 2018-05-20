@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
-import { connect } from 'react-redux';
-import VerificationAction from 'app/store/actions/verifyNumber';
 import Input from 'app/components/common/Input/TextWithIcon/';
 import RoundedButton from 'app/components/common/Button/RoundedButton/';
 import PhoneNumber from 'awesome-phonenumber';
 import style from 'app/screens/Auth/style';
-
-import { validateNumberSignUp, validateNumberForgotPwd } from 'app/lib/api';
 
 class PhoneNumberVerification extends Component {
 
@@ -38,22 +34,14 @@ class PhoneNumberVerification extends Component {
 	 */
 	onButtonPress() {
 		const {number} = this.state;
-		const {purpose, setNumber, setUserId} = this.props;
+		const {purpose} = this.props;
 
 		this.setState({isSubmitting: true});
-
-		// Submit the number to different endpoints based on purpose of verification
-		const func = purpose == 'signup' ? validateNumberSignUp : validateNumberForgotPwd;
-		func(number).then(({data}) => {
-
-			this.setState({isSubmitting: false});
-			setNumber(number);
-
-			if(purpose == 'reset-pwd') {
-				setUserId(data.id);
+		this.props.onSendCode(number, (errors) => {
+			if(errors) {
+				this.setState({errors, isSubmitting: false});
 			}
-		})
-		.catch(({response: {data}}) => this.setState({errors: data[0], isSubmitting: false}));
+		}); 
 	}
 
 	/**
@@ -102,18 +90,4 @@ class PhoneNumberVerification extends Component {
 	}
 }
 
-/**
- * Map the store's action dispatcher to the component's props
- * @param  {Function} dispatch The dispatch function
- * @return {Object}           
- */
-const mapDispatchToProps = (dispatch) => ({
-	setNumber: (number) => {
-		dispatch(VerificationAction.setNumber(number));
-	},
-	setUserId: (id) => {
-		dispatch(VerificationAction.setUserId(id));
-	},
-});
-
-export default connect(null, mapDispatchToProps)(PhoneNumberVerification);
+export default PhoneNumberVerification;
