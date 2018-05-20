@@ -1,9 +1,10 @@
 import React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
+import { number, node, object, func } from 'prop-types';
 import * as Animatable from 'react-native-animatable';
 import style from './style';
 
-export default Card = ({children, depth, card, body, animation, onPress}) => {
+const Card = ({children, depth, card, body, animation, onPress}) => {
 
 	const hasLink = onPress ? 0.7 : 1;
 	const getDepthStyle = () => {
@@ -32,4 +33,23 @@ export default Card = ({children, depth, card, body, animation, onPress}) => {
 			</TouchableOpacity>
 		</Animatable.View>
 	)
-}
+};
+
+Card.propTypes = {
+	children: node.isRequired,
+	depth: number,
+	animation: object,
+	body: object,
+	card: object,
+	onPress: func,
+};
+
+Card.defaultProps = {
+	depth: 1,
+	animation: {},
+	body: {},
+	card: {},
+	onPress: null,
+};
+
+export default Card;

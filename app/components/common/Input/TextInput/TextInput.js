@@ -1,22 +1,37 @@
 import React from 'react';
 import { View, Text, TextInput } from 'react-native';
+import { string, bool, object } from 'prop-types';
 import Hint from '../Hint/';
 import styling from 'app/config/styling';
 import style from './style';
 
-const SimpleTextInput = (props) => {
+const SimpleTextInput = ({label, style: customStyle, hint, hasError, ...others}) => {
 
 	return (
 		<View>
-			{props.label ? <Text style={[style.label]}>{props.label}</Text> : null}
+			{label ? <Text style={[style.label]}>{label}</Text> : null}
 			<TextInput
-				{...props}
 				placeholderTextColor={styling.text.gray}
-				style={[style.input, props.style]}
+				style={[style.input, customStyle]}
+				{...others}
 			/>
-			{props.hint ? <Hint text={props.hint} isError={props.hasError} /> : null}
+			{hint ? <Hint text={hint} isError={hasError} /> : null}
 		</View>
 	);
 }
+
+SimpleTextInput.propTypes = {
+	label: string,
+	hint: string,
+	hasError: bool,
+	style: object,
+};
+
+SimpleTextInput.defaultProps = {
+	hasError: false,
+	label: '',
+	hint: '',
+	style: {},
+};
 
 export default SimpleTextInput;

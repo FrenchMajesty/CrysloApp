@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
+import { number, string, object, node } from 'prop-types';
 import Card from 'app/components/common/Card/';
 import style from './style';
 
@@ -20,6 +21,26 @@ const StatsRow = ({rowStyle, depth, label, content, hint, button, animation, ico
 			{button ? <View style={style.button}>{button}</View> : null}
 		</Card>
 	);
+};
+
+StatsRow.propTypes = {
+	label: string.isRequired,
+	content: string.isRequired,
+	depth: number,
+	hint: string,
+	animation: object,
+	rowStyle: object,
+	button: node,
+	icon: node,
+};
+
+StatsRow.defaultProps = {
+	hint: '',
+	depth: null,
+	animation: {},
+	rowStyle: {},
+	button: null,
+	icon: null,
 };
 
 export default StatsRow;

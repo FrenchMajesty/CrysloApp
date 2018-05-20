@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
+import { string, func, bool } from 'prop-types';
 import Icon from 'react-native-vector-icons/Ionicons';
 import style from './style';
 
@@ -21,6 +22,19 @@ const ListItem = ({primaryText, secondaryText, onPress, separator}) => {
 			{separator === false ? null : <View style={[style.separator]} />}
 		</View>
 	);
+};
+
+ListItem.propTypes = {
+	primaryText: string.isRequired,
+	secondaryText: string,
+	onPress: func,
+	separator: bool,
+};
+
+ListItem.defaultProps = {
+	secondaryText: '',
+	onPress: null,
+	separator: true,
 };
 
 export default ListItem;

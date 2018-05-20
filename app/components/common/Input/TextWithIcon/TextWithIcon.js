@@ -1,31 +1,47 @@
 import React, { Component } from 'react';
 import { TextInput, View } from 'react-native';
+import { bool, string, object } from 'prop-types';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Hideo } from 'react-native-textinput-effects';
 import Hint from '../Hint/';
 import style from './style';
 
-export default Text = (props) => {
-
-	const bg = props.backgroundColor ? props.backgroundColor : 'white';
-	const textColor = props.textColor ? props.textColor : 'white';
+const Text = ({backgroundColor, textColor, hint, containerStyle, ...others}) => {
 	
 	return (
-		<View style={[style.inputRow, props.containerStyle]}>
+		<View style={[style.inputRow, containerStyle]}>
 			<Hideo
 				iconClass={Icon}
-				iconBackgroundColor={bg}
+				iconBackgroundColor={backgroundColor}
 				spellCheck={false}
 				autoCapitalize="none"
-				{...props}
-				inputStyle={[style.input, {backgroundColor: bg, color: textColor}]}
+				inputStyle={[style.input, {backgroundColor, color: textColor}]}
+				{...others}
 			/>
-			{props.hint ? 
+			{hint ? 
 				(<Hint 
 					containerStyle={{flex: 1}} 
-					text={props.hint} 
-					isError={props.hasError} 
+					text={hint} 
+					isError={hasError} 
 				/>) : null}
 		</View>
 	);
 };
+
+Text.propTypes = {
+	backgroundColor: string,
+	textColor: string,
+	hint: string,
+	hasError: bool,
+	containerStyle: object,
+};
+
+Text.defaultProps = {
+	containerStyle: {},
+	backgroundColor: 'white',
+	textColor: 'white',
+	hasError: false,
+	hint: '',
+};
+
+export default Text;

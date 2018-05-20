@@ -1,17 +1,13 @@
 import React from 'react';
 import { Text } from 'react-native';
+import { oneOf, string, node, object } from 'prop-types';
 import styling from 'app/config/styling';
 
-export default CommonText = ({weight, color, style, children}) => {
-
-	const fontWeight = weight == 'heavy' ? 'heavy' : 'light';
-	const textColor = {
-		color: color ? color : styling.black,
-	};
+const CommonText = ({weight, color, style, children}) => {
 
 	const styleProps = [
-		styling.text.prop[fontWeight],
-		textColor,
+		styling.text.prop[weight],
+		{color},
 		style,
 	];
 
@@ -21,3 +17,18 @@ export default CommonText = ({weight, color, style, children}) => {
 		</Text>
 	);
 };
+
+CommonText.propTypes = {
+	children: node.isRequired,
+	weight: oneOf(['heavy','light']),
+	color: string,
+	style: object,
+};
+
+CommonText.defaultProps = {
+	weight: 'light',
+	color: styling.black,
+	style: {},
+};
+
+export default CommonText;

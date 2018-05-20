@@ -1,12 +1,13 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
+import { shape, string, func } from 'prop-types';
 import { LinearGradient } from 'expo';
 import CommonText from 'app/components/common/CommonText/';
 import cardStyle from 'app/components/common/Card/style';
 import styling from 'app/config/styling';
 import style from './style';
 
-export default DataRow = ({metric: {name, type, value}, onPress}) => {
+const DataRow = ({metric: {name, type, value}, onPress}) => {
 	
 	let count = null;
 	let gradient = styling.gradient;
@@ -63,3 +64,14 @@ export default DataRow = ({metric: {name, type, value}, onPress}) => {
 		</TouchableOpacity>
 	);
 };
+
+DataRow.propTypes = {
+	metric: shape({
+		name: string.isRequired,
+		type: string.isRequired,
+		value: string.isRequired,
+	}).isRequired,
+	onPress: func.isRequired,
+};
+
+export default DataRow;
