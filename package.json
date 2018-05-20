@@ -29,6 +29,7 @@
     "expo": "^25.0.0",
     "font-awesome": "^4.7.0",
     "indicative": "^5.0.5",
+    "prop-types": "^15.6.1",
     "react": "16.2.0",
     "react-native": "^0.52.2",
     "react-native-animatable": "^1.2.4",
