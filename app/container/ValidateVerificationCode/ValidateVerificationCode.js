@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Alert, View, Text, ActivityIndicator } from 'react-native';
-import { string, func } from 'prop-types';
+import { string, func, oneOf } from 'prop-types';
 import PhoneNumber from 'awesome-phonenumber';
 import { connect } from 'react-redux';
 import VerificationAction from 'app/store/actions/verifyNumber';
@@ -14,7 +14,7 @@ import { validateNumber, verifyCode } from 'app/lib/api';
 class ValidateVerificationCode extends Component {
 
 	static propTypes = {
-		purpose: string.isRequired,
+		purpose: oneOf(['signup','reset-pwd']).isRequired,
 		onResendCode: func,
 	};
 
