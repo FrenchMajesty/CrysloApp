@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
+import { func } from 'prop-types';
 import Input from 'app/components/common/Input/TextWithIcon/';
 import RoundedButton from 'app/components/common/Button/RoundedButton/';
 import PhoneNumber from 'awesome-phonenumber';
 import style from 'app/screens/Auth/style';
 
 class PhoneNumberVerification extends Component {
+
+	static propTypes = {
+		onSendCode: func.isRequired,
+	};
 
 	/** The component's constructor */
 	constructor(props) {

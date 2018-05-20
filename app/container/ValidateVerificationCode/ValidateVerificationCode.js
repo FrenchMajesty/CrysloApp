@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Alert, View, Text, ActivityIndicator } from 'react-native';
+import { string, func } from 'prop-types';
 import PhoneNumber from 'awesome-phonenumber';
 import { connect } from 'react-redux';
 import VerificationAction from 'app/store/actions/verifyNumber';
@@ -11,6 +12,15 @@ import style from 'app/screens/Auth/style';
 import { validateNumber, verifyCode } from 'app/lib/api';
 
 class ValidateVerificationCode extends Component {
+
+	static propTypes = {
+		purpose: string.isRequired,
+		onResendCode: func,
+	};
+
+	static defaultProps = {
+		onResendCode: () => {},
+	};
 
 	/** The component's constructor */
 	constructor(props) {
