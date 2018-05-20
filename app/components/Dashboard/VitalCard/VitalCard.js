@@ -1,11 +1,31 @@
 import React, { Component } from 'react';
 import { View, Text, Image } from 'react-native';
+import { shape, oneOfType, func, number, string } from 'prop-types';
 import distanceInWords from 'date-fns/distance_in_words';
 import Card from 'app/components/common/Card/';
 import FadeInView from 'app/container/FadeInView/';
 import style from './style';
 
 class VitalCard extends Component {
+
+	static propTypes = {
+		item: shape({
+			name: string.isRequired,
+			value: oneOfType([string, number]).isRequired,
+			measure: string.isRequired,
+			lastReading: oneOfType([string, number]).isRequired,
+		}).isRequired, 
+		icon: shape({uri: string.isRequired}).isRequired,
+		fadeInDuration: number,
+		delay: number,
+		onPress: func,
+	};
+
+	static defaultProps = {
+		fadeInDuration: 0,
+		delay: 0,
+		onPress: null,
+	};
 
 	/**
 	 * Component constructor
@@ -86,7 +106,7 @@ class VitalCard extends Component {
 
 		return (
 			<FadeInView duration={fadeInDuration} delay={delay}>
-				<Card card={style.card} body={style.body} onPress={onPress}>
+				<Card card={[style.card]} body={[style.body]} onPress={onPress}>
 					<Text style={style.name}>{item.name}</Text>
 					<View style={style.logoContainer}>
 						<Image style={style.logo} source={icon} />
