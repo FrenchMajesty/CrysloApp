@@ -13,7 +13,7 @@ import styling from 'app/config/styling';
 import style from '../style';
 import phoneImg from '../../../../assets/images/text.png';
 
-import { signUp } from 'app/lib/api';
+import { signUp, validateNumberSignUp } from 'app/lib/api';
 
 class SignUpStep2 extends Component {
 
@@ -25,6 +25,7 @@ class SignUpStep2 extends Component {
 
 		this.state = this.getInitialState();
 
+		this.handleSendCode = this.handleSendCode.bind(this);
 		this.onSuccess = this.onSuccess.bind(this);
 	}
 
@@ -39,18 +40,34 @@ class SignUpStep2 extends Component {
 	}
 
 	/**
+	 * Make a call to the API to text a verification code to the number
+	 * @param  {String} number The number where to send the code
+	 * @param  {Function} callb  The callback function
+	 * @return {Void}        
+	 */
+	handleSendCode(number, callb) {
+		const callback = callb || (() => {}); // default callback function
+
+		validateNumberSignUp(number).then(() => {
+			this.props.setNumber(number);
+			callback();
+		})
+		.catch(({response: {data}}) => data[0] ? callback(data[0]) : callback());
+	}
+
+	/**
 	 * Submit to the API a request to create a new account then redirect 
 	 * to subscription screen
 	 * @return {Void} 
 	 */
 	onSuccess() {
-		const {email, password, number, navigation, setNumber, setCredentials, setAuthToken} = this.props; 
+		const {email, password, number, navigation} = this.props; 
 
 		signUp({email, password, number}).then(({data: {token}}) => {
 
-			setNumber('');
-			setCredentials({email: '', password: ''});
-			setAuthToken(token);
+			this.props.setNumber('');
+			this.props.setCredentials({email: '', password: ''});
+			this.props.setAuthToken(token);
 			navigation.navigate('SignUpStep3');
 		})
 		.catch(({response}) => {
@@ -78,7 +95,10 @@ class SignUpStep2 extends Component {
 					{number ?
 						<ValidateVerificationCode purpose="signup"  onSuccess={this.onSuccess} />
 					: 
-						<PhoneNumberVerification purpose="signup"/>
+						<PhoneNumberVerification 
+							purpose="signup"
+							onSendCode={this.handleSendCode}
+						/>
 					}
 				</View>
 			</View>
