@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ActivityIndicator } from 'react-native';
+import { Alert, View, Text, ActivityIndicator } from 'react-native';
 import PhoneNumber from 'awesome-phonenumber';
 import { connect } from 'react-redux';
 import VerificationAction from 'app/store/actions/verifyNumber';
@@ -19,6 +19,7 @@ class ValidateVerificationCode extends Component {
 		this.state = this.getInitialState();
 
 		this.onCodeChange = this.onCodeChange.bind(this);
+		this.onResendCode = this.onResendCode.bind(this);
 		this.onButtonPress = this.onButtonPress.bind(this);
 	}
 
@@ -74,7 +75,8 @@ class ValidateVerificationCode extends Component {
 	 * @return {Void} 
 	 */
 	onResendCode() {
-		alert('Just sent you a new code!');
+		this.props.onResendCode(this.props.number);
+		Alert.alert('Another code on the way','A new verification code was just sent to your number!');
 	}
 
 	/**
@@ -98,7 +100,7 @@ class ValidateVerificationCode extends Component {
 				:
 					<View>
 						<Text style={style.blackText}>A text message with a verification code was just sent to <Text style={{fontWeight: 'bold'}}>+1{formattedNum}</Text>. Did you not receive it?
-						You can <Text style={[style.link]} onPress={this.onResendCode}>press here</Text> to re-send a new code.</Text>
+						You can <Link onPress={this.onResendCode}>press here</Link> to re-send a new code.</Text>
 					</View>
 				}
 				<View style={[{flex: 2, marginTop: 25}]}>
@@ -132,7 +134,7 @@ class ValidateVerificationCode extends Component {
 							onPress={this.onButtonPress} />)
 					}
 				</View>
-				<View style={{flex: 5}} />
+				<View style={{flex: 6}} />
 			</View>
 		);
 	}
