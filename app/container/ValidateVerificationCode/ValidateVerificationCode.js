@@ -34,15 +34,6 @@ class ValidateVerificationCode extends Component {
 	}
 
 	/**
-	 * Clear the phone number from the store if it wasn't validated 
-	 */
-	componentWillUnmount() {
-		if(! this.state.codeIsGood) {
-			this.props.setNumber('');
-		}
-	}
-
-	/**
 	 * Return the component's initial state
 	 * @return {Object} 
 	 */
@@ -53,6 +44,15 @@ class ValidateVerificationCode extends Component {
 			isSubmitting: false,
 			errors: {},
 		};
+	}
+
+	/**
+	 * Clear the phone number from the store if it wasn't validated 
+	 */
+	componentWillUnmount() {
+		if(! this.state.codeIsGood) {
+			this.props.setNumber('');
+		}
 	}
 
 	/**
