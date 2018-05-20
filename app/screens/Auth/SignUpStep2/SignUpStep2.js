@@ -95,10 +95,7 @@ class SignUpStep2 extends Component {
 					{number ?
 						<ValidateVerificationCode purpose="signup"  onSuccess={this.onSuccess} />
 					: 
-						<PhoneNumberVerification 
-							purpose="signup"
-							onSendCode={this.handleSendCode}
-						/>
+						<PhoneNumberVerification onSendCode={this.handleSendCode} />
 					}
 				</View>
 			</View>

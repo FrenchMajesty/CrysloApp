@@ -39,7 +39,6 @@ class PhoneNumberVerification extends Component {
 	 */
 	onButtonPress() {
 		const {number} = this.state;
-		const {purpose} = this.props;
 
 		this.setState({isSubmitting: true});
 		this.props.onSendCode(number, (errors) => {

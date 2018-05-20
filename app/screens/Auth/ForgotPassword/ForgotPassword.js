@@ -72,10 +72,7 @@ class ForgotPassword extends Component {
 							onResendCode={this.onSendCode}
 						/>
 					: 
-						<PhoneNumberVerification 
-							purpose="reset-pwd" 
-							onSendCode={this.onSendCode}
-						/>
+						<PhoneNumberVerification onSendCode={this.onSendCode} />
 					}
 				</View>
 			</View>
