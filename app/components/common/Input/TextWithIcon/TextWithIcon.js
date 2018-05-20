@@ -6,7 +6,7 @@ import { Hideo } from 'react-native-textinput-effects';
 import Hint from '../Hint/';
 import style from './style';
 
-const Text = ({backgroundColor, textColor, hint, containerStyle, ...others}) => {
+const Text = ({backgroundColor, textColor, hint, containerStyle, hasError, ...others}) => {
 	
 	return (
 		<View style={[style.inputRow, ...containerStyle]}>
@@ -20,7 +20,7 @@ const Text = ({backgroundColor, textColor, hint, containerStyle, ...others}) => 
 			/>
 			{hint ? 
 				(<Hint 
-					containerStyle={{flex: 1}} 
+					containerStyle={[{flex: 1}]} 
 					text={hint} 
 					isError={hasError} 
 				/>) : null}

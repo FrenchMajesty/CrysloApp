@@ -82,7 +82,7 @@ class SignUp extends Component {
 			<View>
 				<IconButton
 					icon="arrow-left"
-					style={styling.fixedNavButton}
+					style={[styling.fixedNavButton]}
 					onPress={() => navigation.goBack(null)}
 				/>
 				<KeyboardAwareScrollView
