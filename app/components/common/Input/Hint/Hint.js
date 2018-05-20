@@ -1,17 +1,17 @@
 import React from 'react';
 import { Text, View } from 'react-native';
-import { object, bool, string } from 'prop-types';
+import { array, bool, string } from 'prop-types';
 import style from './style';
 
 const Hint = ({isError, text, containerStyle, textStyle}) => {
 
 	return (
-		<View style={[style.container, containerStyle]}>
+		<View style={[style.container, ...containerStyle]}>
 			<Text 
 				style={[
 					style.text,
 					isError ? style.error : '',
-					textStyle,
+					...textStyle,
 				]}
 			>{text}</Text>
 		</View>
@@ -19,15 +19,15 @@ const Hint = ({isError, text, containerStyle, textStyle}) => {
 };
 
 Hint.propTypes = {
-	containerStyle: object,
-	textStyle: object,
+	containerStyle: array,
+	textStyle: array,
 	isError: bool,
 	text: string,
 };
 
 Hint.defaultProps = {
-	containerStyle: {},
-	textStyle: {},
+	containerStyle: [],
+	textStyle: [],
 	isError: false,
 	text: '',
 };

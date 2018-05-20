@@ -113,7 +113,7 @@ class AccountProfile extends Component {
 						title="Account Settings"
 						hint="This is your personal profile. Your health information is private and only visible to you and authorized members."
 						elevated={true}
-						style={{flex: 2, position: 'absolute'}}
+						style={[{flex: 2, position: 'absolute'}]}
 					/>
 				</View>
 				<KeyboardAwareScrollView
@@ -172,13 +172,13 @@ class AccountProfile extends Component {
 					</View>
 					<View style={[style.buttonStyle]}>
 						{buttonIndicator ? 
-							<Button style={{width: '70%'}}>
+							<Button style={[{width: '70%'}]}>
 								{buttonIndicator}
 							</Button>
 						:
 							<Button
 								text="Update my account"
-								style={{width: '70%'}}
+								style={[{width: '70%'}]}
 								onPress={this.onSubmit}
 							/>
 						}

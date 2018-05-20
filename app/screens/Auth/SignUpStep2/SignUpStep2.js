@@ -90,7 +90,7 @@ class SignUpStep2 extends Component {
 					style={styling.fixedNavButton}
 					onPress={() => navigation.goBack(null)}
 				/>
-				<CommonText weight="heavy" style={style.errors}>{errors}</CommonText>
+				<CommonText weight="heavy" style={[style.errors]}>{errors}</CommonText>
 				<View style={[{alignSelf: 'center', top: errors ? '5%' : '20%'}]}>
 					{number ?
 						<ValidateVerificationCode purpose="signup"  onSuccess={this.onSuccess} />

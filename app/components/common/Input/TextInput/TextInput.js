@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TextInput } from 'react-native';
-import { string, bool, object } from 'prop-types';
+import { string, bool, array } from 'prop-types';
 import Hint from '../Hint/';
 import styling from 'app/config/styling';
 import style from './style';
@@ -12,7 +12,7 @@ const SimpleTextInput = ({label, style: customStyle, hint, hasError, ...others})
 			{label ? <Text style={[style.label]}>{label}</Text> : null}
 			<TextInput
 				placeholderTextColor={styling.text.gray}
-				style={[style.input, customStyle]}
+				style={[style.input, ...customStyle]}
 				{...others}
 			/>
 			{hint ? <Hint text={hint} isError={hasError} /> : null}
@@ -24,14 +24,14 @@ SimpleTextInput.propTypes = {
 	label: string,
 	hint: string,
 	hasError: bool,
-	style: object,
+	style: array,
 };
 
 SimpleTextInput.defaultProps = {
 	hasError: false,
 	label: '',
 	hint: '',
-	style: {},
+	style: [],
 };
 
 export default SimpleTextInput;

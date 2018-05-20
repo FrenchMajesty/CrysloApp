@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { TextInput, View } from 'react-native';
-import { bool, string, object } from 'prop-types';
+import { bool, string, array } from 'prop-types';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Hideo } from 'react-native-textinput-effects';
 import Hint from '../Hint/';
@@ -9,7 +9,7 @@ import style from './style';
 const Text = ({backgroundColor, textColor, hint, containerStyle, ...others}) => {
 	
 	return (
-		<View style={[style.inputRow, containerStyle]}>
+		<View style={[style.inputRow, ...containerStyle]}>
 			<Hideo
 				iconClass={Icon}
 				iconBackgroundColor={backgroundColor}
@@ -33,11 +33,11 @@ Text.propTypes = {
 	textColor: string,
 	hint: string,
 	hasError: bool,
-	containerStyle: object,
+	containerStyle: array,
 };
 
 Text.defaultProps = {
-	containerStyle: {},
+	containerStyle: [],
 	backgroundColor: 'white',
 	textColor: 'white',
 	hasError: false,

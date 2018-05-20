@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
-import { number, node, object, func } from 'prop-types';
+import { number, node, object, array, func } from 'prop-types';
 import * as Animatable from 'react-native-animatable';
 import style from './style';
 
@@ -24,10 +24,10 @@ const Card = ({children, depth, card, body, animation, onPress}) => {
 		>
 			<TouchableOpacity 
 				activeOpacity={hasLink} 
-				style={[style.card, getDepthStyle(), card]}
+				style={[style.card, getDepthStyle(), ...card]}
 				onPress={onPress}
 			>
-				<View style={[style.cardBody, body]}>
+				<View style={[style.cardBody, ...body]}>
 					{children}
 				</View>
 			</TouchableOpacity>
@@ -39,16 +39,16 @@ Card.propTypes = {
 	children: node.isRequired,
 	depth: number,
 	animation: object,
-	body: object,
-	card: object,
+	body: array,
+	card: array,
 	onPress: func,
 };
 
 Card.defaultProps = {
 	depth: 1,
 	animation: {},
-	body: {},
-	card: {},
+	body: [],
+	card: [],
 	onPress: null,
 };
 

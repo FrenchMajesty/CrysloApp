@@ -62,8 +62,8 @@ class Referral extends Component {
 			>
 				<Header 
 					title="Referral Program"
-					style={{flex: 0, marginBottom: 20}}
 					navigation={navigation}
+					style={[{flex: 0, marginBottom: 20}]}
 				/>
 
 				<KeyboardAwareScrollView
@@ -89,7 +89,7 @@ class Referral extends Component {
 								onPress={this.onSocialShare}
 							/>
 
-							<Link style={{marginTop: 10}} onPress={() => alert('You have referred 99 people!')}>View Referral History</Link>
+							<Link style={[{marginTop: 10}]} onPress={() => alert('You have referred 99 people!')}>View Referral History</Link>
 						</View>
 					</Card>
 

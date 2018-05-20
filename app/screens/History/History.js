@@ -57,8 +57,8 @@ export default class History extends Component {
 			return (
 				<View style={style.dayContainer}>
 					<View style={style.day}>
-						<CommonText style={style.dayNum}>{day.day}</CommonText>
-						<CommonText style={style.dayText}>{date.toLocaleString('en-US', {month: 'short'})}</CommonText>
+						<CommonText style={[style.dayNum]}>{day.day}</CommonText>
+						<CommonText style={[style.dayText]}>{date.toLocaleString('en-US', {month: 'short'})}</CommonText>
 					</View>
 					{firstMetric ?
 						<DataRow metric={firstMetric} onPress={() => navigation.navigate('Details', {vital: firstMetric.type})} />
@@ -80,7 +80,7 @@ export default class History extends Component {
 	 */
 	renderDayContent(item, isTheFirstItemOfDay) {
 		if(!isTheFirstItemOfDay) {
-			return (<DataRow metric={item} />);
+			return <DataRow metric={item} />;
 		}
 	}
 
@@ -174,9 +174,9 @@ export default class History extends Component {
 				<Header 
 					title="History"
 					color="white"
-					style={{flex: 0, backgroundColor: purple}}
 					navigation={rootNavigation}
 					forHistory={true}
+					style={[{flex: 0, backgroundColor: purple}]}
 				/>
 				<Agenda
 					items={items}

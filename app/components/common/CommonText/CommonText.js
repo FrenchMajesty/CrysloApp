@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text } from 'react-native';
-import { oneOf, string, node, object } from 'prop-types';
+import { oneOf, string, node, array } from 'prop-types';
 import styling from 'app/config/styling';
 
 const CommonText = ({weight, color, style, children}) => {
@@ -8,7 +8,7 @@ const CommonText = ({weight, color, style, children}) => {
 	const styleProps = [
 		styling.text.prop[weight],
 		{color},
-		style,
+		...style,
 	];
 
 	return (
@@ -22,13 +22,13 @@ CommonText.propTypes = {
 	children: node.isRequired,
 	weight: oneOf(['heavy','light']),
 	color: string,
-	style: object,
+	style: array,
 };
 
 CommonText.defaultProps = {
 	weight: 'light',
 	color: styling.black,
-	style: {},
+	style: [],
 };
 
 export default CommonText;

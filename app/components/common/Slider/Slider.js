@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Slider } from 'react-native';
-import { string, object } from 'prop-types';
+import { string, array } from 'prop-types';
 import styling from 'app/config/styling';
 import style from './style';
 
@@ -22,12 +22,12 @@ const FormSlider = ({label, style: customStyle, ...others}) => {
 
 FormSlider.propTypes = {
 	label: string,
-	style: object,
+	style: array,
 };
 
 FormSlider.defaultProps = {
 	label: '',
-	style: {},
+	style: [],
 };
 
 export default FormSlider;

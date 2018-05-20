@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, Text } from 'react-native';
-import { func, string, object, bool, node } from 'prop-types';
+import { func, string, array, bool, node } from 'prop-types';
 import styling from 'app/config/styling';
 import style from './style';
 
@@ -23,7 +23,7 @@ const RectangularButton = ({children, text, inverted, color, disabled, onPress, 
 				style.container,
 				getButtonStyle(),
 				disabled ? style.disabled : '',
-				customStyle
+				...customStyle
 			]}
 		>
 			{! children ?
@@ -48,7 +48,7 @@ RectangularButton.propTypes = {
 	color: string,
 	disabled: bool,
 	onPress: func,
-	style: object,
+	style: array,
 };
 
 RectangularButton.defaultProps = {
@@ -58,7 +58,7 @@ RectangularButton.defaultProps = {
 	color: styling.mainColor,
 	disabled: false,
 	onPress: null,
-	style: {},
+	style: [],
 };
 
 export default RectangularButton;

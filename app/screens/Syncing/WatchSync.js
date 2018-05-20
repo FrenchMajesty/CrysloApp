@@ -52,7 +52,7 @@ class WatchSync extends Component {
 			<View style={[styling.statusBarPadding, styling.screenPadding, style.container]}>
 				<Header 
 					title="Sync Your Device"
-					style={{flex: 0, marginBottom: 20}}
+					style={[{flex: 0, marginBottom: 20}]}
 					navigation={navigation}
 				/>
 				<View style={{backgroundColor: 'red', width: 200, height: 200, alignSelf: 'center'}} />
@@ -66,7 +66,7 @@ class WatchSync extends Component {
 						<RoundedButton
 							inverted={true}
 							center={true}
-							style={{padding: 23}}
+							style={[{padding: 23}]}
 						><Spinner color="#fff" /></RoundedButton>
 					:
 						<RoundedButton
@@ -74,7 +74,7 @@ class WatchSync extends Component {
 							inverted={true}
 							center={true}
 							onPress={this.onConnect}
-							style={{paddingTop: 15, padding: 30}}
+							style={[{paddingTop: 15, padding: 30}]}
 						/>	
 					}
 				</View>

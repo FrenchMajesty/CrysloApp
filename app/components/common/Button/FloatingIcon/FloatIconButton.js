@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { node, object } from 'prop-types';
+import { node, array } from 'prop-types';
 import style from './style';
 import cardStyle from '../../Card/style';
 
@@ -9,7 +9,7 @@ const FloatIconButton = ({children, customStyle, ...others}) => {
 	return (
 		<TouchableOpacity
 			activeOpacity={0.6} 
-			style={[cardStyle.card, style.button, cardStyle.depth2, customStyle]}
+			style={[cardStyle.card, style.button, cardStyle.depth2, ...customStyle]}
 			{...others}
 		>
 			{children}
@@ -19,11 +19,11 @@ const FloatIconButton = ({children, customStyle, ...others}) => {
 
 FloatIconButton.propTypes = {
 	children: node.isRequired,
-	customStyle: object,
+	customStyle: array,
 };
 
 FloatIconButton.defaultProps = {
-	customStyle: {},
+	customStyle: [],
 };
 
 export default FloatIconButton;

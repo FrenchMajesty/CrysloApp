@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { number, string, object, node } from 'prop-types';
+import { number, string, object, node, array } from 'prop-types';
 import Card from 'app/components/common/Card/';
 import style from './style';
 
@@ -9,7 +9,7 @@ const StatsRow = ({rowStyle, depth, label, content, hint, button, animation, ico
 	return (
 		<Card 
 			depth={depth}
-			card={[style.row, rowStyle]}
+			card={[style.row, ...rowStyle]}
 			animation={animation}
 		>
 			<Text style={[style.label]}>{label}:</Text>
@@ -29,7 +29,7 @@ StatsRow.propTypes = {
 	depth: number,
 	hint: string,
 	animation: object,
-	rowStyle: object,
+	rowStyle: array,
 	button: node,
 	icon: node,
 };
@@ -38,7 +38,7 @@ StatsRow.defaultProps = {
 	hint: '',
 	depth: null,
 	animation: {},
-	rowStyle: {},
+	rowStyle: [],
 	button: null,
 	icon: null,
 };

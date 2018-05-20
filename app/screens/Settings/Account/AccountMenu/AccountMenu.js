@@ -16,7 +16,7 @@ const AccountMenu = ({navigation, screenProps: {rootNavigation}}) => {
 					showBackButton={true}
 					title="Account"
 					elevated={true}
-					style={{flex: 2, position: 'absolute'}}
+					style={[{flex: 2, position: 'absolute'}]}
 				/>
 			</View>
 			<ScrollView style={[style.screenPadding, style.listContainer]}>

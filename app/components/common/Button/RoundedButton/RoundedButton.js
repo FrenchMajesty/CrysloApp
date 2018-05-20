@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, Text, View } from 'react-native';
-import { string, func, node, bool, object } from 'prop-types';
+import { array, string, func, node, bool } from 'prop-types';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import style from './style';
 
@@ -13,7 +13,7 @@ const RoundedButton = ({children, text, onPress, style: customStyle, inverted}) 
 			style={[
 				style.container,
 				inverted ? style.invertedContainer : style.normalContainer,
-				customStyle
+				...customStyle,
 			]}
 		>
 			{text ? 
@@ -33,7 +33,7 @@ RoundedButton.propTypes = {
 	onPress: func,
 	children: node,
 	inverted: bool,
-	style: object,
+	style: array,
 };
 
 RoundedButton.defaultProps = {
@@ -41,7 +41,7 @@ RoundedButton.defaultProps = {
 	onPress: null,
 	children: null,
 	inverted: false,
-	style: {},
+	style: [],
 };
 
 export default RoundedButton;

@@ -91,8 +91,8 @@ class Home extends Component {
 				<StatusBar barStyle="dark-content" />
 				<Header 
 					title="Cryslo's Dashboard"
-					style={{flex: 0, marginBottom: 20}}
 					navigation={rootNavigation}
+					style={[{flex: 0, marginBottom: 20}]}
 				/>
 				
 		        <ScrollView 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { string, bool, object } from 'prop-types';
+import { string, bool, object, array } from 'prop-types';
 import IconButton from '../common/Button/IconButton/';
 import style from './style';
 import styling from 'app/config/styling';
@@ -23,18 +23,18 @@ const Header = ({title, showBackButton, navigation, hint, elevated, forHistory, 
 			elevated ? cardStyle.depth2 : '',
 			elevated ? style.elevated : '',
 			flexDirection, 
-			customStyle
+			...customStyle,
 			]}
 		>
 			{showBackButton ?
 				<IconButton
 					icon="arrow-left"
-					style={{position: 'absolute', marginLeft: 10}}
+					style={[{position: 'absolute', marginLeft: 10}]}
 					onPress={()=> navigation.pop()}
 				/>
 			:	<IconButton
 					icon="bars"
-					style={{position: 'absolute', marginLeft: 10}}
+					style={[{position: 'absolute', marginLeft: 10}]}
 					onPress={() => navigation.navigate('DrawerToggle')}
 				/>
 		}
@@ -54,7 +54,7 @@ const Header = ({title, showBackButton, navigation, hint, elevated, forHistory, 
 Header.propTypes = {
 	title: string.isRequired,
 	navigation: object.isRequired,
-	style: object,
+	style: array,
 	hint: string,
 	color: string,
 	showBackButton: bool,
@@ -68,7 +68,7 @@ Header.defaultProps = {
 	forHistory: false,
 	color: styling.black,
 	hint: '',
-	style: {},
+	style: [],
 };
 
 export default Header;

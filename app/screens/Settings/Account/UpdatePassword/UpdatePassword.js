@@ -60,9 +60,8 @@ class UpdatePassword extends Component {
 						navigation={navigation}
 						showBackButton={true}
 						title="Account Password"
-						color={styling.black}
 						elevated={true}
-						style={{flex: 2, position: 'absolute'}}
+						style={[{flex: 2, position: 'absolute'}]}
 					/>
 				</View>
 				<KeyboardAwareScrollView
@@ -119,13 +118,13 @@ class UpdatePassword extends Component {
 					</View>
 					<View style={[style.buttonStyle]}>
 						{isSubmitting ? 
-							<Button style={{width: '70%'}}>
+							<Button style={[{width: '70%'}]}>
 								<Spinner color={styling.mainColor} />
 							</Button>
 						:
 							<Button
 								text="Update my password"
-								style={{width: '70%'}}
+								style={[{width: '70%'}]}
 								onPress={this.onSubmit}
 							/>
 						}

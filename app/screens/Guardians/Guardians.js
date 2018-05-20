@@ -173,7 +173,7 @@ class Guardians extends Component {
 							step={5}
 							value={heart_min}
 							onValueChange={(newVal) => this.setState({heart_min: newVal})}
-							style={{flex: 1}}
+							style={[{flex: 1}]}
 						/>
 					</View>
 					<View style={[style.sliderWrapper]}>
@@ -185,7 +185,7 @@ class Guardians extends Component {
 							step={5}
 							value={heart_max}
 							onValueChange={(newVal) => this.setState({heart_max: newVal})}
-							style={{flex: 1}}
+							style={[{flex: 1}]}
 						/>
 					</View>
 				</View>
@@ -214,7 +214,7 @@ class Guardians extends Component {
 							step={2}
 							value={breath_min}
 							onValueChange={(newVal) => this.setState({breath_min: newVal})}
-							style={{flex: 1}}
+							style={[{flex: 1}]}
 						/>
 					</View>
 					<View style={[style.sliderWrapper]}>
@@ -226,7 +226,7 @@ class Guardians extends Component {
 							step={2}
 							value={breath_max}
 							onValueChange={(newVal) => this.setState({breath_max: newVal})}
-							style={{flex: 1}}
+							style={[{flex: 1}]}
 						/>
 					</View>
 				</View>
@@ -250,7 +250,7 @@ class Guardians extends Component {
 						title="Guardians"
 						hint="Guardians helps you set notifications if your health indicators are outside of their normal range."
 						elevated={true}
-						style={{flex: 2, position: 'absolute'}}
+						style={[{flex: 2, position: 'absolute'}]}
 					/>
 				</View>
 

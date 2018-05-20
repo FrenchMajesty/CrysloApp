@@ -15,10 +15,9 @@ const SettingsMenu = ({name, navigation, screenProps:{rootNavigation}}) => {
 				<Header
 					navigation={rootNavigation}
 					title="Settings"
-					color={styling.black}
 					hint="Here is the place where you update all of your account and app settings."
 					elevated={true}
-					style={{flex: 2, position: 'absolute'}}
+					style={[{flex: 2, position: 'absolute'}]}
 				/>
 			</View>
 			<ScrollView style={[style.screenPadding, style.listContainer]}>

@@ -54,43 +54,43 @@ class DeviceStats extends Component {
 			<View style={[styling.statusBarPadding, style.container]}>
 				<Header 
 					title="Your Device"
-					style={{flex: 0, marginBottom: 20}}
 					navigation={navigation}
+					style={[{flex: 0, marginBottom: 20}]}
 				/>
 				<ScrollView
 					showsVerticalScrollIndicator={false}
 				>
-				<View style={{backgroundColor: 'red', width: 200, height: 200, alignSelf: 'center'}} />
+					<View style={{backgroundColor: 'red', width: 200, height: 200, alignSelf: 'center'}} />
 
-				<Text style={[styling.text.prop.heavy, style.title]}>Helo LX</Text>
+					<Text style={[styling.text.prop.heavy, style.title]}>Helo LX</Text>
 
-				<View style={[style.rowContainer]}>
-					<StatsRow
-						label="Bluetooth"
-						content="The Bluetooth is connected."
-						icon={<Icon name="bluetooth-b" color="blue" size={30} />}
-					/>
-					<StatsRow
-						label="Battery"
-						content="Your battery level is at 86%."
-						icon={<Icon name="battery-3" color="lightgreen" size={30} />}
-					/>
-					<StatsRow
-						label="Location"
-						content="Your GPS location is not activated."
-						hint="Please allow Cryslo to have access to your location, or else the WeCare feature won't work as planned."
-						icon={<Icon name="map-marker" color="gray" size={35} />}
-						button={<Button text="Fix now" onPress={() => alert('Ask access to GPS location.')} />}
-						depth={2}
-						animation={{
-							animation: 'pulse',
-							delay: 200,
-							duration: 800,
-							iterationCount: 'infinite',
-							easing: 'ease-in-out',
-						}}
-					/>
-				</View>
+					<View style={[style.rowContainer]}>
+						<StatsRow
+							label="Bluetooth"
+							content="The Bluetooth is connected."
+							icon={<Icon name="bluetooth-b" color="blue" size={30} />}
+						/>
+						<StatsRow
+							label="Battery"
+							content="Your battery level is at 86%."
+							icon={<Icon name="battery-3" color="lightgreen" size={30} />}
+						/>
+						<StatsRow
+							label="Location"
+							content="Your GPS location is not activated."
+							hint="Please allow Cryslo to have access to your location, or else the WeCare feature won't work as planned."
+							icon={<Icon name="map-marker" color="gray" size={35} />}
+							button={<Button text="Fix now" onPress={() => alert('Ask access to GPS location.')} />}
+							depth={2}
+							animation={{
+								animation: 'pulse',
+								delay: 200,
+								duration: 800,
+								iterationCount: 'infinite',
+								easing: 'ease-in-out',
+							}}
+						/>
+					</View>
 				</ScrollView>
 			</View>
 		);

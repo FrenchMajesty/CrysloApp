@@ -27,14 +27,12 @@ const WeCare = ({navigation, contacts, screenProps: {rootNavigation}}) => {
 	 */
 	const renderAddButton = () => {
 		const text = contacts.length >= 3 ?
-						'You have reached the limit' 
-					:
-						`Add ${3-contacts.length} more`;
+					'You have reached the limit' : `Add ${3-contacts.length} more`;
 
 		return (
 			<Button
 				text={text}
-				style={{width: '70%'}}
+				style={[{width: '70%'}]}
 				disabled={contacts.length >= 3}
 				onPress={() => navigation.navigate('ContactDetails', {mode: 'add'})}
 			/>
@@ -49,7 +47,7 @@ const WeCare = ({navigation, contacts, screenProps: {rootNavigation}}) => {
 					title="WeCare"
 					hint="These contacts are the people we are going to notify via text or call if your vitals go into your danger zone or if you press the panic button."
 					elevated={true}
-					style={{flex: 2, position: 'absolute'}}
+					style={[{flex: 2, position: 'absolute'}]}
 				/>
 			</View>
 			<ScrollView style={[styling.screenPadding, style.listContainer]}>
@@ -60,7 +58,7 @@ const WeCare = ({navigation, contacts, screenProps: {rootNavigation}}) => {
 				/>
 				:
 					<View style={{marginTop: 35, marginBottom: 35}}>
-						<CommonText weight="heavy" style={{fontSize: 16, textAlign: 'center'}}>
+						<CommonText weight="heavy" style={[{fontSize: 16, textAlign: 'center'}]}>
 							You have not added any emergency contacts to your account yet!
 						</CommonText>
 					</View>

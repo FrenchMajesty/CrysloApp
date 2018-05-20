@@ -173,14 +173,14 @@ class ContactDetails extends Component {
 		return (
 			<View style={[style.buttonStyle]}>
 				{buttonIndicator ? 
-					<Button inverted style={{width: '80%'}}>
+					<Button inverted style={[{width: '80%'}]}>
 						{buttonIndicator}
 					</Button>
 				:
 					<Button
 						inverted
 						text="Update this contact"
-						style={{width: '80%'}}
+						style={[{width: '80%'}]}
 						onPress={this.onUpdate}
 					/>
 				}
@@ -188,12 +188,12 @@ class ContactDetails extends Component {
 				{deleteBtnIndicator ?
 					<Button 
 						color="red" 
-						style={{width: '80%', marginTop: 20}} 
+						style={[{width: '80%', marginTop: 20}]} 
 					>{deleteBtnIndicator}</Button>
 				:
 					<Button 
 						color="red" 
-						style={{width: '80%', marginTop: 20}} 
+						style={[{width: '80%', marginTop: 20}]} 
 						onPress={this.confirmPopup}
 					>
 						<Icon name="trash" color="red" size={19} />
@@ -213,14 +213,14 @@ class ContactDetails extends Component {
 		return (
 			<View style={[style.buttonStyle]}>
 				{buttonIndicator ? 
-					<Button inverted style={{width: '80%'}}>
+					<Button inverted style={[{width: '80%'}]}>
 						{buttonIndicator}
 					</Button>
 				: 
 					<Button
 						inverted
 						text="Add this new contact"
-						style={{width: '80%'}}
+						style={[{width: '80%'}]}
 						onPress={this.onCreate}
 					/>
 				}
@@ -247,7 +247,7 @@ class ContactDetails extends Component {
 						showBackButton={true}
 						title="WeCare Contact"
 						elevated={true}
-						style={{flex: 2, position: 'absolute'}}
+						style={[{flex: 2, position: 'absolute'}]}
 					/>
 				</View>
 				<ScrollView style={[styling.screenPadding, style.content]}>
