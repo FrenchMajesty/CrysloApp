@@ -91,3 +91,12 @@ export function updateGuardiansConfigs(data) {
 	const {auth, account: {profile: {id}}} = store.getState().profile;
 	return axios.put(`${API_URL}/guardian/${id}`, data, authHeaders(auth.token));
 }
+
+/**
+ * Onboarding endpoints
+ */
+
+export function reportOnboarding(action) {	
+	const {token} = store.getState().profile.auth;
+	return axios.post(`${API_URL}/onboarding`, {action}, authHeaders(token));
+}
