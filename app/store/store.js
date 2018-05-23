@@ -5,6 +5,7 @@ import signup from './reducers/signup';
 import verifyNumber from './reducers/verifyNumber';
 import profile from './reducers/profile';
 import wecare from './reducers/wecare';
+import history from './reducers/history';
 
 const reducer = combineReducers({
 	trackers,
@@ -12,6 +13,7 @@ const reducer = combineReducers({
 	verifyNumber,
 	profile,
 	wecare,
+	history,
 });
 
 export default createStore(reducer);
