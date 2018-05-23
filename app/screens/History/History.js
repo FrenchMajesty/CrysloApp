@@ -2,13 +2,17 @@ import React, { Component } from 'react';
 import { View, StatusBar } from 'react-native';
 import { Agenda } from 'react-native-calendars';
 import moment from 'moment';
+import { connect } from 'react-redux';
+import HistoryAction from 'app/store/actions/history';
 import Header from 'app/components/Header/';
 import CommonText from 'app/components/common/CommonText/';
 import DataRow from 'app/components/History/DataRow/';
 import styling from 'app/config/styling';
 import style from './style';
 
-export default class History extends Component {
+import { loadMonthMeasuredData, fetchMonthMeasuredData } from 'app/lib/api';
+
+class History extends Component {
 
 	/**
 	 * Component constructor
@@ -20,6 +24,7 @@ export default class History extends Component {
 
 		this.renderDay = this.renderDay.bind(this);
 		this.renderDayContent = this.renderDayContent.bind(this);
+		this.loadAdditionalMonth = this.loadAdditionalMonth.bind(this);
 		this.updateDateExpanded = this.updateDateExpanded.bind(this);
 	}
 
@@ -35,12 +40,37 @@ export default class History extends Component {
 	}
 
 	/**
+	 * Load the measurement data of the current month
+	 */
+	componentDidMount() {
+		const month = moment().startOf('month').format('YYYY-MM-DD');
+		loadMonthMeasuredData().then(({data}) => this.props.addMonthData({month, data}));
+	}
+
+	/**
 	 * Update the state of the current date being viewed
-	 * @param  {Object} day New date selected
+	 * @param  {String} day.dateString New date selected in the Agenda comp's format
 	 * @return {Void}     
 	 */
 	updateDateExpanded({dateString: today}) {
 		this.setState({today});
+	}
+
+	/**
+	 * Send a request to load a specific month's measurement datas
+	 * @param  {String} options.dateString The date of the trigger item
+	 * @return {Void}                    
+	 */
+	loadAdditionalMonth({dateString}) {
+		const {history} = this.props;
+		const date = moment(dateString, 'YYYY-MM-DD').startOf('month').format('YYYY-MM-DD');
+		const isAlredyFetched = Object.keys(history).some(month => month == date);
+
+		if(! isAlredyFetched) {
+			fetchMonthMeasuredData({date}).then(({data}) => {
+				this.props.addMonthData({month: date, data});
+			});
+		}
 	}
 
 	/**
@@ -85,73 +115,19 @@ export default class History extends Component {
 	}
 
 	/**
-	 * Render the component
-	 * @return {ReactElement} Markup
+	 * Render the component markup
+	 * @return {ReactElement} 
 	 */
 	render() {
-		const {screenProps: {rootNavigation}} = this.props
-		const {today} = this.state;
 		const minusOne = moment().subtract(1,'d').format('YYYY-MM-DD');
 		const minusTwo = moment().subtract(2,'d').format('YYYY-MM-DD');
 		const minusThree = moment().subtract(3,'d').format('YYYY-MM-DD');
+		const {history: {data}, userSignupDate, screenProps: {rootNavigation}} = this.props
+		const {today} = this.state;
 
-		const items = {
-			[today]: [
-				{
-					type: 'sleep',
-					name: 'Sleep',
-					value: '10:20', 
-					date: today,
-				},
-				{
-					type: 'mood',
-					name: 'Mood',
-					value: 'Frustrated', 
-					date: today,
-				},
-			],
-			[minusOne]: [
-				{
-					type: 'heart',
-					name: 'Heart Pulse',
-					value: 88, 
-					date: minusOne,
-				},
-				{
-					type: 'breaths',
-					name: 'Breaths Pulse',
-					value: 17, 
-					date: minusOne,
-				},
-			],
-			[minusTwo] : [],
-			[minusThree]: [
-				{
-					type: 'heart',
-					name: 'Heart Pulse',
-					value: 88, 
-					date: minusThree,
-				},
-				{
-					type: 'breaths',
-					name: 'Breaths Pulse',
-					value: 17, 
-					date: minusThree,
-				},
-				{
-					type: 'mood',
-					name: 'Mood',
-					value: 'Happy', 
-					date: minusThree,
-				},
-				{
-					type: 'sleep',
-					name: 'Sleep',
-					value: '7:29', 
-					date: minusThree,
-				},
-			],
-		};
+		// Combine all the dates into a single obj
+		let items = {};
+		Object.keys(data).forEach((month) => items = { ...items, ...data[month] });
 
 		const white = '#fff';
 		const purple = '#8563e5';
@@ -180,12 +156,12 @@ export default class History extends Component {
 				/>
 				<Agenda
 					items={items}
-					loadItemsForMonth={(month) => {console.log('trigger items loading')}}
+					loadItemsForMonth={this.loadAdditionalMonth}
 				  	onCalendarToggled={(calendarOpened) => {console.log(calendarOpened)}}
 				  	onDayPress={this.updateDateExpanded}
-				  	onDayChange={(day) => console.log('Scrolled onto another day')}
+				  	onDayChange={(day) => console.log('Scrolled onto another day', day)}
 					selected={today}
-					minDate={moment().subtract(7,'d').format('YYYY-MM-DD')}
+					minDate={moment(userSignupDate).format('YYYY-MM-DD')}
 					maxDate={moment().format('YYYY-MM-DD')}
 					pastScrollRange={3}
 					futureScrollRange={1}
@@ -196,7 +172,7 @@ export default class History extends Component {
 				  // specify how empty date content with no items should be rendered
 				  	renderEmptyDate={() => {return (<View />);}}
 				  // specify what should be rendered instead of ActivityIndicator
-				  	renderEmptyData = {() => {return (<View />);}}
+				  	//renderEmptyData = {() => {return (<View />);}}
 				   	rowHasChanged={(r1, r2) => {return r1.text !== r2.text}}
 				   	style={{flex: 1}}
 				   	theme={calendarStyle}
@@ -205,3 +181,27 @@ export default class History extends Component {
 		);
 	}
 }
+
+/**
+ * Map the redux store's state to the component's props
+ * @param  {Object} options.history Tree of the vitals measurement datas
+ * @param  {Object} options.profile.account.profile The User's model and entry info
+ * @return {Object}                  
+ */
+const mapStateToProps = ({history, profile: {account: {profile}}}) => ({
+		history,
+		userSignupDate: profile.created_at,
+});
+
+/**
+ * Map the store's action dispatcher to the component's props
+ * @param  {Function} dispatch The dispatch function
+ * @return {Object}           
+ */
+const mapDispatchToProps = (dispatch) => ({
+	addMonthData: (details) => {
+		dispatch(HistoryAction.addMonthData(details));
+	},
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(History);
