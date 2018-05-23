@@ -119,9 +119,6 @@ class History extends Component {
 	 * @return {ReactElement} 
 	 */
 	render() {
-		const minusOne = moment().subtract(1,'d').format('YYYY-MM-DD');
-		const minusTwo = moment().subtract(2,'d').format('YYYY-MM-DD');
-		const minusThree = moment().subtract(3,'d').format('YYYY-MM-DD');
 		const {history: {data}, userSignupDate, screenProps: {rootNavigation}} = this.props
 		const {today} = this.state;
 
