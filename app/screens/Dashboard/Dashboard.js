@@ -73,10 +73,11 @@ class Home extends Component {
 				number,
 				contacts,
 				guardians,
+				created_at,
 			} = data;
 
 			this.props.setContacts(contacts);
-			this.props.updateAccountProfile({id, email, referral_id, number});
+			this.props.updateAccountProfile({id, email, referral_id, number, created_at});
 			this.props.updateGuardiansConfigs(guardians);
 
 			// Since the first & last name are optional check they exist before setting them
