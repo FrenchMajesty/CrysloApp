@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { shape, string, func } from 'prop-types';
+import { shape, string, func, number, oneOfType } from 'prop-types';
 import { LinearGradient } from 'expo';
 import CommonText from 'app/components/common/CommonText/';
 import cardStyle from 'app/components/common/Card/style';
@@ -70,7 +70,7 @@ DataRow.propTypes = {
 	metric: shape({
 		name: string.isRequired,
 		type: string.isRequired,
-		value: string.isRequired,
+		value: oneOfType([string, number]).isRequired,
 	}).isRequired,
 	onPress: func,
 };
