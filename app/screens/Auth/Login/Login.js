@@ -3,7 +3,6 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo';
 import { connect } from 'react-redux';
 import ProfileAction from 'app/store/actions/profile';
-import WeCareAction from 'app/store/actions/wecare';
 import RoundedButton from 'app/components/common/Button/RoundedButton';
 import Input from 'app/components/common/Input/TextWithIcon/';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -24,7 +23,6 @@ class Login extends Component {
 		this.state = this.getInitialState();
 
 		this.onSignOn = this.onSignOn.bind(this);
-		this.loadUserData = this.loadUserData.bind(this);
 	}
 
 	/**
@@ -41,43 +39,6 @@ class Login extends Component {
 	}
 
 	/**
-	 * Load all of the user's data from the server
-	 * @param  {Function} callback The callback function after successful fetching
-	 * @return {Void}            
-	 */
-	loadUserData(callback) {
-		loadProfile('?withContact=true&withGuardians=true')
-		.then((res) => {
-			const {data: {
-				id,
-				firstname,
-				lastname,
-				email,
-				referral_id,
-				number,
-				contacts,
-				guardians
-			}} = res;
-
-			this.props.setContacts(contacts);
-			this.props.updateAccountProfile({id, email, referral_id, number});
-			this.props.updateGuardiansConfigs(guardians);
-
-			// Since the first & last name are optional check they exist before setting them
-			if(firstname && lastname) {
-				this.props.updateAccountProfile({
-					firstname,
-					lastname,
-					name: `${firstname} ${lastname}`,
-				});
-			}
-
-			callback()
-		})
-		.catch((response) => console.log(response));
-	}
-
-	/**
 	 * Send the user's credentials to the server for authentication
 	 * @return {Void} 
 	 */
@@ -87,11 +48,9 @@ class Login extends Component {
 
 		login({email, password}).then(({data: {token}}) => {
 			this.props.updateAuthToken(token);
-			this.loadUserData(() => navigate('App'));
+			navigate('App');
 		})
-		.catch(({response: {data}}) => {
-			alert(data[0].message);
-		});
+		.catch(({response: {data}}) => alert(data[0].message));
 	}
 
 	/**
@@ -191,15 +150,6 @@ const mapStateToProps = ({profile: {auth: {token}}}) => ({
 const mapDispatchToProps = (dispatch) => ({
 	updateAuthToken: (token) => {
 		dispatch(ProfileAction.updateAuthToken(token));
-	},
-	updateAccountProfile: (profile) => {
-		dispatch(ProfileAction.updateAccountProfile(profile));
-	},
-	updateGuardiansConfigs: (configs) => {
-		dispatch(ProfileAction.updateGuardiansConfigs(configs));
-	},
-	setContacts: (contacts) => {
-		dispatch(WeCareAction.setContacts(contacts));
 	},
 });
 

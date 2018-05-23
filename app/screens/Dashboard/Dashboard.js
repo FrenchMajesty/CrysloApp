@@ -5,6 +5,8 @@ import Header from 'app/components/Header/';
 import VitalCard from 'app/components/Dashboard/VitalCard/';
 import { connect } from 'react-redux';
 import TrackerAction from 'app/store/actions/trackers';
+import ProfileAction from 'app/store/actions/profile';
+import WeCareAction from 'app/store/actions/wecare';
 import styling from 'app/config/styling';
 import HeartIcon from 'assets/images/heart-icon.png';
 import LungIcon from 'assets/images/lung-icon.png';
@@ -12,6 +14,8 @@ import MoodIcon from 'assets/images/mood-icon.png';
 import EnergyIcon from 'assets/images/energy-icon.png';
 import BedIcon from 'assets/images/bed-icon.png';
 import style from './style';
+
+import { loadProfile } from 'app/lib/api';
 
 const icons = {
 	heart: {uri: 'https://i.imgur.com/RFbR4i9.png'},//HeartIcon,
@@ -31,6 +35,7 @@ class Home extends Component {
 
 		this.state = this.getInitialState();
 
+		this.loadUserData = this.loadUserData.bind(this);
 		this.renderCard = this.renderCard.bind(this);
 		this.onRefresh = this.onRefresh.bind(this);
 	}
@@ -43,6 +48,47 @@ class Home extends Component {
 		return {
 			refreshing: false,
 		};
+	}
+
+	/**
+	 * Fetch all relevant data of the user
+	 */
+	componentDidMount() {
+		this.loadUserData();
+	}
+
+	/**
+	 * Load all of the user's data and put it into the store's state
+	 * @return {Void}            
+	 */
+	loadUserData() {
+		loadProfile('?withContact=true&withGuardians=true')
+		.then(({data}) => {
+			const {
+				id,
+				firstname,
+				lastname,
+				email,
+				referral_id,
+				number,
+				contacts,
+				guardians,
+			} = data;
+
+			this.props.setContacts(contacts);
+			this.props.updateAccountProfile({id, email, referral_id, number});
+			this.props.updateGuardiansConfigs(guardians);
+
+			// Since the first & last name are optional check they exist before setting them
+			if(firstname && lastname) {
+				this.props.updateAccountProfile({
+					firstname,
+					lastname,
+					name: `${firstname} ${lastname}`,
+				});
+			}
+		})
+		.catch((response) => console.log(response));
 	}
 
 	/**
@@ -125,6 +171,15 @@ const mapStateToProps = ({trackers}) => ({
 const mapDispatchToProps = (dispatch) => ({
 	updateVitalValue: (newValue) => {
 		dispatch(TrackerAction.updateVitalValue(newValue));
+	},
+	updateAccountProfile: (profile) => {
+		dispatch(ProfileAction.updateAccountProfile(profile));
+	},
+	updateGuardiansConfigs: (configs) => {
+		dispatch(ProfileAction.updateGuardiansConfigs(configs));
+	},
+	setContacts: (contacts) => {
+		dispatch(WeCareAction.setContacts(contacts));
 	},
 });
 
