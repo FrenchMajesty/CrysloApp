@@ -7,12 +7,12 @@ import cardStyle from 'app/components/common/Card/style';
 import styling from 'app/config/styling';
 import style from './style';
 
-const DataRow = ({metric: {name, type, value}, onPress}) => {
+const DataRow = ({metric: {type, value}, onPress}) => {
 	
 	let count = null;
 	let gradient = styling.gradient;
 
-	if(type =='heart' || type == 'breaths') {
+	if(type =='heart' || type == 'breath') {
 		count = 'bpm';
 	}else if(type == 'sleep') {
 		count = 'hours';
@@ -32,6 +32,23 @@ const DataRow = ({metric: {name, type, value}, onPress}) => {
 		style[type],
 	];
 
+	/**
+	 * Get the displayable name for the measurement data type
+	 * @param  {String} identifier The measurement data type identifier
+	 * @return {String}            
+	 */
+	const getDisplayableName = (identifier) => {
+		const id = {
+			sleep: 'Sleep',
+			heart: 'Heart Pulse',
+			breath: 'Breaths Pulse',
+			mood: 'Mood',
+			default: 'INVALID_IDENTIFIER',
+		};
+
+		return id[identifier] || id.default;
+	}
+
 	return (
 		<TouchableOpacity onPress={onPress}>
 			<LinearGradient colors={gradient} style={styleProps}>
@@ -39,7 +56,7 @@ const DataRow = ({metric: {name, type, value}, onPress}) => {
 						weight="light"
 						style={[style.rowName, style.typeName]}
 					>
-						{name}
+						{getDisplayableName(type)}
 					</CommonText>
 				<View style={[style.rowData]}>
 					<View style={[style.countContainer]}>
@@ -68,7 +85,6 @@ const DataRow = ({metric: {name, type, value}, onPress}) => {
 
 DataRow.propTypes = {
 	metric: shape({
-		name: string.isRequired,
 		type: string.isRequired,
 		value: oneOfType([string, number]).isRequired,
 	}).isRequired,
