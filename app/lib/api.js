@@ -100,3 +100,18 @@ export function reportOnboarding(action) {
 	const {token} = store.getState().profile.auth;
 	return axios.post(`${API_URL}/onboarding`, {action}, authHeaders(token));
 }
+
+
+/**
+ * History endpoints
+ */
+
+export function loadMonthMeasuredData() {	
+	const {token} = store.getState().profile.auth;
+	return axios.get(`${API_URL}/readingData`, authHeaders(token));
+}
+
+export function fetchMonthMeasuredData(data) {	
+	const {token} = store.getState().profile.auth;
+	return axios.post(`${API_URL}/readingData`, data, authHeaders(token));
+}
