@@ -1,7 +1,7 @@
 import HistoryAction from '../actions/history';
 
 const initialState = {
-
+	data: {}
 };
 
 export default function history(state = initialState, action) {
@@ -10,7 +10,10 @@ export default function history(state = initialState, action) {
 		case HistoryAction.ADD_MONTH_DATA:
 			return {
 				...state,
-				[action.month]: action.data,
+				data: {
+					...state.data,
+					[action.month]: action.data,
+				}
 			};
 
 		default:
