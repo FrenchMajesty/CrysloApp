@@ -66,7 +66,7 @@ class SignUpStep2 extends Component {
 
 			this.props.setNumber('');
 			this.props.setCredentials({email: '', password: ''});
-			this.props.setAuthToken(token);
+			this.props.updateAuthToken(token);
 			navigation.navigate('SignUpStep3');
 		})
 		.catch(({response}) => {
@@ -125,8 +125,8 @@ const mapDispatchToProps = (dispatch) => ({
 	setCredentials: (details) => {
 		dispatch(SignUpAction.setCredentials(details));
 	},
-	setAuthToken: (token) => {
-		dispatch(ProfileAction.setAuthToken(token));
+	updateAuthToken: (token) => {
+		dispatch(ProfileAction.updateAuthToken(token));
 	},
 });
 
