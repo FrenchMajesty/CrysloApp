@@ -128,7 +128,7 @@ class ValidateVerificationCode extends Component {
 						onChangeText={this.onCodeChange}
 						maxLength={10}
 						hint={errors.message}
-						hasError={errors.message}
+						hasError={Boolean(errors.message)}
 					/>
 				</View>
 				<View style={[style.actionButtonContainer, style.submitContainer2]}>

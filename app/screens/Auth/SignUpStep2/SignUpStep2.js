@@ -3,7 +3,6 @@ import { View, Image, Text } from 'react-native';
 import { connect } from 'react-redux';
 import IconButton from 'app/components/common/Button/IconButton/';
 import Input from 'app/components/common/Input/TextWithIcon/';
-import CommonText from 'app/components/common/CommonText/';
 import PhoneNumberVerification from 'app/container/PhoneNumberVerification/';
 import ValidateVerificationCode from 'app/container/ValidateVerificationCode/';
 import VerificationAction from 'app/store/actions/verifyNumber';
@@ -81,17 +80,15 @@ class SignUpStep2 extends Component {
 	 */
 	render() {
 		const {navigation, number} = this.props;
-		const {errors} = this.state;
 
 		return (
 			<View style={[styling.statusBarPadding, style.container, {flex: 1}]}>
 				<IconButton
 					icon="arrow-left"
-					style={styling.fixedNavButton}
+					style={[styling.fixedNavButton]}
 					onPress={() => navigation.goBack(null)}
 				/>
-				<CommonText weight="heavy" style={[style.errors]}>{errors}</CommonText>
-				<View style={[{alignSelf: 'center', top: errors ? '5%' : '20%'}]}>
+				<View style={[{alignSelf: 'center', top: '20%'}]}>
 					{number ?
 						<ValidateVerificationCode purpose="signup"  onSuccess={this.onSuccess} />
 					: 
@@ -111,9 +108,9 @@ class SignUpStep2 extends Component {
  * @return {Object}                  
  */
 const mapStateToProps = ({verifyNumber: {number}, signup: {email, password}}) => ({
-		number,
-		email,
-		password,
+	number,
+	email,
+	password,
 });
 
 /**

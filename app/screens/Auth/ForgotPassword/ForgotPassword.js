@@ -61,7 +61,7 @@ class ForgotPassword extends Component {
 			<View style={[styling.statusBarPadding, style.container, {flex: 1}]}>
 				<IconButton
 					icon="arrow-left"
-					style={styling.fixedNavButton}
+					style={[styling.fixedNavButton]}
 					onPress={() => navigation.goBack(null)}
 				/>
 				<View style={[{alignSelf: 'center', top: '20%'}]}>
