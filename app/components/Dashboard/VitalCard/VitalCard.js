@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, Image } from 'react-native';
-import { shape, oneOfType, func, number, string } from 'prop-types';
+import { shape, oneOfType, func, number, string, node } from 'prop-types';
 import distanceInWords from 'date-fns/distance_in_words';
 import Card from 'app/components/common/Card/';
 import FadeInView from 'app/container/FadeInView/';
@@ -15,7 +15,8 @@ class VitalCard extends Component {
 			measure: string.isRequired,
 			lastReading: oneOfType([string, number]).isRequired,
 		}).isRequired, 
-		icon: shape({uri: string.isRequired}).isRequired,
+		//icon: shape({uri: string.isRequired}).isRequired,
+		icon: node.isRequired,
 		fadeInDuration: number,
 		delay: number,
 		onPress: func,
@@ -62,7 +63,7 @@ class VitalCard extends Component {
 			this.setState({time, intervalId});
 		}
 
-		Image.prefetch(url);
+		//Image.prefetch(url);
 	}
 
 	/**
