@@ -254,10 +254,6 @@ class ContactDetails extends Component {
 					<View style={[style.formContainer]}>
 						<View style={[style.inputContainer]}>
 							<Input
-								backgroundColor="rgba(0, 0, 0, 0.05)"
-								placeholderTextColor="black"
-								selectionColor="black"
-								textColor="black"
 								label="Name"
 								placeholder="Enter your contact's name"
 								returnKeyType="done"
@@ -269,10 +265,6 @@ class ContactDetails extends Component {
 						</View>	
 						<View style={[style.inputContainer]}>
 							<Input
-								backgroundColor="rgba(0, 0, 0, 0.05)"
-								placeholderTextColor="black"
-								selectionColor="black"
-								textColor="black"
 								label="Phone Number"
 								placeholder={(name.length > 0 ? `Enter ${name}'s` : 'Enter your contact\'s') + ' phone number'}
 								returnKeyType="done"

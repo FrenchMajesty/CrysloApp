@@ -73,10 +73,6 @@ class UpdatePassword extends Component {
 					<View style={[style.formContainer, {flex: 3}]}>
 						<View style={[style.inputContainer]}>
 							<Input
-								backgroundColor="rgba(0, 0, 0, 0.05)"
-								placeholderTextColor="black"
-								selectionColor="black"
-								textColor="black"
 								secureTextEntry={true}
 								label="Current Password"
 								placeholder="Enter your current password"
@@ -87,10 +83,6 @@ class UpdatePassword extends Component {
 						</View>	
 						<View style={[style.inputContainer, {marginTop: 30}]}>
 							<Input
-								backgroundColor="rgba(0, 0, 0, 0.05)"
-								placeholderTextColor="black"
-								selectionColor="black"
-								textColor="black"
 								secureTextEntry={true}
 								label="New Password"
 								placeholder="Enter your new password"
@@ -102,10 +94,6 @@ class UpdatePassword extends Component {
 						</View>	
 						<View style={[style.inputContainer]}>
 							<Input
-								backgroundColor="rgba(0, 0, 0, 0.05)"
-								placeholderTextColor="black"
-								selectionColor="black"
-								textColor="black"
 								secureTextEntry={true}
 								label="Repeat New Password"
 								placeholder="Confirm your new password"

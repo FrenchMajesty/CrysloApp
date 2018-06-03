@@ -125,10 +125,6 @@ class AccountProfile extends Component {
 					<View style={[style.formContainer, {flex: 3}]}>
 						<View style={[style.inputContainer]}>
 							<Input
-								backgroundColor="rgba(0, 0, 0, 0.05)"
-								placeholderTextColor="black"
-								selectionColor="black"
-								textColor="black"
 								label="First Name"
 								placeholder="Enter your first name"
 								returnKeyType="done"
@@ -140,10 +136,6 @@ class AccountProfile extends Component {
 						</View>	
 						<View style={[style.inputContainer]}>
 							<Input
-								backgroundColor="rgba(0, 0, 0, 0.05)"
-								placeholderTextColor="black"
-								selectionColor="black"
-								textColor="black"
 								label="Last Name"
 								placeholder="Enter your last name"
 								returnKeyType="done"
@@ -155,10 +147,6 @@ class AccountProfile extends Component {
 						</View>	
 						<View style={[style.inputContainer]}>
 							<Input
-								backgroundColor="rgba(0, 0, 0, 0.05)"
-								placeholderTextColor="black"
-								selectionColor="black"
-								textColor="black"
 								label="Email"
 								placeholder="Enter your email"
 								keyboardType="email-address"

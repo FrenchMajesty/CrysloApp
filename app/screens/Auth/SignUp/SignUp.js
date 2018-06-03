@@ -105,7 +105,6 @@ class SignUp extends Component {
 							<Input
 								iconColor="black"
 								backgroundColor="rgba(0, 0, 0, 0.05)"
-								placeholderTextColor="black"
 								selectionColor="black"
 								textColor="black"
 								iconName="envelope"
@@ -122,7 +121,6 @@ class SignUp extends Component {
 							<Input
 								iconColor="black"
 								backgroundColor="rgba(0, 0, 0, 0.05)"
-								placeholderTextColor="black"
 								selectionColor="black"
 								textColor="black"
 								iconName="lock"
