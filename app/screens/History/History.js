@@ -127,7 +127,8 @@ class History extends Component {
 		Object.keys(data).forEach((month) => items = { ...items, ...data[month] });
 
 		const white = '#fff';
-		const purple = '#8563e5';
+		const purple = styling.mainColor;
+		
 		const calendarStyle = {
 	   		backgroundColor: white,
 	   		calendarBackground: purple,
