@@ -11,7 +11,10 @@ const SimpleTextInput = ({label, style: customStyle, hint, hasError, ...others})
 		<View>
 			{label ? <Text style={[style.label]}>{label}</Text> : null}
 			<TextInput
-				placeholderTextColor={styling.text.gray}
+				placeholderTextColor={styling.black}
+				textColor={styling.black}
+				selectionColor={styling.black}
+				backgroundColor="rgba(0, 0, 0, 0.05)"
 				style={[style.input, ...customStyle]}
 				{...others}
 			/>
