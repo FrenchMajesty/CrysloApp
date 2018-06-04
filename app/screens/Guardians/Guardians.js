@@ -41,7 +41,7 @@ class Guardians extends Component {
 			breath_min: null,
 			breath_max: null,
 			isSubmitting: false,
-			buttonIndicator: null,
+			success: false,
 		};
 	}
 
@@ -75,7 +75,7 @@ class Guardians extends Component {
 		if(nextState.buttonIndicator && ! isEqual(newState2, currentState)) {
 			this.setState({
 				...nextState,
-				buttonIndicator: null,
+				success: false,
 			});
 		}
 
@@ -87,9 +87,7 @@ class Guardians extends Component {
 	 * @return {Void} 
 	 */
 	onSave() {
-		this.setState({
-			buttonIndicator: <Spinner color="#fff" />,
-		});
+		this.setState({isSubmitting: true});
 
 		const {notify_self, notify_wecare, heart_min, heart_max, breath_min, breath_max} = this.state;
 		const config = {
@@ -103,7 +101,8 @@ class Guardians extends Component {
 
 		updateGuardiansConfigs(config).then(() => {
 			this.setState({
-				buttonIndicator: <Icon name="check" color="#fff" size={30} style={{margin: -5}} />,
+				isSubmitting: false,
+				success: true,
 			});
 
 			this.props.updateGuardiansConfigs({
@@ -239,7 +238,7 @@ class Guardians extends Component {
 	 * @return {ReactElement} 
 	 */
 	render() {
-		const {buttonIndicator} = this.state;
+		const {buttonIndicator, isSubmitting, success} = this.state;
 		const {rootNavigation} = this.props.screenProps;
 
 		return (
@@ -260,19 +259,14 @@ class Guardians extends Component {
 					{this.renderBreathSettings()}
 
 					<View style={[style.buttonContainer]}>
-						{buttonIndicator ?
-							<RoundedButton
-								inverted={true}
-								center={true}
-							>{buttonIndicator}</RoundedButton>
-						:
-							<RoundedButton
-								text="Save Changes"
-								inverted={true}
-								center={true}
-								onPress={this.onSave}
-							/>	
-						}
+						<RoundedButton
+							inverted={true}
+							center={true}
+							loading={isSubmitting}
+							success={success}
+							text="Save Changes"
+							onPress={this.onSave}
+						>{buttonIndicator}</RoundedButton>
 					</View>
 				</ScrollView>
 			</View>
