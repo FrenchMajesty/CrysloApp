@@ -10,7 +10,7 @@ import IosIcon from 'react-native-vector-icons/Ionicons';
 import styling from 'app/config/styling'; 
 import style from '../style';
 
-import { login, loadProfile } from 'app/lib/api';
+import { login } from 'app/lib/api';
 
 class Login extends Component {
 
